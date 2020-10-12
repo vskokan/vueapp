@@ -1,0 +1,24 @@
+* {
+    margin: 0px;
+    margin-bottom: 0px;
+}
+
+button {
+    height: 40px;
+    font-size: 22px;
+    border: none;
+    background-color: #7c8e51;
+    color: rgb(255, 255, 255);
+    border-radius: 5px;
+    margin: 10px 0px 0px 10px;
+    font-family: 'Rubik', sans-serif;
+}
+
+button:hover {
+    background-color:  #557481;
+    
+    cursor: pointer;
+}
+
+
+ 
