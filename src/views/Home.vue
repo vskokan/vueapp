@@ -1,16 +1,16 @@
 <template>
     <div>
-       <AddNewFish></AddNewFish>
+       <AddFish></AddFish>
     </div>
 </template>
 
 <script>
 
-import AddNewFish from '@/components/AddNewFish'
+import AddFish from '@/components/Fish/AddFish'
 
 export default {
   components: {
-    AddNewFish
+    AddFish
   }
 }
 </script>

@@ -11,7 +11,7 @@ class FishDataService {
 //   }
 
   create(data) {
-    return http.post("/fish", data);
+    return http.post("/fish/test/", data);
   }
 
 //   update(id, data) {
@@ -29,6 +29,7 @@ class FishDataService {
 //   findByTitle(title) {
 //     return http.get(`/fish?title=${title}`);
 //   }
+  
 }
 
 export default new FishDataService();
