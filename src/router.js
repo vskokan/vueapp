@@ -42,7 +42,40 @@ export default new Router({
                     path: 'methods',
                     component: () => import('./components/Tables/Empty.vue')
                 },
-            ]
+                {
+                    path: 'baits',
+                    component: () => import('./components/Tables/Empty.vue')
+                },
+                {
+                    path: 'users',
+                    component: () => import('./components/Tables/Empty.vue')
+                },
+                {
+                    path: 'reviews',
+                    component: () => import('./components/Tables/Empty.vue')
+                },
+                {
+                    path: 'facts',
+                    component: () => import('./components/Tables/Empty.vue')
+                },
+                {
+                    path: 'cities',
+                    component: () => import('./components/Tables/Empty.vue')
+                },
+                {
+                    path: 'districts',
+                    component: () => import('./components/Tables/Empty.vue')
+                },
+                {
+                    path: 'shops',
+                    component: () => import('./components/Tables/Empty.vue')
+                },
+                {
+                    path: 'discounts',
+                    component: () => import('./components/Tables/Empty.vue')
+                },
+            ],
+            redirect: '/databases/fishes'
         },
         { 
             path: '/404', 
