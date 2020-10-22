@@ -16,19 +16,15 @@ export default {
     },
     data() {
         return {
-        reviews: [
-        ],
-        //loading: true,
-        //filter: 'all'
+            reviews: [
+            ],
         }
     },
     mounted() {
         fetch('http://localhost:3000/api/reviews')
         .then(response => response.json())
         .then(json => {
-            
                 this.reviews = json
-                //this.loading = false
         })
     }    
 }

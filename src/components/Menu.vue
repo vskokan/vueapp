@@ -1,13 +1,13 @@
 <template>
     <div class="menu">
             <ul class="nav">
-                <li class="menuitem"><router-link to="/">Добавить</router-link></li>
-                <li class="menuitem"><router-link to="/map">Карта</router-link></li>
+                <li class="menuitem"><router-link to="/">Карта</router-link></li>
+                <li class="menuitem"><router-link to="/test">Тест</router-link></li>
                 <li class="menuitem"><router-link to="/fish">Рыба</router-link></li>
-                <li class="menuitem"><router-link to="/waterbody">Тест</router-link></li>
                 <li class="menuitem"><router-link to="/partners">Тест</router-link></li>
                 <li class="menuitem"><router-link to="/profile">Тест</router-link></li>
                 <li class="menuitem"><router-link to="/reviews">Отзыв</router-link></li>
+                <li class="menuitem"><router-link to="/databases">Тут будут таблицы</router-link></li>
             </ul>
         </div>
 </template>
