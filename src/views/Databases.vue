@@ -15,10 +15,9 @@ export default {
 </script>
 
 <style scoped>
-
-    .TablesArea {
-      /* min-height: calc(100vh - 180px) */
-      height: 50vh;
+    .main {
+        height: 80vh;
     }
+    
   
 </style>

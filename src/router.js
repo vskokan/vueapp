@@ -36,7 +36,7 @@ export default new Router({
             children: [
                 {
                     path: 'fishes',
-                    component: () => import('./components/Tables/Empty.vue')
+                    component: () => import('./views/Tables/Fishes.vue')
                 }, 
                 {
                     path: 'methods',
