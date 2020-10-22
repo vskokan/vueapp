@@ -1,8 +1,10 @@
 <template>
   <div id="app">
     <Header></Header>
-    <router-view>
-    </router-view>
+    <transition name="slide-fade" mode="out-in">
+      <router-view>
+      </router-view>
+    </transition>
     <!-- <Footer></Footer> -->
   </div>
 </template>
@@ -65,7 +67,18 @@ button:hover {
     background-color:   #7c8e51fd;
     cursor: pointer;
 }
-  
+
+.slide-fade-enter-active {
+        transition: all .3s ease;
+    }
+    .slide-fade-leave-active {
+        transition: all .5s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+    }
+    .slide-fade-enter, .slide-fade-leave-to {
+        opacity: 0;
+    }
+
+
 </style>
 
 

@@ -1,18 +1,19 @@
 <template>
     <div>
-       <AddFish></AddFish>
+       <!-- <AddFish></AddFish> -->
+       Что-то будет
     </div>
 </template>
 
 <script>
 
-import AddFish from '@/components/Fish/AddFish'
+// import AddFish from '@/components/Fish/AddFish'
 
-export default {
-  components: {
-    AddFish
-  }
-}
+// export default {
+//   components: {
+//     AddFish
+//   }
+// }
 </script>
 
 <style scoped>
