@@ -9,7 +9,8 @@
                 <li class="menuitem"><router-link to="/databases/facts">Факты</router-link></li>
                 <li class="menuitem"><router-link to="/databases/cities">Города</router-link></li>
                 <li class="menuitem"><router-link to="/databases/districts">Районы</router-link></li>
-                <li class="menuitem"><router-link to="/databases/shops">Магазины</router-link></li>
+                <li class="menuitem"><router-link to="/databases/partners">Партнеры</router-link></li>
+                <li class="menuitem"><router-link to="/databases/departments">Филиалы</router-link></li>
                 <li class="menuitem"><router-link to="/databases/discounts">Скидки</router-link></li>
             </ul>
         </div>

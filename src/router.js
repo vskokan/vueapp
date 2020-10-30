@@ -56,23 +56,27 @@ export default new Router({
                 },
                 {
                     path: 'facts',
-                    component: () => import('./components/Tables/Empty.vue')
+                    component: () => import('./views/Tables/Facts.vue')
                 },
                 {
                     path: 'cities',
-                    component: () => import('./components/Tables/Empty.vue')
+                    component: () => import('./views/Tables/Places.vue')
                 },
                 {
                     path: 'districts',
                     component: () => import('./views/Tables/Districts.vue')
                 },
                 {
-                    path: 'shops',
-                    component: () => import('./components/Tables/Empty.vue')
+                    path: 'partners',
+                    component: () => import('./views/Tables/Partners.vue')
+                },
+                {
+                    path: 'departments',
+                    component: () => import('./views/Tables/Departments.vue')
                 },
                 {
                     path: 'discounts',
-                    component: () => import('./components/Tables/Empty.vue')
+                    component: () => import('./views/Tables/Discounts.vue')
                 },
             ],
             redirect: '/databases/fishes'
