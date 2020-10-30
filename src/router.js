@@ -40,11 +40,11 @@ export default new Router({
                 }, 
                 {
                     path: 'methods',
-                    component: () => import('./components/Tables/Empty.vue')
+                    component: () => import('./views/Tables/Methods.vue')
                 },
                 {
                     path: 'baits',
-                    component: () => import('./components/Tables/Empty.vue')
+                    component: () => import('./views/Tables/Baits.vue')
                 },
                 {
                     path: 'users',
@@ -64,7 +64,7 @@ export default new Router({
                 },
                 {
                     path: 'districts',
-                    component: () => import('./components/Tables/Empty.vue')
+                    component: () => import('./views/Tables/Districts.vue')
                 },
                 {
                     path: 'shops',
