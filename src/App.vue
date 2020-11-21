@@ -37,7 +37,8 @@ export default {
   /* background: radial-gradient(circle farthest-corner at 100px 50px, #f9faf9, #e0e0e0); */
   background-image:  url('./assets/background2.svg');
   background-image: url('./assets/background2.svg'), radial-gradient(circle farthest-corner at 100px 50px, #f9faf9, #e0e0e0);
-  min-height: calc(100vh)
+  min-height: calc(100vh);
+  height: auto;
 }
 
 .red {

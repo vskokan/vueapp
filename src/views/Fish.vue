@@ -63,7 +63,7 @@ export default {
 <style scoped>
 
   .mainpage {
-      min-height: calc(100vh - 180px);
+      /* min-height: calc(100vh - 180px); */
       display: flex;
       flex-direction: column;
       justify-content: center;
