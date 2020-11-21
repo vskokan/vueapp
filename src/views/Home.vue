@@ -1,6 +1,6 @@
 <template>
     <div>
-       <!-- <AddFish></AddFish> -->
+       <h1>Тест</h1>
        Что-то будет
     </div>
 </template>

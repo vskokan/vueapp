@@ -1,6 +1,6 @@
 <template>
     <div class="map">
-        <h2>Тут карта</h2>
+        <!-- <h2>Тут карта</h2> -->
         <!-- <yandex-map :coords="coords" @click="onClick">
             <ymap-marker 
                 marker-id="123" 
@@ -79,11 +79,20 @@ export default {
 <style scoped>
 
     .ymap-container {
-      height: 680px;
+      height: 820px;
+      width:  100%;
     }
 
     .map {
-      min-height: calc(100vh - 220px)
+      width: 100%;
+      min-height: calc(100vh - 320px)
     }
+
+    yandex-map {
+      height: 820px;
+      width:  100%;
+    }
+
+    
   
 </style>

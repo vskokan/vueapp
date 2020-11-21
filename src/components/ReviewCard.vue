@@ -11,9 +11,9 @@
                         </div>
                         <div class="location">
                             <img class="pin" src="../assets/icons/review/placeholder.svg">
-                            <div class="waterbody">
+                            <!-- <div class="waterbody">
                                 {{review.waterbody.name}}
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>

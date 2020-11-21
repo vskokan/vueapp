@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import FishDataService from "../../services/FishDataService";
+import FishData from "../../services/FishData";
 
 export default {
     data() {
@@ -53,9 +53,9 @@ export default {
             // axios.post("http://localhost:3000/api/fish/test/", formData, { headers: "multipart/form-data"})
             //     .then(()=>{console.log('Success')})
             //     .catch(()=>{console.log('Error!!!')})
-            FishDataService.create(formData)
+            FishData.create(formData)
                 .then(response => {
-                this.fish.name = response.data;
+                response.data = `Sent: ${this.fish.name}`;
                 console.log(response.data);
                 //this.submitted = true;
                 })

@@ -1,6 +1,6 @@
 import http from "../http-common";
 
-class FishDataService {
+class FishData {
     
   getAll() {
     return http.get("/fish");
@@ -11,7 +11,7 @@ class FishDataService {
 //   }
 
   create(data) {
-    return http.post("/fish/test/", data);
+    return http.post("/fish/", data);
   }
 
 //   update(id, data) {
@@ -32,4 +32,4 @@ class FishDataService {
   
 }
 
-export default new FishDataService();
+export default new FishData();
