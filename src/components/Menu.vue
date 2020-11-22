@@ -11,8 +11,8 @@
                 <!-- <li class="menuitem wayToAdmin"><router-link to="/databases">Админка</router-link></li>  отображать только для админа-->
             </ul>
             <div class="nav-buttons">
-                <button>Вход</button>
-                <button>Регистрация</button>
+                <button class="button-simple">Вход</button>
+                <button class="button-simple">Регистрация</button>
             </div>
     </div>
 </template>

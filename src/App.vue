@@ -26,6 +26,7 @@ export default {
   @import url('https://fonts.googleapis.com/css2?family=Ubuntu+Condensed&display=swap');
   @import url('https://fonts.googleapis.com/css2?family=Marmelad&display=swap');
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@700&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@700&display=swap');
   
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
@@ -66,7 +67,7 @@ button:hover {
     cursor: pointer;
 } */
 
-button {
+.button-simple {
     height: 40px;
     font-size: 24px;
     border: none;
@@ -83,7 +84,7 @@ button {
     
 }
 
-button:hover {
+.button-simple:hover {
     border-color:transparent;
     background-color:   rgb(101, 15, 172);
     color: #fff;

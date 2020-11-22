@@ -3,25 +3,31 @@
         <div class="formHeader">
             <div class="headerText">Добавить рыбу</div>
         </div>
-        <div class="formBody">
-            <div class="inputContainer">
-                <label for="name">Название</label>
-                <input type="text" name="name" id="name" v-model="fish.name" required>
+        <div class="form-notsubmitted" v-if="!submitted">
+            <div class="formBody" >
+                <div class="inputContainer">
+                    <!-- <label for="name">Название</label> -->
+                    <input type="text" placeholder="Введите название рыбы" name="name" id="name" v-model="fish.name" required>
+                </div>
+                <div class="inputContainerFile" >
+                    <label for="photo" class="custom-file-upload">Выбрать фото <i class="fas fa-file-upload"></i></label>
+                
+                    <input type="file" name="photo" id="photo" accept=".jpg, .jpeg, .png" ref="file" v-on:change="uploadImage()" required>   
+                    <p>{{isFileChosen? this.fish.image.name:'Файл не выбран'}}</p> 
+                </div>
+                <div class="inputContainer">
+                    <!-- <label for="description">Описание</label> -->
+                    <textarea name="description" placeholder="Добавьте описание" id="description" v-model="fish.description"></textarea>
+                </div>
             </div>
-            <div class="inputContainerFile" >
-                <label for="photo" class="custom-file-upload">Выбрать фото</label>
-               
-                <input type="file" name="photo" id="photo" accept=".jpg, .jpeg, .png" ref="file" v-on:change="uploadImage()" required>    
-            </div>
-            <div class="inputContainer">
-                <label for="description">Описание</label>
-                <!-- <input type="text" name="description" id="description" v-model="fish.description" required> -->
-                <textarea name="description" id="description" v-model="fish.description" >"></textarea>
+            <div class="formButtons">
+                <button class="button-simple" v-on:click="send()">Ок</button>
+                <button class="button-simple">Отмена</button>
             </div>
         </div>
-        <div class="formButtons">
-            <button v-on:click="send()">Ок</button>
-            <button>Отмена</button>
+        <div v-else>
+            <h4>Рыба добавлена</h4>
+            <button class="button-simple" @click="newfish">Добавить еще</button>
         </div>
     </div>
 </template>
@@ -36,34 +42,38 @@ export default {
                 name: "",
                 image: "",
                 description: ""    
-            }
+            },
+            submitted: false,
+            isFileChosen: false
         }
     },
     methods: {
         uploadImage() {
+            this.isFileChosen = true
             this.fish.image = this.$refs.file.files[0];
         },
         send() {
-            //alert(this.fish.name)
             let formData = new FormData();
             formData.append('name', this.fish.name)
             formData.append('image', this.fish.image)
             formData.append('description', this.fish.description)
-
-            // axios.post("http://localhost:3000/api/fish/test/", formData, { headers: "multipart/form-data"})
-            //     .then(()=>{console.log('Success')})
-            //     .catch(()=>{console.log('Error!!!')})
             FishData.create(formData)
-                .then(response => {
-                response.data = `Sent: ${this.fish.name}`;
-                console.log(response.data);
-                //this.submitted = true;
+                .then((response) => {
+                        if (response.status === 200) this.submitted = true;
+                //this.fish.id = response.data.id;
+                //console.log(response.status);
+                // this.submitted = true;
                 })
                 .catch(e => {
                 console.log(e);
                 });
-            //alert(formData.get('image'))
-        }
+            //this.submitted = true;
+        },
+        newfish() {
+            this.submitted = false;
+            this.isFileChosen = false;
+            this.fish = {};
+        },
     }
 }
 </script>
@@ -71,15 +81,15 @@ export default {
 <style scoped>
     
     .form {
-        
-        font-family: 'Rubik', sans-serif;
+        font-family: 'Inter', sans-serif;
         display: flex;
         flex-direction: column;
         width: 450px;
+        height: 550px;
         justify-items: center;
         align-items: center;
         background-color: #fff;
-        border-radius: 5px;
+        /* border-radius: 5px; */
         padding-bottom: 20px;
         box-shadow: 0 0 60px rgba(14,42,71,.25);
     }
@@ -88,10 +98,10 @@ export default {
         width: 450px;
         padding-top: 20px;
         padding-bottom: 20px;
-        border-top-left-radius: 5px;
-        border-top-right-radius: 5px;
-        background: linear-gradient(to right, #7c8e51, #69afce);
-        margin-bottom: 30px;
+        /* border-top-left-radius: 5px;
+        border-top-right-radius: 5px; */
+        background: rgb(101, 15, 172);
+        margin-bottom: 20px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -100,17 +110,25 @@ export default {
     .headerText {
         font-size: 34px;
         color: rgb(255, 255, 255);
-        font-weight: bold;
+        font-weight: 700;
+        font-family: 'Inter', sans-serif;
+    }
+
+    .form-notsubmitted {
+         width: 450px;
+        /* width: 100%; */
+        height: 100%;
+        padding-right: 10px;
     }
 
     #description {
         resize: none;
         height: 150px;
-        width: 300px;
+        width: 100%;
     }
 
     #name {
-        width: 300px;
+        width: 100%;
         height: 30px;
     }
 
@@ -139,15 +157,15 @@ export default {
         flex-direction: row;
         align-items: center;
         justify-content: center;
-        width: 160px;
+        width: 50%;
         cursor: pointer;
         height: 40px;
         font-size: 22px;
         border: none;
         /* background-color: #7c8e51; */
-        background-color:  #557481;
+        background-color:  rgb(101, 15, 172);
         color: rgb(255, 255, 255);
-        border-radius: 5px;
+        /* border-radius: 5px; */
         margin: 10px 0px 0px 10px;
         margin: auto;
     }
@@ -156,9 +174,13 @@ export default {
         justify-self: center;
     }
 
+    .fa-file-upload {
+        margin-left: 10px;
+    }
+
     .custom-file-upload:hover {
         /* background-color:  #557481; */
-        background-color: #7c8e51;
+        /* background-color: #7c8e51; */
         cursor: pointer;
     }
 
@@ -172,7 +194,7 @@ export default {
         border: none;
         box-shadow: none;
         background-color: #cadbe24f;
-        padding: 5px;
+        padding: 15px;
         font-size: 18px;
         font-weight: bold;
         font-family: 'Rubik', sans-serif;

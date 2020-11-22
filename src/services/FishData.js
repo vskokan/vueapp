@@ -6,6 +6,10 @@ class FishData {
     return http.get("/fish");
   }
 
+  getAllByPage(page) {
+    return http.get(`/fish/pag/?page=${page}`);
+  }
+
 //   get(id) {
 //     return http.get(`/fish/${id}`);
 //   }
