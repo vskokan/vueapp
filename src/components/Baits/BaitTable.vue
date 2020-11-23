@@ -1,17 +1,17 @@
 <template>
-    <div class="fishTable">
+    <div class="tableArea">
+        <AddBait v-if="showForm"/>
         <div class="tableContainer">
-            
+            <div class="header"><h2>Наживки</h2><button @click="getForm">Добавить</button></div>
             <table class="table">
                 <tr class="tableHeader">
-                    <th>ID</th><th>Название</th><th>Фото</th><th>Описание</th><th>Действия</th>
+                    <th>ID</th><th>Название</th><th>Описание</th><th>Действия</th>
                 </tr>
-                
-                <tr v-for="fish of fishes" :fish="fish" :key="fish.id"><td class="idCell">{{fish.id}}</td><td class="nameCell">{{fish.name}}</td><td class="imageCell"><a :href="'http://localhost:3000/' + fish.image"> {{fish.image.split('/')[2]}}</a></td><td class="descriptionCell">{{fish.description.substr(0, 50) + '...'}}</td>
+                <tr v-for="bait in allBaits" :key="bait.id"><td class="idCell">{{bait.id}}</td><td class="nameCell">{{bait.name}}</td><td class="descriptionCell">{{bait.description.substr(0, 50) + '...'}}</td>
                 <td class="actionCell">
                     <button class="view"><i class="fas fa-info"></i></button>
-                    <button class="edit"><i class="fas fa-pen"></i></button>
-                    <button class="delete"><i class="fas fa-trash-alt"></i></button>
+                    <button class="edit" ><i class="fas fa-pen"></i></button>
+                    <button class="delete" @click="deleteFromTable(bait.id)"><i class="fas fa-trash-alt"></i></button>
                 </td>
                 </tr>
                 
@@ -19,83 +19,55 @@
            
         </div>
         <div class="navigationButtons">
-            <button class="add" v-on:click="showAddForm">+</button>
-            <button class="previous" v-on:click="previousPage"><i class="fas fa-arrow-left"></i></button>
-            <button class="next" v-on:click="nextPage"><i class="fas fa-arrow-right"></i></button>
+            <!-- <button class="add" v-on:click="showAddForm">+</button> -->
+            <!-- <button class="previous" v-on:click="previousPage"><i class="fas fa-arrow-left"></i></button>
+            <button class="next" v-on:click="nextPage"><i class="fas fa-arrow-right"></i></button> -->
         </div>
         <!-- <AddFish v-if="adding"/> -->
     </div>
 </template>
 
 <script>
-
-import FishData from "../../services/FishData";
-// import AddFish from './AddFish'
+import { mapGetters, mapActions, mapMutations } from "vuex";
+import AddBait from '@/components/Baits/AddBait'
 
 export default {
-    data() { 
-        return {
-            isLoaded: false,
-            fishes: [],
-            page: 1,
-            maxpage: '',
-            adding: false
-        }
-    }, 
-    // components: { AddFish },
-    methods: {
-        fetchRows() {
-            //fetch(`http://localhost:3000/api/fish/pag/?page=${this.page}`)
-            FishData.getAllByPage(this.page)
-            //.then(response => response.json())
-            .then(json => {
-                setTimeout(() => {
-                    this.fishes = json.data.rows
-                    this.maxpage = json.data.maxpage
-                    this.isLoaded = true
-                }, 1000)
-            })
+    components: {AddBait},
+    computed: mapGetters(["allBaits", "showForm"]), 
+    methods: { 
+        ...mapActions(["fetchBaits", "deleteBait"]),
+        ...mapMutations(['changeFormView']),
+        getForm() {
+            alert(this.showForm)
+            this.changeFormView()
+            alert(this.showForm)
         },
-        nextPage() {
-            if (this.page < this.maxpage) {
-                this.page +=1
-                // alert(this.page)
-                this.fetchRows()
-            }
-        },
-        previousPage() {
-            if(this.page > 1) {
-                this.page -= 1;
-                this.fetchRows();
-            }
-        },
-        showAddForm() {
-            this.adding = true
+        deleteFromTable(id) {
+            // alert(id)
+            this.deleteBait(id)
         }
     },
     mounted() {
-        if (!this.isLoaded) {
-            this.fishes = [{id: '?', name: 'Загрузка', image: 'Загрузка', description: 'Загрузка'}]
-        }
-        this.fetchRows()
-    },
+        this.fetchBaits();
+    }
 }
+
 </script>
 
 <style scoped>
     .tableContainer {
-        height: 720px;
+        /* height: 720px; */
         font-family: 'Inter', sans-serif;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
         
     }
-    .fishTable {
+    .tableArea {
         display: flex;
         flex-direction: column;
         align-items: center;
-        width: 1200px;
+        width: 1000px;
         background-color: #fff;
         box-shadow: 0 0 60px rgba(14,42,71,.25);
         
@@ -183,5 +155,7 @@ export default {
     background: rgb(101, 15, 172); /* Цвет фона */
     color: #fff; /* Цвет текста */
    }
+
+
 
 </style>

@@ -18,9 +18,9 @@ class BaitData {
 //     return http.put(`/fish/${id}`, data);
 //   }
 
-//   delete(id) {
-//     return http.delete(`/fish/${id}`);
-//   }
+  delete(id) {
+    return http.delete(`/baits/${id}`);
+  }
 
 //   deleteAll() {
 //     return http.delete(`/fish`);

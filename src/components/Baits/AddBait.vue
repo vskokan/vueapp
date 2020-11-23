@@ -15,14 +15,16 @@
             </div>
         </div>
         <div class="formButtons">
-            <button v-on:click="send()">Ок</button>
-            <button>Отмена</button>
+            <button class="button-simple" v-on:click="send">Ок</button>
+            <button class="button-simple" v-on:click="closeForm">Отмена</button>
         </div>
     </div>
 </template>
 
 <script>
-import BaitData from "../../services/BaitData";
+// import BaitData from "../../services/BaitData";
+import { mapActions } from "vuex";
+import { mapMutations } from "vuex";
 
 export default {
     data() {
@@ -34,25 +36,29 @@ export default {
         }
     },
     methods: {
+        ...mapActions(["createBait", "fetchBaits"]),
+        ...mapMutations(['insertBait', 'changeFormView']),
         send() {
             //alert(this.fish.name)
             let formData = new FormData();
             formData.append('name', this.bait.name)
             formData.append('description', this.bait.description)
-
-            // axios.post("http://localhost:3000/api/fish/test/", formData, { headers: "multipart/form-data"})
-            //     .then(()=>{console.log('Success')})
-            //     .catch(()=>{console.log('Error!!!')})
-            BaitData.create(formData)
-                .then(response => {
-                this.bait.name = response.data;
-                console.log(response.data);
-                //this.submitted = true;
-                })
-                .catch(e => {
-                console.log(e);
-                });
+            this.createBait(formData)
+            .then(this.fetchBaits())
+            this.closeForm()
+            // BaitData.create(formData)
+            //     .then(response => {
+            //     this.bait.name = response.data;
+            //     console.log(response.data);
+            //     //this.submitted = true;
+            //     })
+            //     .catch(e => {
+            //     console.log(e);
+            //     });
             //alert(formData.get('image'))
+        },
+        closeForm() {
+            this.changeFormView()
         }
     }
 }
@@ -61,26 +67,28 @@ export default {
 <style scoped>
     
     .form {
-        font-family: 'Rubik', sans-serif;
+        font-family: 'Inter', sans-serif;
         display: flex;
         flex-direction: column;
         width: 450px;
+        height: 450px;
         justify-items: center;
         align-items: center;
         background-color: #fff;
-        border-radius: 5px;
+        /* border-radius: 5px; */
         padding-bottom: 20px;
         box-shadow: 0 0 60px rgba(14,42,71,.25);
     }
+
 
     .formHeader {
         width: 450px;
         padding-top: 20px;
         padding-bottom: 20px;
-        border-top-left-radius: 5px;
-        border-top-right-radius: 5px;
-        background: linear-gradient(to right, #7c8e51, #69afce);
-        margin-bottom: 30px;
+        /* border-top-left-radius: 5px;
+        border-top-right-radius: 5px; */
+        background: rgb(101, 15, 172);
+        margin-bottom: 20px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -89,7 +97,8 @@ export default {
     .headerText {
         font-size: 34px;
         color: rgb(255, 255, 255);
-        font-weight: bold;
+        font-weight: 700;
+        font-family: 'Inter', sans-serif;
     }
 
     #description {
