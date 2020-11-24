@@ -3,7 +3,7 @@
         <h2 class="name">{{bait.name}}</h2>
         <p class="description">{{bait.description}}</p>
         <div class="formButtons">
-            <button class="button-simple" v-on:click="closeForm">Отмена</button>
+            <button class="button-simple" v-on:click="closeForm">Закрыть</button>
         </div>
     </div>
 </template>
@@ -23,7 +23,15 @@ export default {
 
 <style scoped>
     .card {
-        width: 400px;
+        font-family: 'Inter', sans-serif;
+        display: flex;
+        flex-direction: column;
+        width: 450px;
+        height: 250px;
+        justify-items: center;
+        align-items: center;
+        background-color: #fff;
+        padding-bottom: 20px;
         box-shadow: 0 0 60px rgba(14,42,71,.25);
     }
 </style>

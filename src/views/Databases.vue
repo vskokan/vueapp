@@ -20,6 +20,8 @@ export default {
 
     .main {
         height: 80vh;
+        display: flex;
+        flex-direction: row;
     }
     
     .slide-fade-enter-active {

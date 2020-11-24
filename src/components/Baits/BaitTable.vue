@@ -1,30 +1,41 @@
 <template>
     <div class="tableArea">
-        <AddBait v-if="showForm"/>
-        <BaitCard v-if="showCard" v-bind:bait="currentBait" />
+        <transition name="fade">
+            <AddBait class="addForm" v-if="showForm"/>
+            <BaitCard class="cardForm" v-if="showCard" v-bind:bait="currentBait" />
+        </transition>
+        
         <div class="tableContainer">
-            <div class="header"><h2>Наживки</h2><button @click="getForm">Добавить</button></div>
+            <div class="header">
+                <h2>
+                    Приманки
+                </h2>
+                <button class="button-tableheader" @click="getForm">Добавить <i class="fas fa-plus"></i></button>
+            </div>
             <table class="table">
-                <tr class="tableHeader">
+                <thead>
+                    <tr class="tableHeader">
                     <th>ID</th><th>Название</th><th>Описание</th><th>Действия</th>
                 </tr>
-                <tr v-for="bait in allBaits" :key="bait.id"><td class="idCell">{{bait.id}}</td><td class="nameCell">{{bait.name}}</td><td class="descriptionCell">{{bait.description.substr(0, 50) + '...'}}</td>
-                <td class="actionCell">
-                    <button class="view" @click="chooseBait(bait)"><i class="fas fa-info"></i></button>
-                    <button class="edit" ><i class="fas fa-pen"></i></button>
-                    <button class="delete" @click="deleteFromTable(bait.id)"><i class="fas fa-trash-alt"></i></button>
-                </td>
-                </tr>
+                </thead>
+                
+                <tbody name="fade" is="transition-group">
+                    <tr v-for="bait in allBaits" :key="bait.id" class="row"><td class="idCell">{{bait.id}}</td><td class="nameCell">{{bait.name}}</td><td class="descriptionCell">{{bait.description.substr(0, 50) + '...'}}</td>
+                    <td class="actionCell">
+                        <button class="view" @click="chooseBait(bait)"><i class="fas fa-info"></i></button>
+                        <button class="edit" ><i class="fas fa-pen"></i></button>
+                        <button class="delete" @click="deleteFromTable(bait.id)"><i class="fas fa-trash-alt"></i></button>
+                    </td>
+                    </tr>
+                </tbody>
                 
             </table>
            
         </div>
         <div class="navigationButtons">
-            <!-- <button class="add" v-on:click="showAddForm">+</button> -->
-            <!-- <button class="previous" v-on:click="previousPage"><i class="fas fa-arrow-left"></i></button>
-            <button class="next" v-on:click="nextPage"><i class="fas fa-arrow-right"></i></button> -->
+            <button class="previous"><i class="fas fa-arrow-left"></i></button>
+            <button class="next"><i class="fas fa-arrow-right"></i></button>
         </div>
-        <!-- <AddFish v-if="adding"/> -->
     </div>
 </template>
 
@@ -40,9 +51,9 @@ export default {
         ...mapActions(["fetchBaits", "deleteBait"]),
         ...mapMutations(['changeFormView', 'changeCardView']),
         getForm() {
-            alert(this.showForm)
+            // alert(this.showForm)
             this.changeFormView()
-            alert(this.showForm)
+            // alert(this.showForm)
         },
         deleteFromTable(id) {
             // alert(id)
@@ -88,21 +99,27 @@ export default {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+        z-index: 0;
+        /* position: relative; */
         
     }
     .tableArea {
+        position: absolute;
         display: flex;
         flex-direction: column;
         align-items: center;
-        width: 1000px;
+        /* width: 80%; */
+        height: 70vh;
         background-color: #fff;
         box-shadow: 0 0 60px rgba(14,42,71,.25);
+        z-index: 0;
         
     }
     table {
         border-collapse: collapse;
         /* width: 1200px; */
         background-color: #fff;
+        z-index: 0;
         
     }
     .tableHeader {
@@ -111,6 +128,7 @@ export default {
         height: 80px;
         font-size: 24px;
         font-weight: 700;
+        z-index: 0;
     }
 
     td {
@@ -176,13 +194,59 @@ export default {
         align-items: center;
     }
 
-    tr:nth-child(even) {background: #fff}
-    tr:nth-child(odd) {background: rgb(248, 248, 248)}
-    tr:nth-child(1) {
-    background: rgb(101, 15, 172); /* Цвет фона */
-    color: #fff; /* Цвет текста */
+    .row:nth-child(even) {background: #fff}
+    .row:nth-child(odd) {background: rgb(248, 248, 248)}
+        /* tr:nth-child(1)  {
+        background: rgb(101, 15, 172); 
+        color: #fff; 
+    } */
+
+   .tableHeader {
+        background-color: rgb(101, 15, 172);
+        color: #fff;
+        height: 80px;
+        font-size: 24px;
+        font-weight: 700;
+        z-index: 0;
+    }
+
+   .addForm, .cardForm {
+       position: absolute;
+       margin: auto;
+       margin-top: 50px;
+       z-index: 5;
    }
 
+   .fade-enter-active, .fade-leave-active {
+        transition: all 0.5s;
+      }
+      .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+        opacity: 0;
+      }
 
+    .tableImage {
+        width: 40px;
+        margin-right: 10px;
+        color: #fff;
+    }
+
+    .header {
+        display: flex;
+        padding-top: 5px;
+        padding-right: 10px;
+        padding-left: 10px;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        background-color: rgb(101, 15, 172);
+        color: #fff;
+    }
+
+    .header h2  {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        font-size: 48px;
+    }
 
 </style>

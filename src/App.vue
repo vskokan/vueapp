@@ -111,6 +111,32 @@ router-view {
   z-index: 3;
 }
 
+
+.button-tableheader {
+    height: 40px;
+    font-size: 24px;
+    border: none;
+    background-color: transparent;
+    color: rgb(255, 255, 255);
+    border: 3px solid rgb(255, 255, 255);;
+    /* border-radius: 5px; */
+    /* margin: 10px 0px 0px 10px; */
+    margin-left: 5px;
+    margin-right: 5px;
+    text-transform: uppercase;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    transition: .5s;
+    
+}
+
+.button-tableheader:hover {
+    border-color:transparent;
+    background-color:   rgb(255, 255, 255);
+    color: rgb(0, 0, 0);
+    cursor: pointer;
+}
+
 </style>
 
 

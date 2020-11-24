@@ -87,7 +87,8 @@ export default {
         padding-bottom: 20px;
         /* border-top-left-radius: 5px;
         border-top-right-radius: 5px; */
-        background: rgb(101, 15, 172);
+        /* background: rgb(101, 15, 172); */
+        
         margin-bottom: 20px;
         display: flex;
         justify-content: center;
@@ -96,7 +97,7 @@ export default {
 
     .headerText {
         font-size: 34px;
-        color: rgb(255, 255, 255);
+        color: rgb(0, 0, 0);
         font-weight: 700;
         font-family: 'Inter', sans-serif;
     }
