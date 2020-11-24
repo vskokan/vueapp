@@ -1,6 +1,7 @@
 <template>
     <div class="tableArea">
         <AddBait v-if="showForm"/>
+        <BaitCard v-if="showCard" v-bind:bait="currentBait" />
         <div class="tableContainer">
             <div class="header"><h2>Наживки</h2><button @click="getForm">Добавить</button></div>
             <table class="table">
@@ -9,7 +10,7 @@
                 </tr>
                 <tr v-for="bait in allBaits" :key="bait.id"><td class="idCell">{{bait.id}}</td><td class="nameCell">{{bait.name}}</td><td class="descriptionCell">{{bait.description.substr(0, 50) + '...'}}</td>
                 <td class="actionCell">
-                    <button class="view"><i class="fas fa-info"></i></button>
+                    <button class="view" @click="chooseBait(bait)"><i class="fas fa-info"></i></button>
                     <button class="edit" ><i class="fas fa-pen"></i></button>
                     <button class="delete" @click="deleteFromTable(bait.id)"><i class="fas fa-trash-alt"></i></button>
                 </td>
@@ -30,13 +31,14 @@
 <script>
 import { mapGetters, mapActions, mapMutations } from "vuex";
 import AddBait from '@/components/Baits/AddBait'
+import BaitCard from '@/components/Baits/BaitCard'
 
 export default {
-    components: {AddBait},
-    computed: mapGetters(["allBaits", "showForm"]), 
+    components: {AddBait, BaitCard},
+    computed: mapGetters(["allBaits", "showForm", "showCard"]), 
     methods: { 
         ...mapActions(["fetchBaits", "deleteBait"]),
-        ...mapMutations(['changeFormView']),
+        ...mapMutations(['changeFormView', 'changeCardView']),
         getForm() {
             alert(this.showForm)
             this.changeFormView()
@@ -44,11 +46,36 @@ export default {
         },
         deleteFromTable(id) {
             // alert(id)
-            this.deleteBait(id)
+            if (!this.showCard) {
+                this.deleteBait(id)
+            } else {
+                alert('Закройте все окна перед удалением')
+            }
+            
+        },
+        chooseBait(bait) {
+            
+            if (!this.showCard) {
+                this.currentBait = bait
+                this.changeCardView()
+            }
+            // this.changeCardView()
+        },
+        getCard() {
+            alert(this.showCard)
+            if (!this.showCard) {
+                this.changeCardView()
+            }
+            
         }
     },
     mounted() {
         this.fetchBaits();
+    },
+    data() {
+        return {
+            currentBait: ''
+        }
     }
 }
 
