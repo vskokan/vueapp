@@ -20,7 +20,7 @@
                 </tr>
                 </thead>
                 
-                <tbody name="fade" is="transition-group">
+                <!-- <tbody name="fadee" is="transition-group"> -->
                     <tr v-for="bait in allBaits" :key="bait.id" class="row"><td class="idCell">{{bait.id}}</td><td class="nameCell">{{bait.name}}</td><td class="descriptionCell">{{bait.description.substr(0, 50) + '...'}}</td>
                     <td class="actionCell">
                         <button class="view" @click="chooseBait(bait)"><i class="fas fa-info"></i></button>
@@ -28,7 +28,7 @@
                         <button class="delete" @click="deleteFromTable(bait.id)"><i class="fas fa-trash-alt"></i></button>
                     </td>
                     </tr>
-                </tbody>
+                <!-- </tbody> -->
                 
             </table>
            
@@ -100,14 +100,16 @@ export default {
             this.fetchBaits();
         },
         nextPage() {
-            alert(this.getMaxPage)
+            // this.getMaxPageFromServer()
+            // alert(this.getMaxPage)
             this.incrementCurrentPage()
             this.fetchBaits()
         }
     },
     mounted() {
+        
         this.fetchBaits()
-        this.getMaxPageFromServer()
+        // this.getMaxPageFromServer()
     },
     data() {
         return {
@@ -244,7 +246,7 @@ export default {
    }
 
    .fade-enter-active, .fade-leave-active {
-        transition: all 0.5s;
+        transition: all 0.3s;
       }
       .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
         opacity: 0;
@@ -273,6 +275,13 @@ export default {
         flex-direction: row;
         align-items: center;
         font-size: 48px;
+    }
+
+    .fadee-enter-active, .fadee-leave-active {
+    transition: opacity .5s;
+    }
+    .fadee-enter, .fadee-leave-to /* .fade-leave-active below version 2.1.8 */ {
+    opacity: 0;
     }
 
 </style>

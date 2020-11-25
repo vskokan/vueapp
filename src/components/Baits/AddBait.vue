@@ -71,7 +71,7 @@ export default {
         display: flex;
         flex-direction: column;
         width: 450px;
-        height: 450px;
+        height: 420px;
         justify-items: center;
         align-items: center;
         background-color: #fff;
@@ -132,13 +132,14 @@ export default {
     .inputContainer label {
         font-weight: bold;
         align-self: center;
+        color: rgb(91, 21, 148);
     }
 
     #name, #description {
         border-radius: 3px;
         border: none;
         box-shadow: none;
-        background-color: #cadbe24f;
+        background-color: #ada5b323;
         padding: 5px;
         font-size: 18px;
         font-weight: bold;

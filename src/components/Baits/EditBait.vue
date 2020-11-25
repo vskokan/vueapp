@@ -1,17 +1,16 @@
 <template>
     <div class="form"> 
         <div class="formHeader">
-            <div class="headerText">Редактировать приманку: {{bait.id}}</div>
+            <div class="headerText">Редактировать приманку #{{bait.id + ' ' + bait.name}}</div>
         </div>
         <div class="formBody">
             <div class="inputContainer">
                 <label for="name">Название</label>
-                <input type="text" name="name" id="name" v-model="bait.name" value=bait.name required>
+                <input type="text" name="name" id="name" v-model="baitToUdpate.name" required>
             </div>
             <div class="inputContainer">
                 <label for="description">Описание</label>
-                <!-- <input type="text" name="description" id="description" v-model="fish.description" required> -->
-                <textarea name="description" id="description" v-model="bait.description"></textarea>
+                <textarea name="description" id="description" v-model="baitToUdpate.description"></textarea>
             </div>
         </div>
         <div class="formButtons">
@@ -22,44 +21,45 @@
 </template>
 
 <script>
-// import BaitData from "../../services/BaitData";
+
 import { mapActions } from "vuex";
 import { mapMutations } from "vuex";
 
 export default {
     props: ['bait'],
+    data() {
+        return {
+            baitToUdpate: {
+                id: "",
+                name: "",
+                description: ""
+            }
+        }
+    },
     methods: {
         ...mapActions(["updateBait", "fetchBaits"]),
         ...mapMutations(['changeEditFormView']),
         send() {
             const id = this.bait.id
             console.log(id)
-            const name = this.bait.name
-            const description = this.bait.description
+            const name = this.baitToUdpate.name
+            const description = this.baitToUdpate.description
             alert(name)
             let formData = new FormData();
             formData.append('id', id)
             formData.append('name', name)
             formData.append('description', description)
-            // console.log(formData)
-            // alert(formData.body.name)
             this.updateBait(formData)
             .then(this.fetchBaits())
             this.closeForm()
-            // BaitData.create(formData)
-            //     .then(response => {
-            //     this.bait.name = response.data;
-            //     console.log(response.data);
-            //     //this.submitted = true;
-            //     })
-            //     .catch(e => {
-            //     console.log(e);
-            //     });
-            //alert(formData.get('image'))
         },
         closeForm() {
             this.changeEditFormView()
         }
+    },
+    mounted() {
+        this.baitToUdpate.name = this.bait.name
+        this.baitToUdpate.description = this.bait.description
     }
 }
 </script>
@@ -86,14 +86,14 @@ export default {
         width: 450px;
         padding-top: 20px;
         padding-bottom: 20px;
-        margin-bottom: 20px;
+        margin: 10px;
         display: flex;
         justify-content: center;
         align-items: center;
     }
 
     .headerText {
-        font-size: 34px;
+        font-size: 28px;
         color: rgb(0, 0, 0);
         font-weight: 700;
         font-family: 'Inter', sans-serif;
@@ -129,17 +129,18 @@ export default {
     .inputContainer label {
         font-weight: bold;
         align-self: center;
+        color: rgb(91, 21, 148);
     }
 
     #name, #description {
         border-radius: 3px;
         border: none;
         box-shadow: none;
-        background-color: #cadbe24f;
+        background-color: #ada5b323;
         padding: 5px;
         font-size: 18px;
         font-weight: bold;
-        font-family: 'Rubik', sans-serif;
+        font-family: 'Inter', sans-serif;
     }
 
 </style>

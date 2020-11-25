@@ -2,13 +2,14 @@ import BaitData from '../../services/BaitData';
 
 export default {
     actions: {
-        fetchBaits({ commit, state}) {
+        fetchBaits({ commit, state, dispatch}) {
             BaitData.getPage(state.currentPage)
             .then(json => {
                 const baits = json.data.rows
                 //const maxPage = json.data.maxPage
                 //commit('updateMaxPage', baits)
                 commit('updateBaits', baits)
+                dispatch('getMaxPageFromServer')
             })
         },
         fetchBaitsNoPagination({ commit, }) {
@@ -19,9 +20,10 @@ export default {
             })
         },
         getMaxPageFromServer({commit}) { //Исправить! написать функцию для взятия количества а не всего сразу
-            BaitData.getAll()
+            BaitData.getAmount()
             .then(json => {
                 const baits = json.data
+                // alert(baits)
                 commit('updateMaxPage', baits)
             })
         },
@@ -54,20 +56,20 @@ export default {
         updateBaits(state, baits) {
             state.baits = baits
         },
-        changeFormView(state) {
-            state.form = !state.form
-        },
-        changeCardView(state) {
-            state.card = !state.card
-        },
-        changeEditFormView(state) {
-            state.editForm = !state.editForm
-        },
+        // changeFormView(state) {
+        //     state.form = !state.form
+        // },
+        // changeCardView(state) {
+        //     state.card = !state.card
+        // },
+        // changeEditFormView(state) {
+        //     state.editForm = !state.editForm
+        // },
         updateMaxPage(state, baits) {
-            state.maxPage = baits.length / 3
+            state.maxPage = baits
         },
         incrementCurrentPage(state) {
-            if (state.currentPage < state.maxPage) state.currentPage = state.currentPage + 1
+            if (state.currentPage < Math.ceil(state.maxPage / 7)) state.currentPage = state.currentPage + 1
         },
         decrementCurrentPage(state) {
             if (state.currentPage > 1) state.currentPage--
@@ -78,9 +80,9 @@ export default {
     },
     state: {
         baits: [],
-        form: false,
-        card: false,
-        editForm: false,
+        // form: false,
+        // card: false,
+        // editForm: false,
         currentPage: 1,
         maxPage: 0
     },
@@ -89,20 +91,21 @@ export default {
             return state.baits
         },
         getMaxPage(state) {
-            return Math.ceil(state.baits.length / 3)
+            //alert(state.maxPage)
+            return state.maxPage
         },
         getCurrentPage(state) {
             return state.currentPage
         },
-        showForm(state) {
-            return state.form
-        },
-        showCard(state) {
-            return state.card
-        },
-        showEditForm(state) {
-            return state.editForm
-        }
+        // showForm(state) {
+        //     return state.form
+        // },
+        // showCard(state) {
+        //     return state.card
+        // },
+        // showEditForm(state) {
+        //     return state.editForm
+        // }
         // baitCount(state) {
         //     return state.baits.length
         // }

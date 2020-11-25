@@ -116,10 +116,11 @@ router-view {
     height: 40px;
     font-size: 24px;
     border: none;
-    background-color: transparent;
-    color: rgb(255, 255, 255);
-    border: 3px solid rgb(255, 255, 255);;
-    /* border-radius: 5px; */
+    /* background-color: transparent; */
+    background-color:   rgb(255, 230, 0);
+    color: rgb(0, 0, 0);
+    /* border: 3px solid rgb(255, 255, 255); */
+    border-radius: 5px;
     /* margin: 10px 0px 0px 10px; */
     margin-left: 5px;
     margin-right: 5px;
@@ -127,6 +128,7 @@ router-view {
     font-family: 'Inter', sans-serif;
     font-weight: 700;
     transition: .5s;
+    box-shadow: 0px 2px rgb(0, 0, 0);
     
 }
 

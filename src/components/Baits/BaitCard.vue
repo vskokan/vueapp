@@ -27,11 +27,21 @@ export default {
         display: flex;
         flex-direction: column;
         width: 450px;
-        height: 250px;
-        justify-items: center;
+        color: #000;
+        min-height: 250px;
+        justify-content: space-between;
         align-items: center;
         background-color: #fff;
         padding-bottom: 20px;
         box-shadow: 0 0 60px rgba(14,42,71,.25);
     }
+
+    .name {
+        margin-top: 10px;
+    }
+
+    .description {
+        margin: 10px;
+    }
+
 </style>

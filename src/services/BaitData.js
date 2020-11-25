@@ -30,6 +30,10 @@ class BaitData {
 //     return http.delete(`/fish`);
 //   }
 
+  getAmount() {
+    return http.get(`/baits?p=amount`)
+  }
+
 //   findByTitle(title) {
 //     return http.get(`/fish?title=${title}`);
 //   }
