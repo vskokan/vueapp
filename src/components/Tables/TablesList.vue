@@ -1,17 +1,17 @@
 <template>
     <div class="tables">
             <ul class="nav">
-                <li class="menuitem"><router-link to="/databases/fishes">Рыба</router-link></li>
-                <li class="menuitem"><router-link to="/databases/methods">Методы</router-link></li>
-                <li class="menuitem"><router-link to="/databases/baits">Приманки</router-link></li>
-                <li class="menuitem"><router-link to="/databases/users">Пользователи</router-link></li>
-                <li class="menuitem"><router-link to="/databases/reviews">Отзывы</router-link></li>
-                <li class="menuitem"><router-link to="/databases/facts">Факты</router-link></li>
-                <li class="menuitem"><router-link to="/databases/cities">Города</router-link></li>
-                <li class="menuitem"><router-link to="/databases/districts">Районы</router-link></li>
-                <li class="menuitem"><router-link to="/databases/partners">Партнеры</router-link></li>
-                <li class="menuitem"><router-link to="/databases/departments">Филиалы</router-link></li>
-                <li class="menuitem"><router-link to="/databases/discounts">Скидки</router-link></li>
+                <li class="menuitem"><router-link to="/database/fishes">Рыба</router-link></li>
+                <li class="menuitem"><router-link to="/database/methods">Методы</router-link></li>
+                <li class="menuitem"><router-link to="/database/baits">Приманки</router-link></li>
+                <li class="menuitem"><router-link to="/database/users">Пользователи</router-link></li>
+                <li class="menuitem"><router-link to="/database/reviews">Отзывы</router-link></li>
+                <li class="menuitem"><router-link to="/database/facts">Факты</router-link></li>
+                <li class="menuitem"><router-link to="/database/cities">Города</router-link></li>
+                <li class="menuitem"><router-link to="/database/districts">Районы</router-link></li>
+                <li class="menuitem"><router-link to="/database/partners">Партнеры</router-link></li>
+                <li class="menuitem"><router-link to="/database/departments">Филиалы</router-link></li>
+                <li class="menuitem"><router-link to="/database/discounts">Скидки</router-link></li>
             </ul>
         </div>
 </template>

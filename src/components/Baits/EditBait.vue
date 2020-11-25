@@ -1,12 +1,12 @@
 <template>
     <div class="form"> 
         <div class="formHeader">
-            <div class="headerText">Добавить приманку</div>
+            <div class="headerText">Редактировать приманку: {{bait.id}}</div>
         </div>
         <div class="formBody">
             <div class="inputContainer">
                 <label for="name">Название</label>
-                <input type="text" name="name" id="name" v-model="bait.name" required>
+                <input type="text" name="name" id="name" v-model="bait.name" value=bait.name required>
             </div>
             <div class="inputContainer">
                 <label for="description">Описание</label>
@@ -27,23 +27,23 @@ import { mapActions } from "vuex";
 import { mapMutations } from "vuex";
 
 export default {
-    data() {
-        return {
-            bait: {
-                name: "",
-                description: ""
-            }
-        }
-    },
+    props: ['bait'],
     methods: {
-        ...mapActions(["createBait", "fetchBaits"]),
-        ...mapMutations(['insertBait', 'changeFormView']),
+        ...mapActions(["updateBait", "fetchBaits"]),
+        ...mapMutations(['changeEditFormView']),
         send() {
-            //alert(this.fish.name)
+            const id = this.bait.id
+            console.log(id)
+            const name = this.bait.name
+            const description = this.bait.description
+            alert(name)
             let formData = new FormData();
-            formData.append('name', this.bait.name)
-            formData.append('description', this.bait.description)
-            this.createBait(formData)
+            formData.append('id', id)
+            formData.append('name', name)
+            formData.append('description', description)
+            // console.log(formData)
+            // alert(formData.body.name)
+            this.updateBait(formData)
             .then(this.fetchBaits())
             this.closeForm()
             // BaitData.create(formData)
@@ -58,11 +58,12 @@ export default {
             //alert(formData.get('image'))
         },
         closeForm() {
-            this.changeFormView()
+            this.changeEditFormView()
         }
     }
 }
 </script>
+
 
 <style scoped>
     
@@ -85,10 +86,6 @@ export default {
         width: 450px;
         padding-top: 20px;
         padding-bottom: 20px;
-        /* border-top-left-radius: 5px;
-        border-top-right-radius: 5px; */
-        /* background: rgb(101, 15, 172); */
-        
         margin-bottom: 20px;
         display: flex;
         justify-content: center;

@@ -6,6 +6,10 @@ class BaitData {
     return http.get("/baits");
   }
 
+  getPage(page) {
+    return http.get(`/baits?page=${page}`);
+  }
+
 //   get(id) {
 //     return http.get(`/fish/${id}`);
 //   }
@@ -14,9 +18,9 @@ class BaitData {
     return http.post("/baits", data);
   }
 
-//   update(id, data) {
-//     return http.put(`/fish/${id}`, data);
-//   }
+  update(data) {
+    return http.post(`/baits/update`, data);
+  }
 
   delete(id) {
     return http.delete(`/baits/${id}`);

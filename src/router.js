@@ -35,8 +35,8 @@ export default new Router({
             component: () => import('./views/Reviews.vue')
         },
         {
-            path: '/databases',
-            component: () => import('./views/Databases.vue'),
+            path: '/database',
+            component: () => import('./views/Database.vue'),
             children: [
                 {
                     path: 'fishes',
@@ -83,7 +83,7 @@ export default new Router({
                     component: () => import('./views/Tables/Discounts.vue')
                 },
             ],
-            redirect: '/databases/fishes'
+            redirect: '/database/fishes'
         },
         { 
             path: '/404', 

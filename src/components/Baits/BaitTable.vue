@@ -3,6 +3,7 @@
         <transition name="fade">
             <AddBait class="addForm" v-if="showForm"/>
             <BaitCard class="cardForm" v-if="showCard" v-bind:bait="currentBait" />
+            <EditBait class="editForm" v-if="showEditForm" v-bind:bait="currentBait" />
         </transition>
         
         <div class="tableContainer">
@@ -23,7 +24,7 @@
                     <tr v-for="bait in allBaits" :key="bait.id" class="row"><td class="idCell">{{bait.id}}</td><td class="nameCell">{{bait.name}}</td><td class="descriptionCell">{{bait.description.substr(0, 50) + '...'}}</td>
                     <td class="actionCell">
                         <button class="view" @click="chooseBait(bait)"><i class="fas fa-info"></i></button>
-                        <button class="edit" ><i class="fas fa-pen"></i></button>
+                        <button class="edit" @click="chooseBaitToUpdate(bait)"><i class="fas fa-pen"></i></button>
                         <button class="delete" @click="deleteFromTable(bait.id)"><i class="fas fa-trash-alt"></i></button>
                     </td>
                     </tr>
@@ -33,8 +34,8 @@
            
         </div>
         <div class="navigationButtons">
-            <button class="previous"><i class="fas fa-arrow-left"></i></button>
-            <button class="next"><i class="fas fa-arrow-right"></i></button>
+            <button class="previous" @click="previousPage"><i class="fas fa-arrow-left"></i></button>
+            <button class="next" @click="nextPage"><i class="fas fa-arrow-right"></i></button>
         </div>
     </div>
 </template>
@@ -43,13 +44,14 @@
 import { mapGetters, mapActions, mapMutations } from "vuex";
 import AddBait from '@/components/Baits/AddBait'
 import BaitCard from '@/components/Baits/BaitCard'
+import EditBait from '@/components/Baits/EditBait'
 
 export default {
-    components: {AddBait, BaitCard},
-    computed: mapGetters(["allBaits", "showForm", "showCard"]), 
+    components: {AddBait, BaitCard, EditBait},
+    computed: mapGetters(["allBaits", "showForm", "showCard", "showEditForm", "getCurrentPage", "getMaxPage"]), 
     methods: { 
-        ...mapActions(["fetchBaits", "deleteBait"]),
-        ...mapMutations(['changeFormView', 'changeCardView']),
+        ...mapActions(["fetchBaits", "deleteBait", "getMaxPageFromServer"]),
+        ...mapMutations(['changeFormView', 'changeCardView', 'changeEditFormView', 'incrementCurrentPage', 'decrementCurrentPage']),
         getForm() {
             // alert(this.showForm)
             this.changeFormView()
@@ -72,16 +74,40 @@ export default {
             }
             // this.changeCardView()
         },
+        chooseBaitToUpdate(bait) {
+            
+            if (!this.showEditForm) {
+                this.currentBait = bait
+                this.changeEditFormView()
+            }
+            // this.changeCardView()
+        },
         getCard() {
             alert(this.showCard)
             if (!this.showCard) {
                 this.changeCardView()
             }
             
+        },
+        getEditForm() {
+            if (!this.showEditForm) {
+                this.changeEditFormView()
+            }
+        },
+        previousPage() {
+            //alert(this.getCurrentPage)
+            this.decrementCurrentPage()
+            this.fetchBaits();
+        },
+        nextPage() {
+            alert(this.getMaxPage)
+            this.incrementCurrentPage()
+            this.fetchBaits()
         }
     },
     mounted() {
-        this.fetchBaits();
+        this.fetchBaits()
+        this.getMaxPageFromServer()
     },
     data() {
         return {
@@ -210,7 +236,7 @@ export default {
         z-index: 0;
     }
 
-   .addForm, .cardForm {
+   .addForm, .cardForm, .editForm {
        position: absolute;
        margin: auto;
        margin-top: 50px;
