@@ -1,17 +1,16 @@
 <template>
     <div class="form"> 
         <div class="formHeader">
-            <div class="headerText">Добавить метод ловли</div>
+            <div class="headerText">Редактировать метод #{{method.id + ' ' + method.name}}</div>
         </div>
         <div class="formBody">
             <div class="inputContainer">
                 <label for="name">Название</label>
-                <input type="text" name="name" id="name" v-model="method.name" required>
+                <input type="text" name="name" id="name" v-model="methodToUdpate.name" required>
             </div>
             <div class="inputContainer">
                 <label for="description">Описание</label>
-                <!-- <input type="text" name="description" id="description" v-model="fish.description" required> -->
-                <textarea name="description" id="description" v-model="method.description"></textarea>
+                <textarea name="description" id="description" v-model="methodToUdpate.description"></textarea>
             </div>
         </div>
         <div class="formButtons">
@@ -22,47 +21,49 @@
 </template>
 
 <script>
-// import methodData from "../../services/methodData";
+
 import { mapActions } from "vuex";
 import { mapMutations } from "vuex";
 
 export default {
+    props: ['method'],
     data() {
         return {
-            method: {
+            methodToUdpate: {
+                id: "",
                 name: "",
                 description: ""
             }
         }
     },
     methods: {
-        ...mapActions(["createMethod", "fetchMethods"]),
-        ...mapMutations(['insertMethod', 'changeFormView']),
+        ...mapActions(["updateMethod", "fetchMethods"]),
+        ...mapMutations(['changeEditFormView']),
         send() {
-            //alert(this.fish.name)
+            const id = this.method.id
+            console.log(id)
+            const name = this.methodToUdpate.name
+            const description = this.methodToUdpate.description
+            alert(name)
             let formData = new FormData();
-            formData.append('name', this.method.name)
-            formData.append('description', this.method.description)
-            this.createMethod(formData)
+            formData.append('id', id)
+            formData.append('name', name)
+            formData.append('description', description)
+            this.updateMethod(formData)
             .then(this.fetchMethods())
             this.closeForm()
-            // methodData.create(formData)
-            //     .then(response => {
-            //     this.method.name = response.data;
-            //     console.log(response.data);
-            //     //this.submitted = true;
-            //     })
-            //     .catch(e => {
-            //     console.log(e);
-            //     });
-            //alert(formData.get('image'))
         },
         closeForm() {
-            this.changeFormView()
+            this.changeEditFormView()
         }
+    },
+    mounted() {
+        this.methodToUdpate.name = this.method.name
+        this.methodToUdpate.description = this.method.description
     }
 }
 </script>
+
 
 <style scoped>
     
@@ -71,7 +72,7 @@ export default {
         display: flex;
         flex-direction: column;
         width: 450px;
-        height: 420px;
+        height: 450px;
         justify-items: center;
         align-items: center;
         background-color: #fff;
@@ -85,18 +86,14 @@ export default {
         width: 450px;
         padding-top: 20px;
         padding-bottom: 20px;
-        /* border-top-left-radius: 5px;
-        border-top-right-radius: 5px; */
-        /* background: rgb(101, 15, 172); */
-        
-        margin-bottom: 20px;
+        margin: 10px;
         display: flex;
         justify-content: center;
         align-items: center;
     }
 
     .headerText {
-        font-size: 34px;
+        font-size: 28px;
         color: rgb(0, 0, 0);
         font-weight: 700;
         font-family: 'Inter', sans-serif;
@@ -143,7 +140,7 @@ export default {
         padding: 5px;
         font-size: 18px;
         font-weight: bold;
-        font-family: 'Rubik', sans-serif;
+        font-family: 'Inter', sans-serif;
     }
 
 </style>

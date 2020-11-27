@@ -6,6 +6,10 @@ class MethodData {
     return http.get("/methods");
   }
 
+  getPage(page) {
+    return http.get(`/methods?page=${page}`);
+  }
+
 //   get(id) {
 //     return http.get(`/fish/${id}`);
 //   }
@@ -14,17 +18,21 @@ class MethodData {
     return http.post("/methods", data);
   }
 
-//   update(id, data) {
-//     return http.put(`/fish/${id}`, data);
-//   }
+  update(data) {
+    return http.post(`/methods/update`, data);
+  }
 
-//   delete(id) {
-//     return http.delete(`/fish/${id}`);
-//   }
+  delete(id) {
+    return http.delete(`/methods/${id}`);
+  }
 
 //   deleteAll() {
 //     return http.delete(`/fish`);
 //   }
+
+  getAmount() {
+    return http.get(`/methods?p=amount`)
+  }
 
 //   findByTitle(title) {
 //     return http.get(`/fish?title=${title}`);

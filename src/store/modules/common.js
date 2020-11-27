@@ -26,6 +26,6 @@ export default {
         },
         showEditForm(state) {
             return state.editForm
-        }
+        },
     },
 }
