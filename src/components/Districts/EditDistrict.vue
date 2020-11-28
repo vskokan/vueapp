@@ -1,12 +1,12 @@
 <template>
     <div class="form"> 
         <div class="formHeader">
-            <div class="headerText">Добавить район</div>
+            <div class="headerText">Редактировать район #{{district.id + ' ' + district.name}}</div>
         </div>
         <div class="formBody">
             <div class="inputContainer">
                 <label for="name">Название</label>
-                <input type="text" name="name" id="name" v-model="district.name" required>
+                <input type="text" name="name" id="name" v-model="districtToUdpate.name" required>
             </div>
         </div>
         <div class="formButtons">
@@ -17,33 +17,49 @@
 </template>
 
 <script>
+
 import { mapActions } from "vuex";
 import { mapMutations } from "vuex";
 
 export default {
+    props: ['district'],
     data() {
         return {
-            district: {
+            districtToUdpate: {
+                id: "",
                 name: "",
             }
         }
     },
     methods: {
-        ...mapActions(["createDistrict", "fetchDistricts"]),
-        ...mapMutations(['insertDistrict', 'changeFormView']),
+        ...mapActions(["updateDistrict", "fetchDistricts"]),
+        ...mapMutations(['changeEditFormView']),
         send() {
+            const id = this.district.id
+            const name = this.districtToUdpate.name
+            alert(id)
+            alert(name)
             let formData = new FormData();
-            formData.append('name', this.district.name)
-            this.createDistrict(formData)
-            .then(this.fetchDistricts())
+            // formData.append('id', id)
+            formData.append('name', name)
+            let districtToUdpate = {
+                id: id,
+                formData: formData
+            }
+            this.updateDistrict(districtToUdpate)
+                .then(this.fetchDistricts())
             this.closeForm()
         },
         closeForm() {
-            this.changeFormView()
+            this.changeEditFormView()
         }
+    },
+    mounted() {
+        this.districtToUdpate.name = this.district.name
     }
 }
 </script>
+
 
 <style scoped>
     
@@ -52,7 +68,7 @@ export default {
         display: flex;
         flex-direction: column;
         width: 450px;
-        height: 420px;
+        height: 450px;
         justify-items: center;
         align-items: center;
         background-color: #fff;
@@ -65,14 +81,14 @@ export default {
         width: 450px;
         padding-top: 20px;
         padding-bottom: 20px;
-        margin-bottom: 20px;
+        margin: 10px;
         display: flex;
         justify-content: center;
         align-items: center;
     }
 
     .headerText {
-        font-size: 34px;
+        font-size: 28px;
         color: rgb(0, 0, 0);
         font-weight: 700;
         font-family: 'Inter', sans-serif;
@@ -119,7 +135,7 @@ export default {
         padding: 5px;
         font-size: 18px;
         font-weight: bold;
-        font-family: 'Rubik', sans-serif;
+        font-family: 'Inter', sans-serif;
     }
 
 </style>

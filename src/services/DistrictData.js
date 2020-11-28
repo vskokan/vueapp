@@ -6,6 +6,10 @@ class DistrictData {
     return http.get("/districts");
   }
 
+  getPage(page) {
+    return http.get(`/districts?page=${page}`);
+  }
+
 //   get(id) {
 //     return http.get(`/fish/${id}`);
 //   }
@@ -14,17 +18,25 @@ class DistrictData {
     return http.post("/districts", data);
   }
 
-//   update(id, data) {
-//     return http.put(`/fish/${id}`, data);
-//   }
+  // update(data) {
+  //   return http.post(`/districts/update`, data);
+  // }
 
-//   delete(id) {
-//     return http.delete(`/fish/${id}`);
-//   }
+  update(id, data) {
+    return http.put(`/districts/${id}`, data);
+  }
+
+  delete(id) {
+    return http.delete(`/districts/${id}`);
+  }
 
 //   deleteAll() {
 //     return http.delete(`/fish`);
 //   }
+
+  getAmount() {
+    return http.get(`/districts?p=amount`)
+  }
 
 //   findByTitle(title) {
 //     return http.get(`/fish?title=${title}`);

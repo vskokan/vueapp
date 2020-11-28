@@ -1,15 +1,17 @@
 import BaitData from '../../services/BaitData';
+// import common from './common'
 
 export default {
     actions: {
-        fetchBaits({ commit, state, dispatch}) {
-            BaitData.getPage(state.currentPage)
+        fetchBaits({ commit,  rootState, dispatch}) {
+            //alert(rootState.common.currentPage)
+            BaitData.getPage(rootState.common.currentPage)
             .then(json => {
                 const baits = json.data.rows
                 //const maxPage = json.data.maxPage
                 //commit('updateMaxPage', baits)
                 commit('updateBaits', baits)
-                dispatch('getMaxPageFromServer')
+                dispatch('getBaitMaxPageFromServer')
             })
         },
         fetchBaitsNoPagination({ commit, }) {
@@ -19,7 +21,7 @@ export default {
                 commit('updateBaits', baits)
             })
         },
-        getMaxPageFromServer({commit}) { //Исправить! написать функцию для взятия количества а не всего сразу
+        getBaitMaxPageFromServer({commit}) { //Исправить! написать функцию для взятия количества а не всего сразу
             BaitData.getAmount()
             .then(json => {
                 const baits = json.data
@@ -65,15 +67,16 @@ export default {
         // changeEditFormView(state) {
         //     state.editForm = !state.editForm
         // },
-        updateMaxPage(state, baits) {
-            state.maxPage = baits
-        },
-        incrementCurrentPage(state) {
-            if (state.currentPage < Math.ceil(state.maxPage / 7)) state.currentPage = state.currentPage + 1
-        },
-        decrementCurrentPage(state) {
-            if (state.currentPage > 1) state.currentPage--
-        }
+        // updateMaxPage(rootState, baits) {
+        //     alert('Обновление макс страницы в сторе: ' + baits)
+        //     rootState.common.maxPage = baits
+        // },
+        // incrementCurrentBaitPage(state) {
+        //     if (state.currentPage < Math.ceil(state.maxPage / 7)) state.currentPage = state.currentPage + 1
+        // },
+        // decrementCurrentBaitPage(state) {
+        //     if (state.currentPage > 1) state.currentPage--
+        // }
         // insertBait(state, newBait) {
         //     state.baits.unshift(newBait)
         // }
@@ -83,20 +86,20 @@ export default {
         // form: false,
         // card: false,
         // editForm: false,
-        currentPage: 1,
-        maxPage: 0
+        // currentBaitPage: 1,
+        // maxBaitPage: 0
     },
     getters: {
         allBaits(state) {
             return state.baits
         },
-        getMaxPage(state) {
-            //alert(state.maxPage)
-            return state.maxPage
-        },
-        getCurrentPage(state) {
-            return state.currentPage
-        },
+        // getMaxPage(state) {
+        //     //alert(state.maxPage)
+        //     return state.maxPage
+        // },
+        // getCurrentPage(state) {
+        //     return state.currentPage
+        // },
         // showForm(state) {
         //     return state.form
         // },
@@ -110,4 +113,5 @@ export default {
         //     return state.baits.length
         // }
     },
+    // modules: { common }
 }

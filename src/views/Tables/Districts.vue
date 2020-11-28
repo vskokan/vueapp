@@ -1,14 +1,24 @@
 <template>
     <div class="area">
-        <AddDistrict></AddDistrict>
+        <DistrictTable/>
     </div>
 </template>
 
 <script>
 
-import AddDistrict from '@/components/Districts/AddDistrict'
+import DistrictTable from '@/components/Districts/DistrictTable'
 
 export default {
-    components: { AddDistrict }
+    components: { DistrictTable },
 }
+
 </script>
+
+<style scoped>
+    .area {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+</style>
