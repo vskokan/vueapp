@@ -1,25 +1,24 @@
 <template>
     <div class="area">
-        <AddFish></AddFish>
-        <FishTable></FishTable>
+        <!-- <AddFish></AddFish> -->
+        <FishTable2></FishTable2>
     </div>
 </template>
 
 <script>
 
-import AddFish from '@/components/Fish/AddFish'
-import FishTable from '@/components/Fish/FishTable'
+import FishTable2 from '@/components/Fish/FishTable2'
 
 export default {
-    components: { AddFish, FishTable }
+    components: { FishTable2 }
 }
 </script>
 
 <style scoped>
     .area {
+        width: 100%;
         display: flex;
-        flex-direction: row;
-        justify-content: space-around;
-
+        justify-content: center;
+        align-items: center;
     }
 </style>

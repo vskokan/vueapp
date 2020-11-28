@@ -10,6 +10,14 @@ class FishData {
     return http.get(`/fish/pag/?page=${page}`);
   }
 
+  getPage(page) {
+    return http.get(`/fish?page=${page}`);
+  }
+
+  getAmount() {
+    return http.get(`/fish?p=amount`)
+  }
+
 //   get(id) {
 //     return http.get(`/fish/${id}`);
 //   }

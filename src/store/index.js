@@ -3,6 +3,8 @@ import Vuex from 'vuex'
 import bait from './modules/bait'
 import method from './modules/method'
 import district from './modules/district'
+import fish from './modules/fish'
+
 import common from './modules/common'
 
 
@@ -13,6 +15,7 @@ export default new Vuex.Store({
         common, 
         method, 
         district,
+        fish,
     },
 })
 
