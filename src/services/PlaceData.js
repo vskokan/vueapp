@@ -6,6 +6,10 @@ class PlaceData {
     return http.get("/places");
   }
 
+  getPage(page) {
+    return http.get(`/places?page=${page}`);
+  }
+
 //   get(id) {
 //     return http.get(`/fish/${id}`);
 //   }
@@ -14,17 +18,25 @@ class PlaceData {
     return http.post("/places", data);
   }
 
-//   update(id, data) {
-//     return http.put(`/fish/${id}`, data);
-//   }
+  // update(data) {
+  //   return http.post(`/Places/update`, data);
+  // }
 
-//   delete(id) {
-//     return http.delete(`/fish/${id}`);
-//   }
+  update(id, data) {
+    return http.put(`/places/${id}`, data);
+  }
+
+  delete(id) {
+    return http.delete(`/places/${id}`);
+  }
 
 //   deleteAll() {
 //     return http.delete(`/fish`);
 //   }
+
+  getAmount() {
+    return http.get(`/places?p=amount`)
+  }
 
 //   findByTitle(title) {
 //     return http.get(`/fish?title=${title}`);

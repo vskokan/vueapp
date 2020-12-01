@@ -56,16 +56,27 @@ export default {
             const description = this.fishToUdpate.description
             alert(name)
             let formData = new FormData();
-            formData.append('id', id)
+            // formData.append('id', id)
             formData.append('name', name)
             formData.append('image', image)
             formData.append('description', description)
-            this.updateFish(formData)
+
+            const data = {
+                id: id,
+                formData: formData
+            }
+
+            this.updateFish(data)
             .then(this.fetchFishes())
             this.closeForm()
         },
         closeForm() {
+            this.isFileChosen = false
             this.changeEditFormView()
+        },
+        uploadImage() {
+            this.isFileChosen = true
+            this.fishToUdpate.image = this.$refs.file.files[0];
         }
     },
     mounted() {

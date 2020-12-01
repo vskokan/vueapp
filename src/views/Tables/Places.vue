@@ -1,14 +1,24 @@
 <template>
     <div class="area">
-        <AddPlace></AddPlace>
+        <PlaceTable/>
     </div>
 </template>
 
 <script>
 
-import AddPlace from '@/components/Places/AddPlace'
+import PlaceTable from '@/components/Places/PlaceTable'
 
 export default {
-    components: { AddPlace }
+    components: { PlaceTable },
 }
+
 </script>
+
+<style scoped>
+    .area {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+</style>
