@@ -3,7 +3,7 @@
         <transition name="fade">
             <AddFish2 class="addForm" v-if="showForm"/>
             <FishCard2 class="cardForm" v-if="showCard" v-bind:fish="currentFish" />
-            <EditFish2 class="editForm" v-if="showEditForm" v-bind:fish="currentFish" />
+            <EditFish class="editForm" v-if="showEditForm" v-bind:fish="currentFish" />
         </transition>
         
         <div class="tableContainer">
@@ -44,10 +44,10 @@
 import { mapGetters, mapActions, mapMutations } from "vuex";
 import AddFish2 from '@/components/Fish/AddFish2'
 import FishCard2 from '@/components/Fish/FishCard2'
-import EditFish2 from '@/components/Fish/EditFish2'
+import EditFish from '@/components/Fish/EditFish'
 
 export default {
-    components: {AddFish2, FishCard2, EditFish2},
+    components: {AddFish2, FishCard2, EditFish},
     computed: mapGetters(["allFishes", "showForm", "showCard", "showEditForm", "getCurrentPage", "getMaxPage"]), 
     methods: { 
         ...mapActions(["fetchFishes", "deleteFish", "getFishMaxPageFromServer"]),
@@ -243,6 +243,10 @@ export default {
        margin: auto;
        margin-top: 50px;
        z-index: 5;
+   }
+
+   .editForm {
+       margin-top: 20px;
    }
 
    .fade-enter-active, .fade-leave-active {

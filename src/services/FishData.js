@@ -26,9 +26,9 @@ class FishData {
     return http.post("/fish/", data);
   }
 
-//   update(id, data) {
-//     return http.put(`/fish/${id}`, data);
-//   }
+  update(id, data) {
+    return http.put(`/fish/${id}`, data);
+  }
 
 //   delete(id) {
 //     return http.delete(`/fish/${id}`);
