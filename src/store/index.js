@@ -5,6 +5,7 @@ import method from './modules/method'
 import district from './modules/district'
 import place from './modules/place'
 import fish from './modules/fish'
+import user from './modules/user'
 
 import common from './modules/common'
 
@@ -18,6 +19,7 @@ export default new Vuex.Store({
         district,
         fish,
         place,
+        user,
     },
 })
 

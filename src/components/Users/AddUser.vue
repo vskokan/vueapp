@@ -49,7 +49,7 @@
 
 //ДОДЕЛАТЬ
 
-import FishDataService from "../../services/FishDataService";
+import UserData from "../../services/UserData";
 
 export default {
     data() {
@@ -75,7 +75,7 @@ export default {
             // axios.post("http://localhost:3000/api/fish/test/", formData, { headers: "multipart/form-data"})
             //     .then(()=>{console.log('Success')})
             //     .catch(()=>{console.log('Error!!!')})
-            FishDataService.create(formData)
+            UserData.create(formData)
                 .then(response => {
                 this.fish.name = response.data;
                 console.log(response.data);

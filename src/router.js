@@ -52,7 +52,7 @@ export default new Router({
                 },
                 {
                     path: 'users',
-                    component: () => import('./components/Tables/Empty.vue')
+                    component: () => import('./views/Tables/Users.vue')
                 },
                 {
                     path: 'reviews',
