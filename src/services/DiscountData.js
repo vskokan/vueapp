@@ -26,9 +26,9 @@ class DiscountData {
 //     return http.delete(`/fish`);
 //   }
 
-//   findByTitle(title) {
-//     return http.get(`/fish?title=${title}`);
-//   }
+  findById(id) {
+    return http.get(`/district?id=${id}`);
+  }
   
 }
 

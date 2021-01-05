@@ -9,7 +9,7 @@
         <div class="tableContainer">
             <div class="header">
                 <h2>
-                    Населенные пункты
+                    Пользователи
                 </h2>
                 <button class="button-tableheader" @click="getForm">Добавить <i class="fas fa-plus"></i></button>
             </div>

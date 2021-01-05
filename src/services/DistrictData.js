@@ -10,9 +10,12 @@ class DistrictData {
     return http.get(`/districts?page=${page}`);
   }
 
-//   get(id) {
-//     return http.get(`/fish/${id}`);
-//   }
+  get(id) {
+    return http.get(`/districts/${id}`);
+  }
+  // findById(id) {
+  //   return http.get(`/district?id=${id}`);
+  // }
 
   create(data) {
     return http.post("/districts", data);

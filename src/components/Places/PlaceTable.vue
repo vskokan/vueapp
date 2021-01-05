@@ -2,8 +2,8 @@
     <div class="tableArea">
         <transition name="fade">
             <AddPlace class="addForm" v-if="showForm"/>
-            <PlaceCard class="cardForm" v-if="showCard" v-bind:Place="currentPlace" />
-            <EditPlace class="editForm" v-if="showEditForm" v-bind:Place="currentPlace" />
+            <PlaceCard class="cardForm" v-if="showCard" v-bind:place="currentPlace" />
+            <EditPlace class="editForm" v-if="showEditForm" v-bind:place="currentPlace" />
         </transition>
         
         <div class="tableContainer">
@@ -49,6 +49,7 @@ import EditPlace from '@/components/Places/EditPlace'
 export default {
     components: {AddPlace, PlaceCard, EditPlace},
     computed: mapGetters(["allPlaces", "showForm", "showCard", "showEditForm", "getCurrentPage", "getMaxPage"]), 
+    
     methods: { 
         ...mapActions(["fetchPlaces", "deletePlace", "getMaxPageFromServer"]),
         ...mapMutations(['changeFormView', 'changeCardView', 'changeEditFormView', 'incrementCurrentPage', 'decrementCurrentPage']),
@@ -63,15 +64,15 @@ export default {
             }
             
         },
-        choosePlace(Place) {
+        choosePlace(place) {
             if (!this.showCard) {
-                this.currentPlace = Place
+                this.currentPlace = place
                 this.changeCardView()
             }
         },
-        choosePlaceToUpdate(Place) {
+        choosePlaceToUpdate(place) {
             if (!this.showEditForm) {
-                this.currentPlace = Place
+                this.currentPlace = place
                 this.changeEditFormView()
             }
         },
@@ -93,7 +94,8 @@ export default {
         nextPage() {
             this.incrementCurrentPage()
             this.fetchPlaces()
-        }
+        },
+        
     },
     mounted() {
         

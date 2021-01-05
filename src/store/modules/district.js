@@ -47,12 +47,26 @@ export default {
                     commit('updateDistricts', districts)
                 })
             })
+        },
+        fetchDistrictById({commit}, id) {
+            DistrictData.get(id)
+            .then(json => {
+                const district = json.data
+                console.log('dkeufj')
+                console.log(json.data.name)
+                //alert(district.name)
+                commit('updateDistrict', district)
+            })
         }
     },
     mutations: {
         updateDistricts(state, districts) {
             state.districts = districts
         },
+        updateDistrict(state, district) {
+            state.district.id = district.id,
+            state.district.name = district.name
+        }
         // updateMaxPage(state, districts) {
         //     state.maxPage = districts
         // },
@@ -65,6 +79,10 @@ export default {
     },
     state: {
         districts: [],
+        district: {
+            id: "",
+            name: "",
+        }
         // currentPage: 1,
         // maxPage: 0
     },
@@ -72,9 +90,10 @@ export default {
         allDistricts(state) {
             return state.districts
         },
-        // getMaxPage(state) {
-        //     return state.maxPage
-        // },
+        getDistrict(state) {
+            //alert(state.district.id)
+            return state.district
+        },
         // getCurrentPage(state) {
         //     return state.currentPage
         // },
