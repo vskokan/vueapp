@@ -16,23 +16,31 @@
             <table class="table">
                 <thead>
                     <tr class="tableHeader">
-                    <th>ID</th><th>Название</th><th>Район</th><th>Действия</th>
-                </tr>
+                        <th>Логин</th>
+                        <th>Мыло</th>
+                        <th>Админ?</th>
+                        <th>Имя</th>
+                        <th>Нас.пункт</th>
+                        <th>Аватар</th>
+                        <th>Рейтинг</th>
+                        <th>Действия</th>
+                    </tr>
                 </thead>
                 
                 <!-- <tbody name="fadee" is="transition-group"> -->
                     <tr v-for="user in allUsers" :key="user.login" class="row">
-                        <td class="idCell">{{user.login}}</td>
-                        <td class="nameCell">{{user.email}}</td>
-                        <td class="descriptionCell">{{user.password}}</td>
-                        <td class="idCell">{{user.admin}}</td>
-                        <td class="nameCell">{{user.place}}</td>
-                        <td class="descriptionCell">{{user.avatar}}</td>
-                        <td class="descriptionCell">{{user.raiting}}</td>
+                        <td class="loginCell">{{user.login}}</td>
+                        <td class="emailCell">{{user.email}}</td>
+                        <!-- <td class="descriptionCell">{{user.password}}</td> -->
+                        <td class="adminCell">{{user.admin}}</td>
+                        <td class="nameCell">{{user.name}}</td>
+                        <td class="placeCell">{{user.place}}</td>
+                        <td class="avatarCell">{{user.avatar}}</td>
+                        <td class="raitingCell">{{user.raiting}}</td>
                     <td class="actionCell">
                         <button class="view" @click="chooseUser(user)"><i class="fas fa-info"></i></button>
                         <button class="edit" @click="chooseUserToUpdate(user)"><i class="fas fa-pen"></i></button>
-                        <button class="delete" @click="deleteFromTable(user.id)"><i class="fas fa-trash-alt"></i></button>
+                        <button class="delete" @click="deleteFromTable(user.login)"><i class="fas fa-trash-alt"></i></button>
                     </td>
                     </tr>
                 <!-- </tbody> -->

@@ -6,86 +6,71 @@
         <div class="formBody">
             <div class="inputContainer">
                 <label for="name">Логин</label>
-                <input type="text" name="name" id="name" v-model="fish.name" required>
+                <input type="text" name="name" id="name" v-model="user.login" required>
+            </div>
+            <div class="inputContainer">
+                <label for="name">Почта</label>
+                <input type="text" name="name" id="name" v-model="user.email" required>
             </div>
             <div class="inputContainer">
                 <label for="name">Пароль</label>
-                <input type="text" name="name" id="name" v-model="fish.name" required>
+                <input type="text" name="name" id="name" v-model="user.password" required>
             </div>
             <div class="inputContainer">
-                <label for="name">Email</label>
-                <input type="text" name="name" id="name" v-model="fish.name" required>
-            </div>
-            <div class="inputContainer">
-                <label for="name">Админ</label>
-                <input type="checkbox" name="name" id="name" v-model="fish.name" required>
-            </div>
-            <div class="inputContainer">
-                <label for="name">Имя</label>
-                <input type="text" name="name" id="name" v-model="fish.name" required>
-            </div>
-            <div class="inputContainer">
-                <label for="name">Локация</label>
-                <input type="text" name="name" id="name" v-model="fish.name" required>
-            </div>
-            <div class="inputContainerFile" >
-                <label for="photo" class="custom-file-upload">Аватар</label>
-               
-                <input type="file" name="photo" id="photo" accept=".jpg, .jpeg, .png" ref="file" v-on:change="uploadImage()" required>    
-            </div>
-            <div class="inputContainer">
-                <label for="name">Рейтинг</label>
-                <input type="text" name="name" id="name" v-model="fish.name" required>
+                <label for="district">Населенный пункт</label>
+                <!-- <input type="text" name="district" id="district" v-model="fish.district" required> -->
+                <select name="district" id="district" v-model="user.place">
+                    <option v-for="place in allPlaces" :key="place.id" :value="place.id">{{place.name}}</option>
+                </select>
             </div>
         </div>
         <div class="formButtons">
-            <button v-on:click="send()">Ок</button>
-            <button>Отмена</button>
+            <button class="button-simple" v-on:click="send">Ок</button>
+            <button class="button-simple" v-on:click="closeForm">Отмена</button>
         </div>
     </div>
 </template>
 
 <script>
-
-//ДОДЕЛАТЬ
-
-import UserData from "../../services/UserData";
+// import placeData from "../../services/placeData";
+import { mapActions } from "vuex";
+import { mapMutations } from "vuex";
+import { mapGetters } from "vuex";
 
 export default {
     data() {
         return {
-            fish: {
-                name: "",
-                image: "",
-                description: ""    
+            user: {
+                login: "",
+                email: "",
+                password: "",
+                place: ""
             }
         }
     },
+    computed: mapGetters(['allPlaces']),
     methods: {
-        uploadImage() {
-            this.fish.image = this.$refs.file.files[0];
-        },
+        ...mapActions(["createUser", "fetchUsers", "fetchPlacesNoPagination"]),
+        ...mapMutations(['insertUser', 'changeFormView']),
         send() {
-            //alert(this.fish.name)
             let formData = new FormData();
-            formData.append('name', this.fish.name)
-            formData.append('image', this.fish.image)
-            formData.append('description', this.fish.description)
+            formData.append('login', this.user.login)
+            formData.append('email', this.user.email)
+            formData.append('password', this.user.password)
+            formData.append('place', this.user.place)
 
-            // axios.post("http://localhost:3000/api/fish/test/", formData, { headers: "multipart/form-data"})
-            //     .then(()=>{console.log('Success')})
-            //     .catch(()=>{console.log('Error!!!')})
-            UserData.create(formData)
-                .then(response => {
-                this.fish.name = response.data;
-                console.log(response.data);
-                //this.submitted = true;
-                })
-                .catch(e => {
-                console.log(e);
-                });
-            //alert(formData.get('image'))
+            //alert(this.place.name)
+            //alert(this.place.district)
+            this.createUser(formData)
+            .then(this.fetchUsers())
+            this.closeForm()
+        },
+        closeForm() {
+            this.changeFormView()
         }
+    },
+    mounted() {
+        this.fetchPlacesNoPagination()
     }
 }
 </script>
@@ -93,27 +78,29 @@ export default {
 <style scoped>
     
     .form {
-        
-        font-family: 'Rubik', sans-serif;
+        font-family: 'Inter', sans-serif;
         display: flex;
         flex-direction: column;
         width: 450px;
+        height: 420px;
         justify-items: center;
         align-items: center;
         background-color: #fff;
-        border-radius: 5px;
+        /* border-radius: 5px; */
         padding-bottom: 20px;
         box-shadow: 0 0 60px rgba(14,42,71,.25);
     }
+
 
     .formHeader {
         width: 450px;
         padding-top: 20px;
         padding-bottom: 20px;
-        border-top-left-radius: 5px;
-        border-top-right-radius: 5px;
-        background: linear-gradient(to right, #7c8e51, #69afce);
-        margin-bottom: 30px;
+        /* border-top-left-radius: 5px;
+        border-top-right-radius: 5px; */
+        /* background: rgb(101, 15, 172); */
+        
+        margin-bottom: 20px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -121,14 +108,15 @@ export default {
 
     .headerText {
         font-size: 34px;
-        color: rgb(255, 255, 255);
-        font-weight: bold;
+        color: rgb(0, 0, 0);
+        font-weight: 700;
+        font-family: 'Inter', sans-serif;
     }
 
-    #description {
+    #district {
         resize: none;
-        height: 150px;
-        width: 300px;
+        height: 40px;
+        width: 310px;
     }
 
     #name {
@@ -152,48 +140,17 @@ export default {
         margin-bottom: 20px;
     }
 
-    input[type="file"] {
-        display: none;
-    }
-
-    .custom-file-upload {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: center;
-        width: 160px;
-        cursor: pointer;
-        height: 40px;
-        font-size: 22px;
-        border: none;
-        /* background-color: #7c8e51; */
-        background-color:  #557481;
-        color: rgb(255, 255, 255);
-        border-radius: 5px;
-        margin: 10px 0px 0px 10px;
-        margin: auto;
-    }
-    .inputContainerFile {
-        margin-bottom: 20px;
-        justify-self: center;
-    }
-
-    .custom-file-upload:hover {
-        /* background-color:  #557481; */
-        background-color: #7c8e51;
-        cursor: pointer;
-    }
-
     .inputContainer label {
         font-weight: bold;
         align-self: center;
+        color: rgb(91, 21, 148);
     }
 
-    #name, #description {
+    #name, #district {
         border-radius: 3px;
         border: none;
         box-shadow: none;
-        background-color: #cadbe24f;
+        background-color: #ada5b323;
         padding: 5px;
         font-size: 18px;
         font-weight: bold;
