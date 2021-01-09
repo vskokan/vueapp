@@ -1,6 +1,6 @@
 <template>
     <div class="form"> 
-        <ChangePassword v-if="showChangePasswordForm" v-bind:user="user" />
+        <ChangePassword class="changePasswordForm" v-if="showChangePasswordForm" v-bind:user="user" />
         <div class="formHeader">
             <div class="headerText">Редактировать пользователя {{user.login}}</div>
         </div>
@@ -39,7 +39,7 @@
                     </div>
                     <div class="avatarSettings">
                         <div class="inputContainer">
-                            <img class="avatar" :src="'http://localhost:3000/' + userToUdpate.avatar">
+                            <img class="avatar" :src="'http://localhost:3000/' + user.avatar">
                         </div>
                         <div class="inputContainerFile" >
                             <label for="photo" class="custom-file-upload">Выбрать фото <i class="fas fa-file-upload"></i></label>
@@ -110,6 +110,7 @@ export default {
             const email = this.userToUdpate.email
             //const password = this.userToUdpate.password
             const name = this.userToUdpate.name
+            const avatar = this.userToUdpate.avatar
             const place = this.userToUdpate.place
             const admin = this.userToUdpate.admin
             const raiting = this.userToUdpate.raiting
@@ -120,6 +121,7 @@ export default {
             formData.append('email', email)
             //formData.append('password', password)
             formData.append('name', name)
+            formData.append('avatar', avatar)
             formData.append('place', place)
             formData.append('admin', admin)
             formData.append('raiting', raiting)
@@ -129,8 +131,8 @@ export default {
                 formData: formData
             }
 
-            this.updateuser(data)
-            .then(this.fetchuseres())
+            this.updateUser(data)
+            //.then(this.fetchUsers())
             this.closeForm()
         },
         closeForm() {
@@ -335,5 +337,12 @@ export default {
     .custom-file-upload:hover {
         cursor: pointer;
     }
+
+    .changePasswordForm {
+       position: absolute;
+       margin: auto;
+       margin-top: 150px;
+       z-index: 5;
+   }
 
 </style>
