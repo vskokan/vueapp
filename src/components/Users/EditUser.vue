@@ -1,32 +1,68 @@
 <template>
     <div class="form"> 
+        <ChangePassword v-if="showChangePasswordForm" v-bind:user="user" />
         <div class="formHeader">
-            <div class="headerText">Редактировать пользователя #{{user.login}}</div>
+            <div class="headerText">Редактировать пользователя {{user.login}}</div>
         </div>
         <div class="formBody">
-            <div class="inputContainer">
-                <label for="name">Логин</label>
-                <input type="text" name="name" id="name" v-model="userToUdpate.login" required>
+            <div class="mainSettings">
+                <p class="settingsHeader">
+                    Основные настройки
+                </p>
+                <div class="settings">
+                    <div class="fieldSettings">
+                        <div class="inputContainer">
+                            <label for="name">Логин</label>
+                            <input type="text" name="name" id="login" v-model="userToUdpate.login" required>
+                        </div>
+                        <div class="inputContainer">
+                            <label for="name">Почта</label>
+                            <input type="text" name="name" id="email" v-model="userToUdpate.email" required>
+                        </div>
+                        <!-- <div class="inputContainer">
+                            <label for="name">Пароль</label>
+                            <input type="text" name="name" id="password" v-model="userToUdpate.password" required>
+                        </div> -->
+                        <div class="inputContainer">
+                            <label for="description">Имя</label>
+                            <input name="description" id="name" v-model="userToUdpate.name">
+                        </div>
+                        <div class="inputContainer">
+                            <label for="district">Локация</label>
+                            <select name="district" id="place" v-model="userToUdpate.place">
+                                <option v-for="place in allPlaces" :key="place.id" :value="place.id">{{place.name}}</option>
+                            </select>
+                        </div>
+                        <button class="passwordSettingsButton" v-on:click="getChangePasswordForm">
+                            Смена пароля <i class="fas fa-lock"></i>
+                        </button>
+                    </div>
+                    <div class="avatarSettings">
+                        <div class="inputContainer">
+                            <img class="avatar" :src="'http://localhost:3000/' + userToUdpate.avatar">
+                        </div>
+                        <div class="inputContainerFile" >
+                            <label for="photo" class="custom-file-upload">Выбрать фото <i class="fas fa-file-upload"></i></label>
+                            <input type="file" name="photo" id="photo" accept=".jpg, .jpeg, .png" ref="file" v-on:change="uploadImage()" required>   
+                            <p>{{isFileChosen? this.userToUdpate.avatar.name:'Новый файл не выбран'}}</p> 
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="inputContainer">
-                <label for="name">Почта</label>
-                <input type="text" name="name" id="name" v-model="userToUdpate.mail" required>
-            </div>
-            <div class="inputContainer">
-                <label for="name">Пароль</label>
-                <input type="text" name="name" id="name" v-model="userToUdpate.password" required>
-            </div>
-            <div class="inputContainer">
-                <img class="image" :src="'http://localhost:3000/'+fish.image">
-            </div>
-            <div class="inputContainerFile" >
-                <label for="photo" class="custom-file-upload">Выбрать фото <i class="fas fa-file-upload"></i></label>
-                <input type="file" name="photo" id="photo" accept=".jpg, .jpeg, .png" ref="file" v-on:change="uploadImage()" required>   
-                <p>{{isFileChosen? this.fishToUdpate.image.name:'Новый файл не выбран'}}</p> 
-            </div>
-            <div class="inputContainer">
-                <label for="description">Описание</label>
-                <textarea name="description" id="description" v-model="fishToUdpate.description"></textarea>
+            <div class="additionalSettings">
+                <p class="settingsHeader">
+                    Дополнительные настройки
+                </p>
+                <div class="fieldSettings">
+                    <div class="inputContainer">
+                        <label for="description">Администратор</label>
+                        <input type="checkbox" name="description" id="admin" v-model="userToUdpate.admin">
+                    </div>
+                    <div class="inputContainer">
+                        <label for="description">Рейтинг</label>
+                        <input type="text" name="description" id="raiting" v-model="userToUdpate.raiting">
+                    </div>
+                </div>                
             </div>
         </div>
         <div class="formButtons">
@@ -40,42 +76,61 @@
 
 import { mapActions } from "vuex";
 import { mapMutations } from "vuex";
-
+import { mapGetters } from "vuex";
+import ChangePassword from "@/components/Users/ChangePassword"
 export default {
-    props: ['fish'],
+    props: ['user'],
+    components: { ChangePassword },
     data() {
         return {
-            fishToUdpate: {
-                id: "",
+            userToUdpate: {
+                login: "",
+                email: "",
+                //password: "",
+                avatar: "",
                 name: "",
-                description: ""
+                place: "",
+                admin: "",
+                raiting: ""
             },
             isFileChosen: false
         }
     },
+    computed: mapGetters(['allPlaces', 'showChangePasswordForm']),
     methods: {
-        ...mapActions(["updateFish", "fetchFishes"]),
-        ...mapMutations(['changeEditFormView']),
+        ...mapActions(["updateUser", "fetchPlacesNoPagination"]),
+        ...mapMutations(['changeEditFormView', 'changePasswordFormView']),
+        getChangePasswordForm() {
+            this.changePasswordFormView()
+        },
         send() {
-            const id = this.fish.id
-            console.log(id)
-            const name = this.fishToUdpate.name
-            const image = this.fishToUdpate.image
-            const description = this.fishToUdpate.description
-            alert(name)
+            const oldLogin = this.user.login
+            //console.log(id)
+            const login = this.userToUdpate.login
+            const email = this.userToUdpate.email
+            //const password = this.userToUdpate.password
+            const name = this.userToUdpate.name
+            const place = this.userToUdpate.place
+            const admin = this.userToUdpate.admin
+            const raiting = this.userToUdpate.raiting
+            //alert(name)
             let formData = new FormData();
             // formData.append('id', id)
+            formData.append('login', login)
+            formData.append('email', email)
+            //formData.append('password', password)
             formData.append('name', name)
-            formData.append('image', image)
-            formData.append('description', description)
+            formData.append('place', place)
+            formData.append('admin', admin)
+            formData.append('raiting', raiting)
 
             const data = {
-                id: id,
+                login: oldLogin,
                 formData: formData
             }
 
-            this.updateFish(data)
-            .then(this.fetchFishes())
+            this.updateuser(data)
+            .then(this.fetchuseres())
             this.closeForm()
         },
         closeForm() {
@@ -84,12 +139,21 @@ export default {
         },
         uploadImage() {
             this.isFileChosen = true
-            this.fishToUdpate.image = this.$refs.file.files[0];
+            this.userToUdpate.avatar = this.$refs.file.files[0];
         }
     },
     mounted() {
-        this.fishToUdpate.name = this.fish.name
-        this.fishToUdpate.description = this.fish.description
+        this.userToUdpate.login = this.user.login
+        this.userToUdpate.email = this.user.email
+        //this.userToUdpate.password = this.user.password
+        this.userToUdpate.name = this.user.name
+        this.userToUdpate.place = this.user.place
+        this.userToUdpate.admin = this.user.admin
+        this.userToUdpate.avatar = this.user.avatar
+        this.userToUdpate.raiting = this.user.raiting
+    },
+    created() {
+        this.fetchPlacesNoPagination()
     }
 }
 </script>
@@ -101,7 +165,7 @@ export default {
         font-family: 'Inter', sans-serif;
         display: flex;
         flex-direction: column;
-        width: 450px;
+        width: 900px;
         height: 600px;
         justify-items: center;
         align-items: center;
@@ -129,13 +193,65 @@ export default {
         font-family: 'Inter', sans-serif;
     }
 
-    #description {
-        resize: none;
-        height: 150px;
-        width: 300px;
+    .settings {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
     }
 
-    #name {
+    .avatarSettings {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin-right: 20px;
+    }
+
+    .passwordSettingsButton {
+        height: 40px;
+        padding: 10px;
+        font-size: 20px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        /* font-weight: bold; */
+        font-family: 'Inter', sans-serif;
+        border: transparent;
+        color: #fff;
+        background-color: rgb(91, 21, 148);
+        margin-left: 30px;
+    }
+
+    .passwordSettingsButton:hover {
+        cursor: pointer;
+    }
+
+    .fa-lock {
+        margin-left: 10px;
+    }
+
+    .additionalSettings .fieldSettings {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    #admin {
+        margin-left: 40px;
+    }
+
+    #raiting {
+        width: 100px;
+    }
+
+    #place {
+        resize: none;
+        height: 40px;
+        width: 310px;
+    }
+
+    #name, #login, #password, #email,  #place {
         width: 300px;
         height: 30px;
     }
@@ -159,11 +275,12 @@ export default {
     .inputContainer label {
         font-weight: bold;
         margin-right: 10px;
+        width: 90px;
         align-self: center;
         color: rgb(91, 21, 148);
     }
 
-    #name, #description {
+    #name, #login, #password, #email, #place, #raiting {
         border-radius: 3px;
         border: none;
         box-shadow: none;
@@ -174,9 +291,9 @@ export default {
         font-family: 'Inter', sans-serif;
     }
 
-    .image {
+    .avatar {
         width: 200px;
-        height: 100px;
+        height: 200px;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -196,10 +313,10 @@ export default {
         flex-direction: row;
         align-items: center;
         justify-content: center;
-        width: 50%;
+        width: 100%;
         cursor: pointer;
         height: 40px;
-        font-size: 22px;
+        font-size: 20px;
         border: none;
         background-color:  rgb(101, 15, 172);
         color: rgb(255, 255, 255);

@@ -26,6 +26,10 @@ class UserData {
     return http.put(`/users/${id}`, data);
   }
 
+  updatePassword(login, data) {
+    return http.post(`/users/changepassword?login=${login}`, data);
+  }
+
   delete(id) {
     return http.delete(`/users/${id}`);
   }

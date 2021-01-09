@@ -11,6 +11,9 @@ export default {
         changeEditFormView(state) {
             state.editForm = !state.editForm
         },
+        changePasswordFormView(state) {
+            state.changePasswordForm = !state.changePasswordForm
+        },
         updateMaxPage(state, elements) {
             state.maxPage = elements
         },
@@ -25,6 +28,7 @@ export default {
         form: false,
         card: false,
         editForm: false,
+        changePasswordForm: false,
         currentPage: 1,
         maxPage: 1
     },
@@ -37,6 +41,9 @@ export default {
         },
         showEditForm(state) {
             return state.editForm
+        },
+        showChangePasswordForm(state) {
+            return state.changePasswordForm
         },
         getMaxPage(state) {
             return state.maxPage

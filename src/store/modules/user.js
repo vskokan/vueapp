@@ -47,6 +47,16 @@ export default {
                     commit('updateUsers', users)
                 })
             })
+        },
+        updateUserPassword_AdminPanel({commit, dispatch}, userToUpdate, users) {
+            //alert(userToUpdate.formData)
+            UserData.updatePassword(userToUpdate.login, userToUpdate.formData)
+                .then(() => {
+                    dispatch('fetchUsers')
+                    .then(() => {
+                        commit('updateUsers', users)
+                    })
+                })
         }
     },
     mutations: {
