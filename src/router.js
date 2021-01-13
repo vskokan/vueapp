@@ -56,7 +56,7 @@ export default new Router({
                 },
                 {
                     path: 'reviews',
-                    component: () => import('./components/Tables/Empty.vue')
+                    component: () => import('./views/Tables/Reviews.vue')
                 },
                 {
                     path: 'facts',
