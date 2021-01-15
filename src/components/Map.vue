@@ -16,7 +16,7 @@
             >
             </ymap-marker> -->
 
-            <ymap-marker v-for="review in allReviews" :key="review.id" marker-id="review.id" :coords="[`${review.latitude}`, `${review.longitude}`]" @click="chooseReview(review)" />
+            <ymap-marker v-for="review in allReviews" :key="review.id" marker-id="review.id" :coords="[`${review.latitude}`, `${review.longitude}`]" @click="chooseReview(review)" :icon="markerIcon" />
 
         </yandex-map>
         <ReviewCard class="cardForm" v-if="showCard" v-bind:review="currentReview"/>
@@ -38,6 +38,14 @@ export default {
     return {
     coords: [54.62880826189078,39.75270322600586],
     //opened: false,
+    markerIcon: {
+      layout: 'default#image',
+      imageHref: 'http://localhost:3000/assets/map-marker.svg',
+      imageSize: [35, 50],
+      imageOffset: [-15, -45],
+      // imageOffset: [0, 0],
+       preset: 'islands#violetIcon'
+    }
   }
     
   },
@@ -81,9 +89,7 @@ export default {
   },
   mounted() {
     this.fetchReviewsNoPagination()
-    
-    
-    
+
   },
   // directives: {
   //   ClickOutside
