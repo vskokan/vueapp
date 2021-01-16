@@ -8,18 +8,25 @@
                 :balloon-template="balloonTemplate"
             ></ymap-marker>
         </yandex-map> -->
-        <yandex-map :coords="coords" :zoom="12">
-            <!-- <ymap-marker v-click-outside="hide" @click="toggle(review)" v-for="review of reviews" :key="review"
+        <yandex-map :coords="coords" :zoom="12" @click="onClick">
+            <!-- <ymap-marker v-click-outside="hide" @click="toggle(review)" v-for="review of reviews" :key="review" :icon="markerIcon"
                 marker-id="review.id" 
                 :coords= "[`${review.latitude}`, `${review.longitude}`]"
                 :balloon-template="mapBalloon(review)"
             >
             </ymap-marker> -->
-
-            <ymap-marker v-for="review in allReviews" :key="review.id" marker-id="review.id" :coords="[`${review.latitude}`, `${review.longitude}`]" @click="chooseReview(review)" :icon="markerIcon" />
+                <ymap-marker 
+                  :coords="coords" 
+                  marker-id="0" 
+                  v-if="showForm"
+                />
+            <ymap-marker v-for="review in allReviews" :key="review.id" marker-id="review.id" :coords="[`${review.latitude}`, `${review.longitude}`]" @click="chooseReview(review)"  />
 
         </yandex-map>
+        <transition name="fade">
         <ReviewCard class="cardForm" v-if="showCard" v-bind:review="currentReview"/>
+        <AddReviewOnMap class="cardForm" v-if="showForm" v-bind:latitude="coords[0]" v-bind:longitude="coords[1]"/>
+        </transition>
     </div>
 </template>
 
@@ -27,7 +34,7 @@
 
 import { mapGetters, mapActions, mapMutations } from "vuex";
 import ReviewCard from '@/components/Reviews/AdminPanel/ReviewCard'
-
+import AddReviewOnMap from '@/components/Reviews/AddReviewOnMap'
 // import ReviewCard from '@/components/ReviewCard'
 // import ClickOutside from 'vue-click-outside'
 
@@ -49,9 +56,9 @@ export default {
   }
     
   },
-  components: { ReviewCard },
+  components: { ReviewCard, AddReviewOnMap },
   computed: {
-    ...mapGetters(["allReviews", "showCard"]), 
+    ...mapGetters(["allReviews", "showCard", "showForm"]), 
     balloonTemplate() {
       return `
         <h1 class="red">Hi, everyone!</h1>
@@ -64,6 +71,10 @@ export default {
     ...mapMutations(['changeFormView', 'changeCardView', 'changeEditFormView']),
     onClick(e) {
       this.coords = e.get('coords');
+    
+            this.changeFormView()
+            // alert(this.showForm)
+        
     },
     chooseReview(review) {
             
@@ -125,6 +136,11 @@ export default {
        z-index: 5;
    }
 
-    
+       .fade-enter-active, .fade-leave-active {
+        transition: all 0.3s;
+      }
+      .fade-enter, .fade-leave-to  {
+        opacity: 0;
+      }
   
 </style>

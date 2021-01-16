@@ -42,7 +42,7 @@ export default {
             })
         },
         updateReview({commit, dispatch}, reviewToUpdate, reviews) {
-            ReviewData.update(reviewToUpdate.login, reviewToUpdate.formData)
+            ReviewData.update(reviewToUpdate.id, reviewToUpdate.formData)
             .then(() => {
                 dispatch('fetchReviews')
                 .then(() => {

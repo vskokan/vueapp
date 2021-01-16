@@ -1,14 +1,14 @@
 <template>
     <div class="area">
-        <AddFact></AddFact>
+        <FactTable></FactTable>
     </div>
 </template>
 
 <script>
 
-import AddFact from '@/components/Reviews/AdminPanel/AddFact'
+import FactTable from '@/components/Reviews/AdminPanel/FactTable'
 
 export default {
-    components: { AddFact }
+    components: { FactTable }
 }
 </script>

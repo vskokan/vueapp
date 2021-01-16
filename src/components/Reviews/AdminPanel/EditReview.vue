@@ -1,15 +1,9 @@
 <template>
     <div class="form"> 
         <div class="formHeader">
-            <div class="headerText">Редактировать отзыв #{{ review.id }}</div>
+            <div class="headerText">Редактировать отзыв #{{ review.id }} пользователя {{ review.login }}</div>
         </div>
         <div class="formBody">
-            <div class="inputContainer">
-                <label for="login">Пользователь</label>
-                <select name="login" id="login" v-model="reviewToUpdate.login">
-                    <option v-for="user in allUsers" :key="user.login" :value="user.login">{{ user.login }}</option>
-                </select>
-            </div>
             <div class="inputContainer">
                 <label for="description">Описание</label>
                 <textarea type="text" name="description" id="description" v-model="reviewToUpdate.description" required />
@@ -46,48 +40,78 @@
 
 import { mapActions } from "vuex";
 import { mapMutations } from "vuex";
-import { mapGetters } from "vuex";
+//import { mapGetters } from "vuex";
 
 export default {
-    props: ['place'],
+    props: ['review'],
     data() {
         return {
-            reviewToUdpate: {
+            reviewToUpdate: {
                 id: "",
-                name: "",
-                district: ""
+                login: "",
+                description: "",
+                isBaiting: "",
+                roadQuality: "",
+                fishingTime: "",
+                raiting: "",
+                latitude: "",
+                longitude: ""
             }
         }
     },
-    computed: mapGetters(['allDistricts']),
+    //computed: mapGetters(['allDistricts']),
     methods: {
-        ...mapActions(["updatePlace", "fetchPlaces", "fetchDistrictsNoPagination"]),
+        ...mapActions(["updateReview", "fetchReviews"]),
         ...mapMutations(['changeEditFormView']),
         send() {
-            const id = this.place.id
-            const name = this.placeToUdpate.name
-            const district = this.place.district
+            const id = this.review.id
+            const login = this.review.login
+
+            const description = this.reviewToUpdate.description
+            const isBaiting = this.reviewToUpdate.isBaiting
+            const roadQuality = this.reviewToUpdate.roadQuality
+            const fishingTime = this.reviewToUpdate.fishingTime
+            const raiting = this.reviewToUpdate.raiting
+            const latitude = this.reviewToUpdate.latitude
+            const longitude = this.reviewToUpdate.longitude
+
+
             // alert(id)
-            alert(district)
+            //alert(district)
             let formData = new FormData();
             // formData.append('id', id)
-            formData.append('name', name)
-            formData.append('district', district)
-            let placeToUdpate = {
+            formData.append('login', login)
+            formData.append('description', description)
+            formData.append('isBaiting', isBaiting)
+            formData.append('roadQuality', roadQuality)
+            formData.append('fishingTime', fishingTime)
+            formData.append('raiting', raiting)
+            formData.append('latitude', latitude)
+            formData.append('longitude', longitude)
+
+            let reviewToUpdate = {
                 id: id,
                 formData: formData
             }
-            this.updatePlace(placeToUdpate)
-                .then(this.fetchPlaces())
+            this.updateReview(reviewToUpdate)
+                .then(this.fetchReviews())
             this.closeForm()
         },
         closeForm() {
             this.changeEditFormView()
         }
     },
-    mounted() {
-        this.placeToUdpate.name = this.place.name
-        this.fetchDistrictsNoPagination()
+    created() {
+        this.reviewToUpdate.description = this.review.description
+        this.reviewToUpdate.isBaiting = this.review.isbaiting
+        this.reviewToUpdate.roadQuality = this.review.roadquality
+        this.reviewToUpdate.raiting = this.review.raiting
+        this.reviewToUpdate.fishingTime = this.review.fishingtime
+        this.reviewToUpdate.latitude = this.review.latitude
+        this.reviewToUpdate.longitude = this.review.longitude
+
+        console.log(this.reviewToUpdate)
+        //this.fetchDistrictsNoPagination()
     }
 }
 </script>
@@ -100,7 +124,7 @@ export default {
         display: flex;
         flex-direction: column;
         width: 450px;
-        height: 350px;
+        height: 600px;
         justify-items: center;
         align-items: center;
         background-color: #fff;

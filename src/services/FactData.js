@@ -6,8 +6,19 @@ class FactData {
     return http.get("/facts");
   }
 
+  getAllByPage(page) {
+    return http.get(`/facts/pag/?page=${page}`);
+  }
+
+  getPage(page) {
+    return http.get(`/facts?page=${page}`);
+  }
+
+  getAmount() {
+    return http.get(`/facts?p=amount`)
+  }
 //   get(id) {
-//     return http.get(`/fish/${id}`);
+//     return http.get(`/fact/${id}`);
 //   }
 
   create(data) {
@@ -15,20 +26,20 @@ class FactData {
   }
 
 //   update(id, data) {
-//     return http.put(`/fish/${id}`, data);
+//     return http.put(`/fact/${id}`, data);
 //   }
 
 //   delete(id) {
-//     return http.delete(`/fish/${id}`);
+//     return http.delete(`/fact/${id}`);
 //   }
 
 //   deleteAll() {
-//     return http.delete(`/fish`);
+//     return http.delete(`/fact`);
 //   }
 
-//   findByTitle(title) {
-//     return http.get(`/fish?title=${title}`);
-//   }
+  findByReview(review) {
+    return http.get(`/fact?review=${review}`);
+  }
   
 }
 
