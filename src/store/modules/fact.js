@@ -1,4 +1,5 @@
 import FactData from '../../services/FactData';
+//import review from './review';
 
 export default {
     actions: {
@@ -47,6 +48,13 @@ export default {
                     commit('updateFacts', facts)
                 })
             })
+        },
+        findFactsByReview({commit}, review) {
+            FactData.findByReview(review)
+            .then(json => {
+                const facts = json.data
+                commit('updateFacts', facts)
+            })       
         }
     },
     mutations: {
@@ -61,5 +69,15 @@ export default {
         allFacts(state) {
             return state.facts
         },
+        // filteredFacts(state, review) {
+        //     const filteredFacts = []
+        //     state.facts.forEach(fact => {
+        //         if (fact.review === review) {
+        //             filteredFacts.push(fact)
+        //         }    
+        //     })
+
+        //     return filteredFacts
+        // }
     },
 }

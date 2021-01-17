@@ -9,6 +9,9 @@
         <p class="description">{{review.fishingtime}}</p>
         <p class="description">{{review.latitude}}</p>
         <p class="description">{{review.longitude}}</p>
+
+        <h3>ФАКТЫ!</h3>
+        <p v-for="fact in allFacts" :key="fact.id">{{fact.fish + ' ' + fact.bait + ' ' + fact.method}}</p>
         <div class="formButtons">
             <button class="button-simple" v-on:click="closeForm">Закрыть</button>
         </div>
@@ -16,14 +19,23 @@
 </template>
 
 <script>
+
+import { mapActions} from 'vuex'
+import { mapGetters} from 'vuex'
+
 import { mapMutations } from "vuex";
 export default {
     props: ['review'],
+    computed: mapGetters(['allFacts']),
     methods: {
         ...mapMutations(['changeCardView']),
+        ...mapActions(['findFactsByReview']),
         closeForm() {
             this.changeCardView()
         }
+    },
+    created() {
+        this.findFactsByReview(this.review.id)
     }
 }
 </script>
