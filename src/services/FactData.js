@@ -25,20 +25,20 @@ class FactData {
     return http.post("/facts", data);
   }
 
-//   update(id, data) {
-//     return http.put(`/fact/${id}`, data);
-//   }
+  update(id, data) {
+    return http.put(`/facts/${id}`, data);
+  }
 
-//   delete(id) {
-//     return http.delete(`/fact/${id}`);
-//   }
+  delete(id) {
+    return http.delete(`/facts/${id}`);
+  }
 
 //   deleteAll() {
 //     return http.delete(`/fact`);
 //   }
 
   findByReview(review) {
-    return http.get(`/fact?review=${review}`);
+    return http.get(`/facts?review=${review}`);
   }
   
 }

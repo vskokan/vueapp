@@ -71,7 +71,7 @@ export default {
     },
     getters: {
         allReviews(state) {
-            alert(state.reviews)
+            //alert(state.reviews)
             return state.reviews
         },
     },

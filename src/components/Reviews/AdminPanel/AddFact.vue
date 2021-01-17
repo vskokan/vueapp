@@ -5,31 +5,42 @@
         </div>
         <div class="formBody">
             <div class="inputContainer">
-                <label for="name">Код отзыва</label>
-                <input type="text" name="name" id="name" v-model="fact.review" required>
+                <label for="review">Код отзыва</label>
+                <select name="review" id="review" v-model="fact.review">
+                    <option v-for="review in allReviews" :key="review.id" :value="review.id">{{ review.id + ' : ' + review.login }}</option>
+                </select>
             </div>
             <div class="inputContainer">
-                <label for="name">Код рыбы</label>
-                <input type="text" name="name" id="name" v-model="fact.fish" required>
+                <label for="fish">Код рыбы</label>
+                <select name="fish" id="fish" v-model="fact.fish">
+                    <option v-for="fish in allFishes" :key="fish.id" :value="fish.id">{{ fish.name }}</option>
+                </select>
             </div>
             <div class="inputContainer">
-                <label for="name">Код метода</label>
-                <input type="text" name="name" id="name" v-model="fact.method" required>
+                <label for="bait">Код наживки</label>
+                <select name="method" id="method" v-model="fact.bait">
+                    <option v-for="bait in allBaits" :key="bait.id" :value="bait.id">{{ bait.name }}</option>
+                </select>
             </div>
             <div class="inputContainer">
-                <label for="name">Код наживки</label>
-                <input type="text" name="name" id="name" v-model="fact.bait" required>
+                <label for="method">Код метода</label>
+                <select name="method" id="method" v-model="fact.method">
+                    <option v-for="method in allMethods" :key="method.id" :value="method.id">{{ method.name }}</option>
+                </select>
             </div>
         </div>
         <div class="formButtons">
-            <button v-on:click="send()">Ок</button>
-            <button>Отмена</button>
+            <button class="button-simple" v-on:click="send">Ок</button>
+            <button class="button-simple" v-on:click="closeForm">Отмена</button>
         </div>
     </div>
 </template>
 
 <script>
-import FactData from "../../../services/FactData";
+
+import { mapActions } from "vuex";
+import { mapMutations } from "vuex";
+import { mapGetters } from "vuex";
 
 export default {
     data() {
@@ -42,28 +53,33 @@ export default {
             }
         }
     },
+    computed: mapGetters(['allReviews', 'allFishes', 'allBaits', 'allMethods']),
     methods: {
+        ...mapActions(["createFact", "fetchFacts", "fetchReviewsNoPagination", 'fetchFishesNoPagination', 'fetchBaitsNoPagination', 'fetchMethodsNoPagination']),
+        ...mapMutations(['insertFact', 'changeFormView']),
         send() {
-            //alert(this.fish.name)
+
             let formData = new FormData();
+
             formData.append('review', this.fact.review)
             formData.append('fish', this.fact.fish)
             formData.append('method', this.fact.method)
             formData.append('bait', this.fact.bait)
-            // axios.post("http://localhost:3000/api/fish/test/", formData, { headers: "multipart/form-data"})
-            //     .then(()=>{console.log('Success')})
-            //     .catch(()=>{console.log('Error!!!')})
-            FactData.create(formData)
-                .then(response => {
-                this.fact.review = response.data;
-                console.log(response.data);
-                //this.submitted = true;
-                })
-                .catch(e => {
-                console.log(e);
-                });
-            //alert(formData.get('image'))
+
+            this.createFact(formData)
+            .then(this.fetchFacts())
+
+            this.closeForm()
+        },
+        closeForm() {
+            this.changeFormView()
         }
+    },
+    created() {
+        this.fetchReviewsNoPagination()
+        this.fetchFishesNoPagination()
+        this.fetchBaitsNoPagination()
+        this.fetchMethodsNoPagination()
     }
 }
 </script>
@@ -71,26 +87,25 @@ export default {
 <style scoped>
     
     .form {
-        font-family: 'Rubik', sans-serif;
+        font-family: 'Inter', sans-serif;
         display: flex;
         flex-direction: column;
         width: 450px;
+        height: 400px;
         justify-items: center;
         align-items: center;
         background-color: #fff;
-        border-radius: 5px;
+        /* border-radius: 5px; */
         padding-bottom: 20px;
         box-shadow: 0 0 60px rgba(14,42,71,.25);
     }
+
 
     .formHeader {
         width: 450px;
         padding-top: 20px;
         padding-bottom: 20px;
-        border-top-left-radius: 5px;
-        border-top-right-radius: 5px;
-        background: linear-gradient(to right, #7c8e51, #69afce);
-        margin-bottom: 30px;
+        margin-bottom: 20px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -98,20 +113,12 @@ export default {
 
     .headerText {
         font-size: 34px;
-        color: rgb(255, 255, 255);
-        font-weight: bold;
+        color: rgb(0, 0, 0);
+        font-weight: 700;
+        font-family: 'Inter', sans-serif;
     }
 
-    #description {
-        resize: none;
-        height: 150px;
-        width: 300px;
-    }
 
-    #name {
-        width: 300px;
-        height: 30px;
-    }
 
     .formBody {
         display: flex;
@@ -121,8 +128,8 @@ export default {
     }
 
     .inputContainer {
-        margin-left: 10px;
-        margin-right: 10px;
+        margin-left: 20px;
+        margin-right: 20px;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
@@ -132,19 +139,20 @@ export default {
     .inputContainer label {
         font-weight: bold;
         align-self: center;
+        color: rgb(91, 21, 148);
     }
 
-    
-
-    #name, #description {
+    select {
         border-radius: 3px;
         border: none;
         box-shadow: none;
-        background-color: #cadbe24f;
+        background-color: #ada5b323;
         padding: 5px;
         font-size: 18px;
         font-weight: bold;
         font-family: 'Rubik', sans-serif;
+        width: 200px;
     }
 
 </style>
+

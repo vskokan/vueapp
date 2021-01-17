@@ -26,9 +26,9 @@
                     <tr v-for="fact in allFacts" :key="fact.id" class="row">
                         <td class="idCell">{{fact.id}}</td>
                         <td class="reviewCell">{{fact.review}}</td>
-                        <td class="fishCell">{{fact.fish}}</td>
-                        <td class="baitCell">{{fact.bait}}</td>
-                        <td class="methodCell">{{fact.method}}</td>
+                        <td class="fishCell">{{fact.fishname}}</td>
+                        <td class="baitCell">{{fact.baitname}}</td>
+                        <td class="methodCell">{{fact.methodname}}</td>
                         <td class="actionCell">
                             <button class="edit" @click="chooseFactToUpdate(fact)"><i class="fas fa-pen"></i></button>
                             <button class="delete" @click="deleteFromTable(fact.id)"><i class="fas fa-trash-alt"></i></button>
@@ -47,7 +47,7 @@
 <script>
 import { mapGetters, mapActions, mapMutations } from "vuex";
 import AddFact from '@/components/Reviews/AdminPanel/AddFact'
-import EditFact from '@/components/Reviews/AdminPanel/Editfact'
+import EditFact from '@/components/Reviews/AdminPanel/EditFact'
 
 export default {
     components: {AddFact, EditFact},
@@ -61,7 +61,7 @@ export default {
         },
         deleteFromTable(id) {
             if (!this.showCard) {
-                this.deletefact(id)
+                this.deleteFact(id)
             } else {
                 alert('Закройте все окна перед удалением')
             }
