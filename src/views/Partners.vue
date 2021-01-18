@@ -1,14 +1,17 @@
 <template>
     <div class="mainpage">
-       <SignUp></SignUp>
+       <!-- <SignUp></SignUp> -->
+    <AddReview />
     </div>
 </template>
 
 <script>
-import SignUp from '@/components/SignUp'
+// import SignUp from '@/components/SignUp'
+import AddReview from '@/components/Reviews/AddReview'
 export default {
     components: {
-        SignUp
+        //SignUp
+         AddReview
     }    
 }
 </script>

@@ -1,25 +1,32 @@
 <template>
-    <div>
-       <h1>Тест</h1>
-       Что-то будет
+    <div class="mainpage">
+       <!-- <SignUp></SignUp> -->
+    <AddReview />
     </div>
 </template>
 
 <script>
-
-// import AddFish from '@/components/Fish/AddFish'
-
-// export default {
-//   components: {
-//     AddFish
-//   }
-// }
+// import SignUp from '@/components/SignUp'
+import AddReview from '@/components/Reviews/AddReview'
+export default {
+    components: {
+        //SignUp
+         AddReview
+    }    
+}
 </script>
 
 <style scoped>
 
-  div {
+    .mainpage {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .mainpage {
       min-height: calc(100vh - 180px)
-  }
-  
+    }
 </style>
+
