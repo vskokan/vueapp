@@ -80,7 +80,6 @@
                 label="name"
                 track-by="id"
                 :preselect-first="false"
-                
               />
             </td>
             <td>
@@ -96,7 +95,6 @@
                 label="name"
                 track-by="id"
                 :preselect-first="false"
-                
               />
             </td>
             <td>
@@ -116,25 +114,36 @@
                 @tag="addTag"
               />
             </td>
+            <td>
+              <button
+                class="iconButton delete"
+                v-show="facts.length > 1"
+                @click="deleteFact(index)"
+              >
+                <i class="fas fa-times"></i>
+              </button>
+            </td>
           </tr>
         </table>
 
-        <button @click="addFact">Добавить еще</button>
+        <button class="iconButton add" @click="addFact">
+          <i class="fas fa-plus"></i>
+        </button>
       </div>
     </div>
     <div class="stepPart" v-if="step == 2">Шаг 2</div>
     <div class="stepPart" v-if="step == 3">Шаг 3</div>
     <div class="progressContainer"></div>
     <div class="reviewButtons">
-      <div class="stepButtons" v-if="step == 1">
-        <button @click="next()">Далее</button>
+      <div class="stepButtons stepOne" v-if="step == 1">
+        <button class="navButton" @click="next()">Далее</button>
       </div>
       <div class="stepButtons" v-if="step == 2">
-        <button @click="back()">Назад</button>
-        <button @click="next()">Далее</button>
+        <button class="navButton" @click="back()">Назад</button>
+        <button class="navButton" @click="next()">Далее</button>
       </div>
       <div class="stepButtons" v-if="step == 3">
-        <button @click="back()">Назад</button>
+        <button class="navButton" @click="back()">Назад</button>
         <button>Опубликовать</button>
       </div>
       <button class="cancel">Отмена</button>
@@ -209,6 +218,9 @@ export default {
       };
       this.facts.push(fact);
       alert(JSON.stringify(this.facts));
+    },
+    deleteFact(index) {
+      this.facts.splice(index, 1);
     },
   },
   created() {
@@ -339,8 +351,9 @@ export default {
   width: 500px;
 }
 
-.baits, .methods {
-    width: 250px
+.baits,
+.methods {
+  width: 250px;
 }
 </style>
 
@@ -397,11 +410,54 @@ export default {
   display: none;
 }
 
-  .multiselect__option--selected {
-    background: var(--color-violet);
-    color: var(--color-yellow);
-    font-weight: 700;
-  }
+.multiselect__option--selected {
+  background: var(--color-violet);
+  color: var(--color-yellow);
+  font-weight: 700;
+}
 
-  
+.delete {
+  font-size: 16px;
+  color: rgb(94, 94, 94);
+  margin-left: 5px;
+  border: none;
+  background-color: transparent;
+}
+
+.add {
+  color: rgb(94, 94, 94);
+  font-size: 16px;
+  margin-top: 15px;
+  border: none;
+  background-color: transparent;
+}
+
+.delete:hover,
+.add:hover {
+  cursor: pointer;
+  color: var(--color-violet);
+}
+
+.stepOne {
+    
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+   
+}
+button {
+      border: none;
+        background-color: transparent;
+         
+    font-size: 20px;
+}
+
+button:hover {
+    cursor: pointer;
+}
+
+.navButton {
+    color: var(--color-violet);
+}
+
 </style>
