@@ -1,11 +1,10 @@
 <template>
   <div class="reviewCard">
-    <div class="reviewHeader">Добавление отзыва</div>
+    <div class="reviewHeader">Шаг {{ step }} из 3</div>
     <div class="stepPart" v-if="step == 1">
       <div class="formPart">
         <div class="partHeader">
-          <img class="icon" src="../../assets/icons/review/fishing.svg" /> Здесь
-          клюёт?
+          Здесь клюёт?
         </div>
         <div class="inputs radiobuttons">
           <div
@@ -54,19 +53,28 @@
           вариант!
         </p>
         <table class="factsTable">
-          <tr>
+          <tr class="iconRow">
             <th>
-              <img class="icon" src="../../assets/icons/review/rod.svg" />
+              <img
+                class="icon methods"
+                src="../../assets/icons/review/rod.svg"
+              />
             </th>
             <th>
-              <img class="icon" src="../../assets/icons/review/bait.svg" />
+              <img
+                class="icon baits"
+                src="../../assets/icons/review/bait.svg"
+              />
             </th>
             <th>
-              <img class="icon" src="../../assets/icons/review/bucket.svg" />
+              <img
+                class="icon fishes"
+                src="../../assets/icons/review/bucket.svg"
+              />
             </th>
             <th></th>
           </tr>
-          <tr v-for="(fact, index) in facts" :key="index">
+          <tr class="factRow" v-for="(fact, index) in facts" :key="index">
             <td>
               <Multiselect
                 class="multiselect methods"
@@ -117,7 +125,8 @@
             <td>
               <button
                 class="iconButton delete"
-                v-show="facts.length > 1"
+                :class="{ 'iconButton delete disabled': facts.length == 1 }"
+                :disabled="facts.length == 1"
                 @click="deleteFact(index)"
               >
                 <i class="fas fa-times"></i>
@@ -131,14 +140,58 @@
         </button>
       </div>
     </div>
-    <div class="stepPart" v-if="step == 2">Шаг 2</div>
-    <div class="stepPart" v-if="step == 3">Шаг 3</div>
+    <div class="stepPart" v-if="step == 2">
+      <div class="partHeader">
+        <i class="far fa-edit"></i>
+        <div>Добавьте описание</div>
+      </div>
+      <textarea
+        class="reviewDescription"
+        v-model="review.description"
+        v-focus
+        placeholder="Расскажите, как прошла ваша рыбалка!"
+      ></textarea>
+    </div>
+    <div class="stepPart" v-if="step == 3">
+      <div class="partHeader">
+        <i class="fas fa-images"></i>
+        <div>Вы можете прикрепить к отзыву до 5 фотографий</div>
+      </div>
+      <div class="fileInput">
+        <label 
+          >Выбранные изображения:
+          <input
+            type="file"
+            id="file"
+            ref="files"
+            accept=".jpg, .jpeg, .png"
+            multiple
+            :disabled="review.files.length > 5"
+            v-on:change="uploadFiles()"
+          />
+        </label>
+        <!-- <img v-bind:src="preview" v-show="showPreview" /> -->
+      </div>
+      <div class="large-12 medium-12 small-12 cell">
+      <div class="previewContainer">
+        <div v-if="this.review.files.length == 0"> Изображения не выбраны </div>
+        <div v-for="(file, key) in review.files" v-bind:key="key" class="large-4 medium-4 small-6 cell file-listing">
+          <!-- {{ file.name }} -->
+          <img class="preview" v-bind:ref="'image'+parseInt( key )"/>
+          <div class="deleteOnPreview" @click="deleteImage(key)"><i class="fas fa-times"></i></div>
+        </div>
+      </div>
+    <div class="large-12 medium-12 small-12 cell clear">
+      <button v-on:click="addFiles()">Добавить фото</button>
+    </div>
+    </div>
+    </div>
     <div class="progressContainer"></div>
     <div class="reviewButtons">
       <div class="stepButtons stepOne" v-if="step == 1">
         <button class="navButton" @click="next()">Далее</button>
       </div>
-      <div class="stepButtons" v-if="step == 2">
+      <div class="stepButtons stepTwo" v-if="step == 2">
         <button class="navButton" @click="back()">Назад</button>
         <button class="navButton" @click="next()">Далее</button>
       </div>
@@ -164,8 +217,12 @@ export default {
     return {
       step: 1,
       showTip: false,
+      //preview: "",
+      //showPreview: false,
       review: {
         isBaiting: null,
+        description: "",
+        files: [],
       },
       facts: [
         {
@@ -195,6 +252,7 @@ export default {
       };
       console.log(data);
       if (this.step < 3) this.step++;
+      if (this.step == 3) this.getPreviews()
     },
     back() {
       if (this.step > 1) this.step--;
@@ -217,10 +275,53 @@ export default {
         fishes: [],
       };
       this.facts.push(fact);
-      alert(JSON.stringify(this.facts));
+      //alert(JSON.stringify(this.facts));
     },
     deleteFact(index) {
       this.facts.splice(index, 1);
+    },
+    uploadFiles() {
+        let uploadedFiles = this.$refs.files.files
+        if (this.review.files.length > 5 || this.$refs.files.files.length > 5 || (this.review.files.length + this.$refs.files.files.length) > 5 ) {
+            alert('Превышен лимит!!!')
+        }
+        else {
+                    for(let i = 0; i < uploadedFiles.length; i++) {
+            this.review.files.push(uploadedFiles[i])
+        }
+        console.log(this.review.files)
+        this.getPreviews()
+        }
+
+    },
+    getPreviews() {
+        for (let i = 0; i < this.review.files.length; i++) {
+            let fileReader = new FileReader()
+
+            fileReader.addEventListener("load", function(){
+              this.$refs['image' + parseInt( i )][0].src = fileReader.result;
+            }.bind(this), false);
+
+            fileReader.readAsDataURL(this.review.files[i])
+        }
+    },
+    addFiles() {
+        this.$refs.files.click()
+    },
+    deleteImage(key) {
+        console.log(this.review.files)
+       console.log('Должен быть удален файл с индексом ', key)
+        this.review.files.splice(key, 1)
+        console.log(this.review.files)
+        this.getPreviews()
+    }
+  },
+  directives: {
+    focus: {
+      // определение директивы
+      inserted: function(el) {
+        el.focus();
+      },
     },
   },
   created() {
@@ -228,7 +329,9 @@ export default {
     this.fetchBaitsNoPagination();
     this.fetchMethodsNoPagination();
   },
-  mounted() {},
+  mounted() {
+      this.getPreviews()
+  },
 };
 </script>
 
@@ -236,6 +339,11 @@ export default {
 
 <style scoped>
 .reviewCard {
+  /* min-width: 1100px;
+    min-height: 500px; */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   background-color: #fff;
   border-radius: 5px;
   padding: 10px;
@@ -244,6 +352,8 @@ export default {
   /* border-radius: 3px;  */
   --color-violet: rgb(91, 21, 148);
   --color-yellow: rgb(255, 230, 0);
+  --color-darkgray: rgb(56, 56, 56);
+  --color-lightgray: rgb(194, 194, 194);
 }
 
 .stepPart {
@@ -254,22 +364,29 @@ export default {
 .reviewHeader {
   color: #000;
   font-size: 36px;
+  font-family: "Rubik", sans-serif;
+  font-weight: 700;
 }
 
 .formPart {
   /* border: 1px solid rgb(245, 245, 245); */
   padding: 5px;
   margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .partHeader {
-  color: var(--color-violet);
+  color: var(--color-darkgray);
   font-size: 24px;
   padding-bottom: 15px;
+  margin-top: 10px;
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
+  font-family: "Rubik", sans-serif;
 }
 
 .radiobuttons {
@@ -282,11 +399,14 @@ export default {
   /* border: 1px solid #000; */
 
   width: 80px;
-  height: 40px;
+  height: 30px;
   /* box-shadow: 0px 2px #000; */
-  box-shadow: 0 0 5px rgba(14, 42, 71, 0.25);
+  /* box-shadow: 0 0 5px rgba(14, 42, 71, 0.25); */
   /* box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px; */
   border-radius: 3px;
+  border: 3px solid var(--color-violet);
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 .radioBlock label {
@@ -353,19 +473,90 @@ export default {
 
 .baits,
 .methods {
-  width: 250px;
+  width: 230px;
+  margin-right: 10px;
 }
+
+.reviewDescription,
+.reviewDescription:focus {
+  width: 600px;
+  height: 300px;
+  margin-left: 15px;
+  margin-right: 15px;
+  padding: 10px;
+  resize: none;
+  font-size: 20px;
+  border-radius: 3px;
+  border: 2px solid var(--color-violet);
+  outline: none;
+  font-family: "Inter", sans-serif;
+  /* background-color: rgb(245, 244, 244); */
+}
+
+.disabled {
+  color: rgb(204, 204, 204);
+}
+
+.disabled:hover {
+  color: rgb(204, 204, 204);
+  cursor: auto;
+}
+table {
+  width: 100%;
+}
+.factRow,
+.iconRow {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.factRow {
+  align-content: flex-start;
+  margin-bottom: 5px;
+}
+
+.delete {
+  position: relative;
+  top: 10px;
+}
+
+.previewContainer {
+    height: 120px;
+    width: 600px;
+    background-color: var(--color-lightgray);
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    padding: 10px;
+}
+
+.preview {
+    height: 120px;
+    width: 120px;
+}
+
+        input[type="file"] {
+        display: none;
+    }
+
+    .fileInput label {
+        display: none;
+    }
 </style>
 
 <style>
 .multiselect__tag {
   position: relative;
   display: inline-block;
-  padding: 4px 26px 4px 10px;
+  padding: 5px 26px 5px 10px;
   border-radius: 5px;
   margin-right: 10px;
   color: #fff;
   line-height: 1;
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
   background: var(--color-violet);
   margin-bottom: 5px;
   white-space: nowrap;
@@ -391,12 +582,6 @@ export default {
   color: var(--color-violet);
 }
 
-.multiselect__option--highlight {
-  background: var(--color-violet);
-  outline: none;
-  color: #fff;
-}
-
 .multiselect__option--highlight:after {
   content: attr(data-select);
   background: var(--color-violet);
@@ -410,22 +595,16 @@ export default {
   display: none;
 }
 
-.multiselect__option--selected {
-  background: var(--color-violet);
-  color: var(--color-yellow);
-  font-weight: 700;
-}
-
 .delete {
   font-size: 16px;
-  color: rgb(94, 94, 94);
+  color: var(--color-violet);
   margin-left: 5px;
   border: none;
   background-color: transparent;
 }
 
 .add {
-  color: rgb(94, 94, 94);
+  color: var(--color-violet);
   font-size: 16px;
   margin-top: 15px;
   border: none;
@@ -435,29 +614,82 @@ export default {
 .delete:hover,
 .add:hover {
   cursor: pointer;
-  color: var(--color-violet);
 }
 
 .stepOne {
-    
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
-   
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
 }
+
+.stepTwo {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
 button {
-      border: none;
-        background-color: transparent;
-         
-    font-size: 20px;
+  border: none;
+  background-color: transparent;
+
+  font-size: 20px;
 }
 
 button:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .navButton {
-    color: var(--color-violet);
+  color: var(--color-violet);
+  margin: 10px;
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
+  font-size: 24px;
 }
 
+.multiselect__placeholder {
+  color: var(--color-darkgray);
+  font-family: "Inter", sans-serif;
+  display: inline-block;
+  margin-bottom: 10px;
+  padding-top: 2px;
+}
+
+.multiselect--active .multiselect__placeholder {
+  display: none;
+}
+
+.multiselect__option {
+  display: block;
+  padding: 12px;
+  color: var(--color-darkgray);
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
+  min-height: 40px;
+  line-height: 16px;
+  text-decoration: none;
+  text-transform: none;
+  vertical-align: middle;
+  position: relative;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.multiselect__option--selected {
+  background: var(--color-violet);
+  color: var(--color-yellow);
+  font-weight: 700;
+}
+
+.multiselect__single {
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
+  color: var(--color-darkgray);
+}
+
+.multiselect__option--highlight {
+  background: var(--color-violet);
+  outline: none;
+  color: #fff;
+}
 </style>
