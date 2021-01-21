@@ -1,6 +1,7 @@
 <template>
   <div class="reviewCard">
     <div class="reviewHeader">Шаг {{ step }} из 3</div>
+
     <div class="stepPart" v-if="step == 1">
       <div class="formPart">
         <div class="partHeader">
@@ -52,30 +53,29 @@
           комбинаций. Даже если Вы ничего не поймали, предусмотрен и такой
           вариант!
         </p>
-        <table class="factsTable">
-          <tr class="iconRow">
-            <th>
+        <div class="factsTable">
+          <div class="iconRow">
+            <div>
               <img
                 class="icon methods"
                 src="../../assets/icons/review/rod.svg"
               />
-            </th>
-            <th>
+            </div>
+            <div>
               <img
                 class="icon baits"
                 src="../../assets/icons/review/bait.svg"
               />
-            </th>
-            <th>
+            </div>
+            <div>
               <img
                 class="icon fishes"
                 src="../../assets/icons/review/bucket.svg"
               />
-            </th>
-            <th></th>
-          </tr>
-          <tr class="factRow" v-for="(fact, index) in facts" :key="index">
-            <td>
+            </div>
+          </div>
+          <div class="factRow" v-for="(fact, index) in facts" :key="index">
+            <div>
               <Multiselect
                 class="multiselect methods"
                 v-model="fact.method"
@@ -89,8 +89,8 @@
                 track-by="id"
                 :preselect-first="false"
               />
-            </td>
-            <td>
+            </div>
+            <div>
               <Multiselect
                 class="multiselect baits"
                 v-model="fact.baits"
@@ -104,8 +104,8 @@
                 track-by="id"
                 :preselect-first="false"
               />
-            </td>
-            <td>
+            </div>
+            <div>
               <Multiselect
                 class="multiselect fishes"
                 v-model="fact.fishes"
@@ -121,8 +121,8 @@
                 :taggable="false"
                 @tag="addTag"
               />
-            </td>
-            <td>
+            </div>
+            <div>
               <button
                 class="iconButton delete"
                 :class="{ 'iconButton delete disabled': facts.length == 1 }"
@@ -131,34 +131,72 @@
               >
                 <i class="fas fa-times"></i>
               </button>
-            </td>
-          </tr>
-        </table>
+            </div>
+          </div>
+        </div>
 
         <button class="iconButton add" @click="addFact">
           <i class="fas fa-plus"></i>
         </button>
       </div>
     </div>
-    <div class="stepPart" v-if="step == 2">
-      <div class="partHeader">
-        <i class="far fa-edit"></i>
-        <div>Добавьте описание</div>
+    <div class="stepPart step2" v-if="step == 2">
+      <div class="formPart">
+        <div class="partHeader">
+          <i class="fas fa-feather-alt"></i>
+          <div>Добавьте описание</div>
+        </div>
+        <textarea
+          class="reviewDescription"
+          v-model="review.description"
+          v-focus
+          placeholder="Расскажите, как прошла ваша рыбалка!"
+        ></textarea>
       </div>
-      <textarea
-        class="reviewDescription"
-        v-model="review.description"
-        v-focus
-        placeholder="Расскажите, как прошла ваша рыбалка!"
-      ></textarea>
+      <div class="formPart">
+        <div class="partHeader">
+          Опционально
+        </div>
+        <p>
+          Укажите время рыбалки и доступность проезда, чтобы помочь другим
+          пользователям
+        </p>
+        <div class="optionalSelect">
+          <i class="fas fa-clock"></i>
+          <Multiselect
+            class="multiselect optional"
+            v-model="review.fishingtime"
+            :options="timeOptions"
+            :multiple="false"
+            :close-on-select="true"
+            :clear-on-select="false"
+            :preserve-search="true"
+            placeholder="Выберите время рыбалки"
+            :preselect-first="false"
+          />
+        </div>
+        <div class="optionalSelect">
+          <i class="fas fa-car"></i>
+          <Multiselect
+            class="multiselect optional"
+            v-model="review.roadquality"
+            :options="roadOptions"
+            :multiple="false"
+            :close-on-select="true"
+            :clear-on-select="false"
+            :preserve-search="true"
+            placeholder="Укажите качество дороги"
+            :preselect-first="false"
+          />
+        </div>
+      </div>
     </div>
     <div class="stepPart" v-if="step == 3">
       <div class="partHeader">
-        <i class="fas fa-images"></i>
-        <div>Вы можете прикрепить к отзыву до 5 фотографий</div>
+        Вы можете прикрепить к отзыву до 5 фотографий
       </div>
       <div class="fileInput">
-        <label 
+        <label
           >Выбранные изображения:
           <input
             type="file"
@@ -173,18 +211,28 @@
         <!-- <img v-bind:src="preview" v-show="showPreview" /> -->
       </div>
       <div class="large-12 medium-12 small-12 cell">
-      <div class="previewContainer">
-        <div v-if="this.review.files.length == 0"> Изображения не выбраны </div>
-        <div v-for="(file, key) in review.files" v-bind:key="key" class="large-4 medium-4 small-6 cell file-listing">
-          <!-- {{ file.name }} -->
-          <img class="preview" v-bind:ref="'image'+parseInt( key )"/>
-          <div class="deleteOnPreview" @click="deleteImage(key)"><i class="fas fa-times"></i></div>
+        <div class="previewContainer" v-show="this.review.files.length > 0">
+          <!-- <div v-if="this.review.files.length == 0">Изображения не выбраны</div> -->
+          <div
+            v-for="(file, key) in review.files"
+            v-bind:key="key"
+            class="large-4 medium-4 small-6 cell file-listing"
+          >
+            <!-- {{ file.name }} -->
+            <div class="previewElem">
+              <img class="preview" v-bind:ref="'image' + parseInt(key)" />
+              <div class="deleteOnPreview" @click="deleteImage(key)">
+                <i class="fas fa-times"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="large-12 medium-12 small-12 cell clear">
+          <button class="uploadButton" v-on:click="addFiles()">
+            Добавить фото<i class="fas fa-images"></i>
+          </button>
         </div>
       </div>
-    <div class="large-12 medium-12 small-12 cell clear">
-      <button v-on:click="addFiles()">Добавить фото</button>
-    </div>
-    </div>
     </div>
     <div class="progressContainer"></div>
     <div class="reviewButtons">
@@ -197,7 +245,7 @@
       </div>
       <div class="stepButtons" v-if="step == 3">
         <button class="navButton" @click="back()">Назад</button>
-        <button>Опубликовать</button>
+        <button class="navButton">Опубликовать</button>
       </div>
       <button class="cancel">Отмена</button>
     </div>
@@ -226,10 +274,24 @@ export default {
       },
       facts: [
         {
+          localId: "",
           method: "",
           bait: "",
           fishes: [],
         },
+      ],
+      timeOptions: [
+        "Не указано",
+        "Первая половина дня",
+        "Вторая половина дня",
+        "Весь день",
+        "Несколько дней подряд",
+      ],
+      roadOptions: [
+        "Не указано",
+        "Проедет любая машина",
+        "Проедет только нива или уаз",
+        "Только пешком",
       ],
       // fact: {
       //     method: "",
@@ -252,7 +314,7 @@ export default {
       };
       console.log(data);
       if (this.step < 3) this.step++;
-      if (this.step == 3) this.getPreviews()
+      if (this.step == 3) this.getPreviews();
     },
     back() {
       if (this.step > 1) this.step--;
@@ -270,6 +332,7 @@ export default {
     },
     addFact() {
       const fact = {
+        localId: this.facts.length + 1,
         method: "",
         bait: "",
         fishes: [],
@@ -281,40 +344,46 @@ export default {
       this.facts.splice(index, 1);
     },
     uploadFiles() {
-        let uploadedFiles = this.$refs.files.files
-        if (this.review.files.length > 5 || this.$refs.files.files.length > 5 || (this.review.files.length + this.$refs.files.files.length) > 5 ) {
-            alert('Превышен лимит!!!')
+      let uploadedFiles = this.$refs.files.files;
+      if (
+        this.review.files.length > 5 ||
+        this.$refs.files.files.length > 5 ||
+        this.review.files.length + this.$refs.files.files.length > 5
+      ) {
+        alert("Превышен лимит!!!");
+      } else {
+        for (let i = 0; i < uploadedFiles.length; i++) {
+          this.review.files.push(uploadedFiles[i]);
         }
-        else {
-                    for(let i = 0; i < uploadedFiles.length; i++) {
-            this.review.files.push(uploadedFiles[i])
-        }
-        console.log(this.review.files)
-        this.getPreviews()
-        }
-
+        console.log(this.review.files);
+        this.getPreviews();
+      }
     },
     getPreviews() {
-        for (let i = 0; i < this.review.files.length; i++) {
-            let fileReader = new FileReader()
+      for (let i = 0; i < this.review.files.length; i++) {
+        let fileReader = new FileReader();
 
-            fileReader.addEventListener("load", function(){
-              this.$refs['image' + parseInt( i )][0].src = fileReader.result;
-            }.bind(this), false);
+        fileReader.addEventListener(
+          "load",
+          function() {
+            this.$refs["image" + parseInt(i)][0].src = fileReader.result;
+          }.bind(this),
+          false
+        );
 
-            fileReader.readAsDataURL(this.review.files[i])
-        }
+        fileReader.readAsDataURL(this.review.files[i]);
+      }
     },
     addFiles() {
-        this.$refs.files.click()
+      this.$refs.files.click();
     },
     deleteImage(key) {
-        console.log(this.review.files)
-       console.log('Должен быть удален файл с индексом ', key)
-        this.review.files.splice(key, 1)
-        console.log(this.review.files)
-        this.getPreviews()
-    }
+      console.log(this.review.files);
+      console.log("Должен быть удален файл с индексом ", key);
+      this.review.files.splice(key, 1);
+      console.log(this.review.files);
+      this.getPreviews();
+    },
   },
   directives: {
     focus: {
@@ -330,7 +399,7 @@ export default {
     this.fetchMethodsNoPagination();
   },
   mounted() {
-      this.getPreviews()
+    this.getPreviews();
   },
 };
 </script>
@@ -339,8 +408,8 @@ export default {
 
 <style scoped>
 .reviewCard {
-  /* min-width: 1100px;
-    min-height: 500px; */
+  min-width: 1100px;
+  min-height: 500px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -352,7 +421,8 @@ export default {
   /* border-radius: 3px;  */
   --color-violet: rgb(91, 21, 148);
   --color-yellow: rgb(255, 230, 0);
-  --color-darkgray: rgb(56, 56, 56);
+  /* --color-darkgray: rgb(56, 56, 56); */
+  --color-darkgray: rgb(0, 0, 0);
   --color-lightgray: rgb(194, 194, 194);
 }
 
@@ -380,6 +450,7 @@ export default {
 .partHeader {
   color: var(--color-darkgray);
   font-size: 24px;
+  padding: 10px;
   padding-bottom: 15px;
   margin-top: 10px;
   display: flex;
@@ -477,10 +548,28 @@ export default {
   margin-right: 10px;
 }
 
+.optional {
+    width: 350px;
+}
+
+.optionalSelect {
+    margin-top: 15px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.fa-clock, .fa-car {
+    margin-right: 10px;
+    color: #000;
+    font-size: 20px;
+}
+
 .reviewDescription,
 .reviewDescription:focus {
-  width: 600px;
-  height: 300px;
+  width: 450px;
+  height: 250px;
   margin-left: 15px;
   margin-right: 15px;
   padding: 10px;
@@ -523,27 +612,79 @@ table {
 }
 
 .previewContainer {
-    height: 120px;
-    width: 600px;
-    background-color: var(--color-lightgray);
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    padding: 10px;
+  height: 120px;
+  /* width: 600px; */
+  /* background-color: var(--color-lightgray); */
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding: 10px;
+  margin-bottom: 10px;
 }
 
 .preview {
-    height: 120px;
-    width: 120px;
+  height: 120px;
+  width: 120px;
+  border: transparent;
+  color: #000;
+  border-radius: 3px;
+  margin-right: 10px;
+  object-fit: cover;
 }
 
-        input[type="file"] {
-        display: none;
-    }
+input[type="file"] {
+  display: none;
+}
 
-    .fileInput label {
-        display: none;
-    }
+.fileInput label {
+  display: none;
+}
+
+.deleteOnPreview {
+  position: relative;
+  bottom: 115px;
+  left: 90px;
+  background-color: #fff;
+  width: 20px;
+  border: 3px solid var(--color-violet);
+  color: #000;
+  border-radius: 5px;
+}
+
+.deleteOnPreview:hover {
+  cursor: pointer;
+}
+
+.uploadButton {
+  /* background-color: var(--color-violet); */
+  padding: 10px;
+  border-radius: 3px;
+  border: 3px solid var(--color-violet);
+  color: #000;
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
+}
+
+.uploadButton:hover {
+  background-color: var(--color-violet);
+  color: #fff;
+}
+
+.fa-images {
+  margin-left: 10px;
+}
+
+.step2 {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.step2 p {
+  width: 500px;
+  font-family: "Inter", sans-serif;
+  color: #000;
+}
 </style>
 
 <style>
