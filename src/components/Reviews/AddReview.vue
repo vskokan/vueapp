@@ -93,7 +93,7 @@
             <div>
               <Multiselect
                 class="multiselect baits"
-                v-model="fact.baits"
+                v-model="fact.bait"
                 :options="allBaits"
                 :multiple="false"
                 :close-on-select="true"
@@ -237,7 +237,10 @@
     <div class="progressContainer"></div>
     <div class="reviewButtons">
       <div class="stepButtons stepOne" v-if="step == 1">
-        <button class="navButton" @click="next()">Далее</button>
+        <button class="navButton" 
+        :disabled="hasEmptyFacts(facts) == true" 
+        :class="{ 'navButton disabled': hasEmptyFacts(facts) == true }"
+        @click="next()">Далее</button>
       </div>
       <div class="stepButtons stepTwo" v-if="step == 2">
         <button class="navButton" @click="back()">Назад</button>
@@ -274,7 +277,6 @@ export default {
       },
       facts: [
         {
-          localId: "",
           method: "",
           bait: "",
           fishes: [],
@@ -308,12 +310,24 @@ export default {
       "fetchMethodsNoPagination",
     ]),
     ...mapMutations(["changeFormView"]),
+    hasEmptyFacts(facts) {
+        let hasEmpty = false
+        facts.forEach(fact => {
+            if (fact.method == '' || fact.bait == '' || fact.fishes.length == 0) {
+                hasEmpty = true
+                return
+            }
+        })
+        console.log(this.facts)
+        return hasEmpty
+    },
     next() {
-      const data = {
-        facts: this.facts,
-      };
-      console.log(data);
-      if (this.step < 3) this.step++;
+    //   const data = {
+    //     facts: this.facts,
+    //   };
+    //   console.log(data);
+    
+      if (this.step < 3 ) this.step++;
       if (this.step == 3) this.getPreviews();
     },
     back() {
