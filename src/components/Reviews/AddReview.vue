@@ -202,6 +202,7 @@
             type="file"
             id="file"
             ref="files"
+            name="images"
             accept=".jpg, .jpeg, .png"
             multiple
             :disabled="review.files.length > 5"
@@ -248,7 +249,7 @@
       </div>
       <div class="stepButtons" v-if="step == 3">
         <button class="navButton" @click="back()">Назад</button>
-        <button class="navButton">Опубликовать</button>
+        <button class="navButton" @click="send()">Опубликовать</button>
       </div>
       <button class="cancel">Отмена</button>
     </div>
@@ -271,9 +272,12 @@ export default {
       //preview: "",
       //showPreview: false,
       review: {
+        login: 'vikking',
         isBaiting: null,
         description: "",
         files: [],
+        roadQuality: '',
+        fishingTime: ''
       },
       facts: [
         {
@@ -308,12 +312,13 @@ export default {
       "fetchFishesNoPagination",
       "fetchBaitsNoPagination",
       "fetchMethodsNoPagination",
+      "createFullReview"
     ]),
     ...mapMutations(["changeFormView"]),
     hasEmptyFacts(facts) {
         let hasEmpty = false
         facts.forEach(fact => {
-            if (fact.method == '' || fact.bait == '' || fact.fishes.length == 0) {
+            if (fact.method == '' || fact.bait == '' || fact.fishes.length == 0 || this.review.isBaiting == undefined) {
                 hasEmpty = true
                 return
             }
@@ -398,6 +403,38 @@ export default {
       console.log(this.review.files);
       this.getPreviews();
     },
+    send() {
+        const review = {
+            login: 'vikking',
+            isBaiting: this.review.isBaiting,
+            facts:this.facts,
+            description: this.review.description,
+            roadquality: this.review.roadquality,
+            fishingtime: this.review.fishingtime,
+            files: this.review.files
+        }
+        let formData = new FormData()
+
+        formData.append('login', 'vikking')
+        formData.append('isBaiting', this.review.isBaiting)
+        formData.append('facts', JSON.stringify(this.facts))
+        formData.append('description',this.review.description)
+        formData.append('roadQuality',this.review.roadquality)
+        formData.append('fishingTime',this.review.fishingtime)
+        formData.append('latitude','45')
+        formData.append('longitude','45')
+        // formData.append('images', this.review.files)
+
+        for( let i = 0; i < this.review.files.length; i++ ){
+          let file = this.review.files[i];
+        //   formData.append('files[' + i + ']', file);
+        formData.append('images', file);
+        }
+
+        this.createFullReview(formData)
+
+        console.log(review)
+    }
   },
   directives: {
     focus: {
