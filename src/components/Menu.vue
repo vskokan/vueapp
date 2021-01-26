@@ -13,9 +13,31 @@
             <div class="nav-buttons">
                 <router-link to="/login"><button class="button-simple">Вход</button></router-link>
                  <router-link to="/reg"><button class="button-simple">Регистрация</button></router-link>
+                 <router-link to="/database" v-if="isLogged && isAdmin"><button class="button-simple">Админка</button></router-link>
             </div>
     </div>
 </template>
+
+<script>
+
+// import mapActions from 'vuex'
+import { mapGetters } from 'vuex'
+
+export default {
+    // data() {
+    //     return {
+
+    //     }
+    // },
+    computed: mapGetters(['isAdmin', 'isLogged', 'currentUser']),
+    // methods: {
+    //     // ...mapActions('signIn')
+    // },
+    // created() {
+        
+    // }
+}
+</script>
 
 <style scoped>
     .router-link-active {

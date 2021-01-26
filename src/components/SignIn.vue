@@ -1,31 +1,50 @@
 <template>
-    <form>
+    <div class="container">
         <div class="form">
             <div class="header"><h2>Вход</h2></div>
             <div class="input">
                 <i class="fas fa-user icon"></i>
-                <input class="input-field" type="text" name="login" required>
+                <input class="input-field" type="text" name="login" v-model="user.login" required>
                 <div class="placeholder">Логин</div>
             </div>
             <div class="input">
                 <i class="fas fa-lock icon"></i>
-                <input class="input-field" type="password" name="password" required>
+                <input class="input-field" type="password" name="password" v-model="user.password" required>
                 <div class="placeholder">Пароль</div>
             </div>
-            <div class="errors">{{error}}</div>
+            <div class="status" v-if="serverResponse !== undefined || serverResponse !== 200">{{ serverResponse }}</div>
             <div class="buttons">
-                <button class="button-simple">Войти</button>
+                <button class="button-simple" @click="send">Войти</button>
                 
             </div>
         </div>
-    </form>
+    </div>
 </template>
 
 <script>
+
+import { mapActions } from 'vuex'
+import { mapGetters } from 'vuex'
+
     export default {
         data() {
             return {
-                error: '',
+                user: {
+                    login: '',
+                    password: ''
+                }
+            }
+        },
+        computed: mapGetters(['serverResponse']),
+        methods: {
+            ...mapActions(['signIn']),
+            send() {
+                let formData = new FormData()
+
+                formData.append('login', this.user.login)
+                formData.append('password', this.user.password)
+
+                this.signIn(formData)
             }
         }
         
@@ -66,7 +85,7 @@
         color: #000;
     }
 
-    form {
+    .container {
         background-color: #fff;
         width: 450px;
         display: flex;
@@ -148,7 +167,7 @@
         }
     }
 
-    .errors {
+    .status {
         margin-top: 10px;
         color: rgb(209, 87, 87)
     }

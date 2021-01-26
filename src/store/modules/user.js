@@ -57,19 +57,59 @@ export default {
                         commit('updateUsers', users)
                     })
                 })
+        },
+        signIn({commit,}, user) {
+            alert('fkekfghlfklf')
+            UserData.signIn(user)
+            .then((json) => {
+                console.log(json)
+                const statusCode = json.data.statusCode
+                commit('updateServerResponse', statusCode)
+                if (statusCode == 200) {
+                    const currentUser = json.data.user
+                    commit('updateCurrentUser', currentUser)
+                }
+            })
         }
     },
     mutations: {
         updateUsers(state, users) {
             state.users = users
         },
+        updateCurrentUser(state, currentUser) {
+            state.currentUser.login = currentUser.login
+            state.currentUser.admin = currentUser.admin
+        },
+        updateServerResponse(state, statusCode) {
+            state.serverResponse = statusCode
+        }
     },
     state: {
         users: [],
+        currentUser: {
+            login: undefined,
+            admin: false
+        },
+        serverResponse: ''
     },
     getters: {
         allUsers(state) {
             return state.users
         },
+        currentUser(state) {
+            return state.currentUser
+        },
+        serverResponse(state) {
+            return state.serverResponse
+        },
+        isAdmin(state) {
+            return state.currentUser.admin
+        },
+        isLogged(state) {
+            if (state.currentUser.login !== undefined)
+                return true
+            
+            return false
+        }
     },
 }

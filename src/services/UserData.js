@@ -45,6 +45,10 @@ class UserData {
 //   findByTitle(title) {
 //     return http.get(`/fish?title=${title}`);
 //   }
+
+  signIn(data) {
+    return http.post(`au/login`, data)
+  }
   
 }
 
