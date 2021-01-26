@@ -40,6 +40,11 @@ export default {
   background-image: url('./assets/background2.svg'), radial-gradient(circle farthest-corner at 100px 50px, #f9faf9, #e0e0e0);
   min-height: calc(100vh);
   height: auto;
+    --color-violet: rgb(91, 21, 148);
+  --color-yellow: rgb(255, 230, 0);
+  /* --color-darkgray: rgb(56, 56, 56); */
+  --color-darkgray: rgb(0, 0, 0);
+  --color-lightgray: rgb(194, 194, 194);
 }
 
 .red {

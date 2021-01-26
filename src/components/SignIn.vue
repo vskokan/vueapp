@@ -3,18 +3,19 @@
         <div class="form">
             <div class="header"><h2>Вход</h2></div>
             <div class="input">
-                <img class="icon" src="../assets/icons/user.svg">
+                <i class="fas fa-user icon"></i>
                 <input class="input-field" type="text" name="login" required>
-                <div class="placeholder">Имя пользователя</div>
+                <div class="placeholder">Логин</div>
             </div>
             <div class="input">
-                <img class="icon" src="../assets/icons/locked.svg">
+                <i class="fas fa-lock icon"></i>
                 <input class="input-field" type="password" name="password" required>
                 <div class="placeholder">Пароль</div>
             </div>
+            <div class="errors">{{error}}</div>
             <div class="buttons">
-                <button>Войти</button>
-                <button>Регистрация</button>
+                <button class="button-simple">Войти</button>
+                
             </div>
         </div>
     </form>
@@ -22,6 +23,11 @@
 
 <script>
     export default {
+        data() {
+            return {
+                error: '',
+            }
+        }
         
     }
 </script>
@@ -34,7 +40,8 @@
         padding-bottom: 20px;
         border-top-left-radius: 5px;
         border-top-right-radius: 5px;
-        background: linear-gradient(to right, #7c8e51, #69afce);
+        /* background: linear-gradient(to right, var(--color-yellow),var(--color-violet)); */
+        background-color: var(--color-violet);
         margin-bottom: 30px;
         display: flex;
         justify-content: center;
@@ -49,9 +56,14 @@
     .icon {
             width: 30px;
             height: 30px;
-            margin-right: 15px;
+            margin-right: 5px;
             position: relative;
-            top: 5px;
+            top: 0px;
+    }
+
+    .fas {
+        font-size: 16px;
+        color: #000;
     }
 
     form {
@@ -62,7 +74,8 @@
         align-items: center;
         justify-items: center;
         padding: 0px 0px 20px 0px;
-        box-shadow: 0 0 60px rgba(14,42,71,.25);
+        box-shadow: 0 0 60px rgba(14, 42, 71, 0.25);
+        /* box-shadow: 0 0 60px rgba(14,42,71,.25); */
         border-radius: 5px;
         z-index: 0;
     }
@@ -94,6 +107,7 @@
         width: 250px;
         font-size: 26px;
         font-family: 'Rubik', sans-serif;
+        outline: none;
     }
 
     .input-field:required {
@@ -106,29 +120,37 @@
         font-size: 18px;
         color: lightgray;
         position: relative;
-        top: -28px;
-        padding-left: 125px;
+        top: -35px;
+        padding-left: 118px;
         z-index: -1;
         text-align: left;
         transition: font-size 0.01s ease-in-out 0.01s;
         transition: color 0.5s ease-in-out 0.01s;
+ 
     }
 
     .input-field:focus + .placeholder, .input-field:valid + .placeholder {
-        color: #000000;
+        color: var(--color-violet);
         font-size: 18px;
         font-family: 'Roboto', sans-serif;
         animation: movePlaceholder 0.2s ease-in forwards;
+        border: transparent;
+        outline: none;
     }
 
     .input-field:not(:focus) + .placeholder {
-        color: gray;
+        color: var(--color-lightgray);
     }
 
     @keyframes movePlaceholder {
         to {
             transform: translateY(-30px);
         }
+    }
+
+    .errors {
+        margin-top: 10px;
+        color: rgb(209, 87, 87)
     }
 
 </style>

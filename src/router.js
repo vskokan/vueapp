@@ -90,6 +90,14 @@ export default new Router({
             component: () => import('./views/404.vue'), 
         }, 
         { 
+            path: '/login', 
+            component: () => import('./views/Login.vue'), 
+        }, 
+        { 
+            path: '/reg', 
+            component: () => import('./views/SignUp.vue'), 
+        },
+        { 
             path: '*', 
             redirect: '/404' 
         },
