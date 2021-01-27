@@ -43,6 +43,13 @@ import { mapGetters } from 'vuex'
 
                 formData.append('login', this.user.login)
                 formData.append('password', this.user.password)
+                formData.append('userAgent', window.navigator.userAgent)
+
+                // const data = {
+                //     login: this.user.login,
+                //     password: this.user.password,
+                //     userAgent:  window.navigator.userAgent
+                // }
 
                 this.signIn(formData)
             }

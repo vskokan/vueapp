@@ -10,7 +10,9 @@
                 <li class="menuitem"><router-link to="/reviews">Отзыв</router-link></li> -->
                 <!-- <li class="menuitem wayToAdmin"><router-link to="/databases">Админка</router-link></li>  отображать только для админа-->
             </ul>
+            <div v-if="isLogged">{{'Привет,'+ currentUser.login}}</div>
             <div class="nav-buttons">
+                
                 <router-link to="/login"><button class="button-simple">Вход</button></router-link>
                  <router-link to="/reg"><button class="button-simple">Регистрация</button></router-link>
                  <router-link to="/database" v-if="isLogged && isAdmin"><button class="button-simple">Админка</button></router-link>

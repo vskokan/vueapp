@@ -5,6 +5,7 @@ export default axios.create({
   headers: {
     //"Content-type": "application/json",
     "Content-type": "multipart/form-data",
+    withCredentials: true,
   }
 });
 

@@ -61,12 +61,19 @@ export default {
         signIn({commit,}, user) {
             alert('fkekfghlfklf')
             UserData.signIn(user)
-            .then((json) => {
-                console.log(json)
-                const statusCode = json.data.statusCode
+            .then((response) => {
+                console.log(response)
+                const statusCode = response.status
                 commit('updateServerResponse', statusCode)
                 if (statusCode == 200) {
-                    const currentUser = json.data.user
+                    const currentUser = response.data.user
+                    localStorage.setItem('refreshToken', response.data.refresh)
+                    alert(document.cookie)
+                    // document.cookie = `user=${response.data.user.login}; path=/; expires=Tue, 19 Jan 2038 03:14:07 GMT`
+                    localStorage.setItem('currentUser', currentUser)
+                    document.cookie = `token=${response.data.access}; path=/; httpOnly, expires=Tue, 19 Jan 2038 03:14:07 GMT`
+                    console.log(document.cookie)
+                    alert(document.cookie)
                     commit('updateCurrentUser', currentUser)
                 }
             })
@@ -87,7 +94,7 @@ export default {
     state: {
         users: [],
         currentUser: {
-            login: undefined,
+            login: '',
             admin: false
         },
         serverResponse: ''
@@ -106,10 +113,8 @@ export default {
             return state.currentUser.admin
         },
         isLogged(state) {
-            if (state.currentUser.login !== undefined)
-                return true
-            
-            return false
+            return (state.currentUser.login !== '')
+
         }
     },
 }
