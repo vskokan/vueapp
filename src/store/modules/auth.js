@@ -23,12 +23,12 @@ export default {
                 }
             })
         },
-        logout({commit,}, user) {
-            const data = {
-                user: user,
-                userAgent: window.navigator.userAgent,
-            }
-            AuthData.logout(data)
+        logout({commit,}) {
+            // const data = {
+            //     user: user,
+            //     userAgent: window.navigator.userAgent,
+            // }
+            AuthData.logout()
             .then((response) => {
                 let serverResponse
                 switch (response.status) {
@@ -55,7 +55,7 @@ export default {
     },
     mutations: {
         updateCurrentUser(state, currentUser) {
-            state.currentUser = currentUser
+            state.user = currentUser
             state.auth = true
         },
         updateServerResponse(state, response) {
@@ -97,6 +97,9 @@ export default {
         },
         currentUser(state) {
             return state.user
+        },
+        serverResponse(state) {
+            return state.serverResponse
         }
     }
 }

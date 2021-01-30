@@ -10,19 +10,20 @@
                 <li class="menuitem"><router-link to="/reviews">Отзыв</router-link></li> -->
                 <!-- <li class="menuitem wayToAdmin"><router-link to="/databases">Админка</router-link></li>  отображать только для админа-->
             </ul>
-            <div v-if="isLogged">{{'Привет,'+ currentUser.login}}</div>
+            <div v-if="isAuth">{{'Привет,'+ currentUser.login}}</div>
             <div class="nav-buttons">
                 
-                <router-link to="/login"><button class="button-simple">Вход</button></router-link>
-                 <router-link to="/reg"><button class="button-simple">Регистрация</button></router-link>
-                 <router-link to="/database" v-if="isLogged && isAdmin"><button class="button-simple">Админка</button></router-link>
+                <router-link to="/login" v-if="!isAuth"><button class="button-simple">Вход</button></router-link>
+                 <router-link to="/reg" v-if="!isAuth"><button class="button-simple">Регистрация</button></router-link>
+                 <button class="button-simple" v-if="isAuth" @click="exit">Выход</button>
+                 <router-link to="/database" v-if="isAuth && isAdmin"><button class="button-simple">Админка</button></router-link>
             </div>
     </div>
 </template>
 
 <script>
 
-// import mapActions from 'vuex'
+import { mapActions } from 'vuex'
 import { mapGetters } from 'vuex'
 
 export default {
@@ -31,7 +32,13 @@ export default {
 
     //     }
     // },
-    computed: mapGetters(['isAdmin', 'isLogged', 'currentUser']),
+    computed: mapGetters(['isAdmin', 'isAuth', 'currentUser']),
+    methods: {
+        ...mapActions(['logout']),
+        exit() {
+            this.logout()
+        }
+    }
     // methods: {
     //     // ...mapActions('signIn')
     // },

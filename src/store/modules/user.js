@@ -58,63 +58,63 @@ export default {
                     })
                 })
         },
-        signIn({commit,}, user) {
-            alert('fkekfghlfklf')
-            UserData.signIn(user)
-            .then((response) => {
-                console.log(response)
-                const statusCode = response.status
-                commit('updateServerResponse', statusCode)
-                if (statusCode == 200) {
-                    const currentUser = response.data.user
-                    localStorage.setItem('refreshToken', response.data.refresh)
-                    alert(document.cookie)
-                    // document.cookie = `user=${response.data.user.login}; path=/; expires=Tue, 19 Jan 2038 03:14:07 GMT`
-                    localStorage.setItem('currentUser', currentUser)
-                    document.cookie = `token=${response.data.access}; path=/; httpOnly, expires=Tue, 19 Jan 2038 03:14:07 GMT`
-                    console.log(document.cookie)
-                    alert(document.cookie)
-                    commit('updateCurrentUser', currentUser)
-                }
-            })
-        }
+        // signIn({commit,}, user) {
+        //     alert('fkekfghlfklf')
+        //     UserData.signIn(user)
+        //     .then((response) => {
+        //         console.log(response)
+        //         const statusCode = response.status
+        //         commit('updateServerResponse', statusCode)
+        //         if (statusCode == 200) {
+        //             const currentUser = response.data.user
+        //             localStorage.setItem('refreshToken', response.data.refresh)
+        //             alert(document.cookie)
+        //             // document.cookie = `user=${response.data.user.login}; path=/; expires=Tue, 19 Jan 2038 03:14:07 GMT`
+        //             localStorage.setItem('currentUser', currentUser)
+        //             document.cookie = `token=${response.data.access}; path=/; httpOnly, expires=Tue, 19 Jan 2038 03:14:07 GMT`
+        //             console.log(document.cookie)
+        //             alert(document.cookie)
+        //             commit('updateCurrentUser', currentUser)
+        //         }
+        //     })
+        // }
     },
     mutations: {
         updateUsers(state, users) {
             state.users = users
         },
-        updateCurrentUser(state, currentUser) {
-            state.currentUser.login = currentUser.login
-            state.currentUser.admin = currentUser.admin
-        },
-        updateServerResponse(state, statusCode) {
-            state.serverResponse = statusCode
-        }
+        // updateCurrentUser(state, currentUser) {
+        //     state.currentUser.login = currentUser.login
+        //     state.currentUser.admin = currentUser.admin
+        // },
+        // updateServerResponse(state, statusCode) {
+        //     state.serverResponse = statusCode
+        // }
     },
     state: {
         users: [],
-        currentUser: {
-            login: '',
-            admin: false
-        },
-        serverResponse: ''
+        // currentUser: {
+        //     login: '',
+        //     admin: false
+        // },
+        // serverResponse: ''
     },
     getters: {
         allUsers(state) {
             return state.users
         },
-        currentUser(state) {
-            return state.currentUser
-        },
-        serverResponse(state) {
-            return state.serverResponse
-        },
-        isAdmin(state) {
-            return state.currentUser.admin
-        },
-        isLogged(state) {
-            return (state.currentUser.login !== '')
+        // currentUser(state) {
+        //     return state.currentUser
+        // },
+        // serverResponse(state) {
+        //     return state.serverResponse
+        // },
+        // isAdmin(state) {
+        //     return state.currentUser.admin
+        // },
+        // isLogged(state) {
+        //     return (state.currentUser.login !== '')
 
-        }
+        // }
     },
 }

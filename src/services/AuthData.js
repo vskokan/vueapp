@@ -5,8 +5,8 @@ class AuthData {
         return http.post(`au/login`, data) // В data будем помещать такие данные, как ip, user-agent и refreshToken
     }
 
-    logout(data) {
-        return http.post(`au/logout`, data) // С data аналогично
+    logout() {
+        return http.post(`au/logout`) // С data аналогично
     }
 
     checkSession(data) {

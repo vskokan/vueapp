@@ -58,7 +58,7 @@ export default {
   },
   components: { ReviewCard, AddReviewOnMap },
   computed: {
-    ...mapGetters(["allReviews", "showCard", "showForm"]), 
+    ...mapGetters(["allReviews", "showCard", "showForm", "isAuth"]), 
     balloonTemplate() {
       return `
         <h1 class="red">Hi, everyone!</h1>
@@ -72,7 +72,7 @@ export default {
     onClick(e) {
       this.coords = e.get('coords');
     
-            this.changeFormView()
+            if (this.isAuth) this.changeFormView()
             // alert(this.showForm)
         
     },
