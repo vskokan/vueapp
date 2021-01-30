@@ -3,20 +3,23 @@ import AuthData from '../../services/AuthData'
 export default {
     actions: {
         login({commit,}, user) { 
-            const data = {
-                user: user,
-                userAgent: window.navigator.userAgent // При входе нужно отслеживать устройство входа
-            }
-            AuthData.login(data)
+            // const data = {
+            //     user: user,
+            //     userAgent: window.navigator.userAgent // При входе нужно отслеживать устройство входа
+            // }
+            AuthData.login(user)
             .then((response) => {
                 if (response.status === 400) { // Сервер отправит код 400, если пользователь не существует в системе, либо введен неверный пароль
                     commit('updateServerResponse', 'Неверный логин или пароль')
                 } else {
                     commit('updateServerResponse', 'Успешный вход в систему') // Если пройдены проверки логина и пароля, сервер пришлет данные
                     const currentUser = response.data.user //Данные пользователя в принципе можно тоже хранить в локальном хранилище, пока пусть будет просто в Vuex
-                    const refreshToken = response.data.refreshToken // refreshToken храним в локальном хранилише, accessToken будет в http-only куках
+                    //const refreshToken = response.data.refreshToken // refreshToken храним в локальном хранилише, accessToken будет в http-only куках
+                    //localStorage.setItem('refreshToken', refreshToken)
+
+                    console.log(response.data)
                     commit('updateCurrentUser', currentUser)
-                    localStorage.setItem('refreshToken', refreshToken)
+                    
                 }
             })
         },
@@ -39,12 +42,12 @@ export default {
         checkSessionStatus({commit,}) {
             const data = {
                 message: 'checkSession',
-                refreshToken: localStorage.getItem('refreshToken')
+                //refreshToken: localStorage.getItem('refreshToken')
             }
             AuthData.checkSession(data)
             .then((response) => {
                 if (response.status === 200) {
-                    localStorage.setItem('refreshToken', response.data.refreshToken)
+                    //localStorage.setItem('refreshToken', response.data.refreshToken)
                     commit('updateCurrentUser', response.data.user)
                 }
             })
@@ -68,7 +71,7 @@ export default {
             state.user.raiting = ''
             state.user.admin = false
 
-            localStorage.setItem('refreshToken', null)
+            //localStorage.setItem('refreshToken', null)
         }
     },
     state: {
@@ -82,7 +85,7 @@ export default {
             raiting: '',
             admin: false
         },
-        refreshToken: localStorage.getItem('refreshToken'),
+        // refreshToken: localStorage.getItem('refreshToken'),
         serverResponse: ''
     },
     getters: {

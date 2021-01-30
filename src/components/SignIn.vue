@@ -37,7 +37,7 @@ import { mapGetters } from 'vuex'
         },
         computed: mapGetters(['serverResponse']),
         methods: {
-            ...mapActions(['signIn']),
+            ...mapActions(['login']),
             send() {
                 let formData = new FormData()
 
@@ -51,7 +51,7 @@ import { mapGetters } from 'vuex'
                 //     userAgent:  window.navigator.userAgent
                 // }
 
-                this.signIn(formData)
+                this.login(formData)
             }
         }
         
