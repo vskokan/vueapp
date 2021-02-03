@@ -25,7 +25,7 @@
         </yandex-map>
         <transition name="fade">
         <ReviewCard class="cardForm" v-if="showCard" v-bind:review="currentReview"/>
-        <AddReviewOnMap class="cardForm" v-if="showForm" v-bind:latitude="coords[0]" v-bind:longitude="coords[1]"/>
+        <AddReview class="cardForm" v-if="showForm" v-bind:latitude="coords[0]" v-bind:longitude="coords[1]"/>
         </transition>
     </div>
 </template>
@@ -34,7 +34,7 @@
 
 import { mapGetters, mapActions, mapMutations } from "vuex";
 import ReviewCard from '@/components/Reviews/AdminPanel/ReviewCard'
-import AddReviewOnMap from '@/components/Reviews/AddReviewOnMap'
+import AddReview from '@/components/Reviews/AddReview'
 // import ReviewCard from '@/components/ReviewCard'
 // import ClickOutside from 'vue-click-outside'
 
@@ -56,7 +56,7 @@ export default {
   }
     
   },
-  components: { ReviewCard, AddReviewOnMap },
+  components: { ReviewCard, AddReview },
   computed: {
     ...mapGetters(["allReviews", "showCard", "showForm", "isAuth"]), 
     balloonTemplate() {

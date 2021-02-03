@@ -39,14 +39,17 @@ export default {
                 commit('cleanUserData')
             })
         },
-        checkSessionStatus({commit,}) {
-            const data = {
-                message: 'checkSession',
-                //refreshToken: localStorage.getItem('refreshToken')
-            }
-            AuthData.checkSession(data)
+        checkSession({commit,}) {
+            // const data = {
+            //     message: 'check session',
+            //     //refreshToken: localStorage.getItem('refreshToken')
+            // }
+            const formdata = new FormData()
+            formdata.append('message', 'check session')
+            AuthData.checkSession(formdata)
             .then((response) => {
                 if (response.status === 200) {
+                    console.log(response.data)
                     //localStorage.setItem('refreshToken', response.data.refreshToken)
                     commit('updateCurrentUser', response.data.user)
                 }

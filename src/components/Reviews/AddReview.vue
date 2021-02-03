@@ -10,12 +10,12 @@
         <div class="inputs radiobuttons">
           <div
             class="radioBlock"
-            :class="{ 'radioBlock selected': review.isBaiting == 1 }"
+            :class="{ 'radioBlock selected': review.isBaiting == 'true' }"
           >
             <input
               type="radio"
               id="yes"
-              value="1"
+              value="true"
               v-model="review.isBaiting"
               v-show="false"
             />
@@ -23,18 +23,18 @@
           </div>
           <div
             class="radioBlock"
-            :class="{ 'radioBlock selected': review.isBaiting == 0 }"
+            :class="{ 'radioBlock selected': review.isBaiting == 'false' }"
           >
             <input
               type="radio"
               id="no"
-              value="0"
+              value="false"
               v-model="review.isBaiting"
               v-show="false"
             />
             <label for="no">Нет 🙁</label>
           </div>
-          <!-- isBaiting: {{ review.isBaiting }} -->
+          isBaiting: {{ review.isBaiting }}
         </div>
       </div>
       <div class="formPart">
@@ -251,7 +251,7 @@
         <button class="navButton" @click="back()">Назад</button>
         <button class="navButton" @click="send()">Опубликовать</button>
       </div>
-      <button class="cancel">Отмена</button>
+      <button class="cancel" v-on:click="closeForm">Отмена</button>
     </div>
   </div>
 </template>
@@ -265,6 +265,7 @@ import Multiselect from "vue-multiselect";
 
 export default {
   components: { Multiselect },
+  props: ['latitude', 'longitude'],
   data() {
     return {
       step: 1,
@@ -306,7 +307,7 @@ export default {
       // },
     };
   },
-  computed: mapGetters(["allFishes", "allBaits", "allMethods"]),
+  computed: mapGetters(["allFishes", "allBaits", "allMethods", "currentUser"]),
   methods: {
     ...mapActions([
       "fetchFishesNoPagination",
@@ -314,7 +315,7 @@ export default {
       "fetchMethodsNoPagination",
       "createFullReview"
     ]),
-    ...mapMutations(["changeFormView"]),
+    ...mapMutations(["changeFormView", ]),
     hasEmptyFacts(facts) {
         let hasEmpty = false
         facts.forEach(fact => {
@@ -403,9 +404,12 @@ export default {
       console.log(this.review.files);
       this.getPreviews();
     },
+    closeForm() {
+            this.changeFormView()
+    },
     send() {
         const review = {
-            login: 'vikking',
+            login: this.currentUser.login,
             isBaiting: this.review.isBaiting,
             facts:this.facts,
             description: this.review.description,
@@ -415,14 +419,14 @@ export default {
         }
         let formData = new FormData()
 
-        formData.append('login', 'vikking')
+        formData.append('login', this.currentUser.login)
         formData.append('isBaiting', this.review.isBaiting)
         formData.append('facts', JSON.stringify(this.facts))
         formData.append('description',this.review.description)
         formData.append('roadQuality',this.review.roadquality)
         formData.append('fishingTime',this.review.fishingtime)
-        formData.append('latitude','45')
-        formData.append('longitude','45')
+        formData.append('latitude', this.review.latitude)
+        formData.append('longitude',this.review.longitude)
         // formData.append('images', this.review.files)
 
         for( let i = 0; i < this.review.files.length; i++ ){
@@ -448,6 +452,9 @@ export default {
     this.fetchFishesNoPagination();
     this.fetchBaitsNoPagination();
     this.fetchMethodsNoPagination();
+
+    this.review.latitude = this.latitude
+    this.review.longitude = this.longitude
   },
   mounted() {
     this.getPreviews();
