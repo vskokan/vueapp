@@ -12,6 +12,10 @@ class AuthData {
     checkSession(data) {
         return http.post('au/verify', data)
     }
+
+    register(data) {
+        return http.post('au/register', data)
+    }
 }
 
 export default new AuthData() // Экспортируем данный класс для использования его методов в Vuex

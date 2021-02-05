@@ -1,4 +1,5 @@
 import AuthData from '../../services/AuthData'
+import router from '../../router'
 
 export default {
     actions: {
@@ -54,12 +55,26 @@ export default {
                     commit('updateCurrentUser', response.data.user)
                 }
             })
+        },
+        register({commit, }, user) {
+            AuthData.register(user)
+            .then((response) => {
+                if (response.status === 200) {
+                    commit('updateServerResponse', 'Регистрация прошла успешно, вы будете перенаправлены на страницу входа')
+                    setTimeout(() => {router.push('login')}, 2000)
+                    // this.$router.push('login')
+                } else {
+                    commit('updateServerResponse', 'Что-то пошло не так...')
+                }
+            })
         }
     },
     mutations: {
         updateCurrentUser(state, currentUser) {
             state.user = currentUser
             state.auth = true
+
+            
         },
         updateServerResponse(state, response) {
             state.serverResponse = response

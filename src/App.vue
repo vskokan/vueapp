@@ -85,7 +85,7 @@ button:hover {
     border: none;
     background-color: transparent;
     color: rgb(0, 0, 0);
-    border: 3px solid rgb(101, 15, 172);;
+    border: 3px solid rgb(101, 15, 172);
     /* border-radius: 5px; */
     /* margin: 10px 0px 0px 10px; */
     margin-left: 5px;
@@ -101,6 +101,19 @@ button:hover {
     background-color:   rgb(101, 15, 172);
     color: #fff;
     cursor: pointer;
+}
+
+.button-simple-disabled {
+  cursor: auto;
+  border: 3px solid var(--color-lightgray);
+  color: var(--color-lightgray);
+}
+
+.button-simple-disabled:hover {
+  cursor: auto;
+  border: 3px solid var(--color-lightgray);
+  color: var(--color-lightgray);
+  background-color: transparent;
 }
 
 .slide-fade-enter-active {

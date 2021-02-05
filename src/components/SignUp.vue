@@ -1,19 +1,19 @@
 <template>
-    <form>
+    <div class="formContainer">
         <div class="form">
             <div class="header"><h2>Регистрация</h2></div>
             <div class="container">
                 <div class="input">
                     <i class="fas fa-user icon"></i>
-                    <input class="input-field" type="text" name="login" required>
+                    <input class="input-field" type="text" name="login" v-model="formData.login" @input="validateLogin" required>
                     <div class="placeholder">Логин</div>
                 </div>
-                <div class="description">Латинские буквы и цифры<div class="errors">{{errors.loginError}}</div></div>
+                <div class="description">Латинские буквы в нижнем регистре и цифры<div class="errors">{{errors.loginError}}</div></div>
             </div>
             <div class="container">
                 <div class="input">
                     <i class="fas fa-envelope icon"></i>
-                    <input class="input-field" type="text" name="login" required>
+                    <input class="input-field" type="text" name="login" v-model="formData.email" @input="validateEmail" required>
                     <div class="placeholder">Электронная почта</div>
                 </div>
                 <div class="description">Она типа нужна (нет) <div class="errors">{{errors.emailError}}</div></div>
@@ -21,42 +21,146 @@
             <div class="container">
                 <div class="input">
                     <i class="fas fa-lock icon"></i>
-                    <input class="input-field" type="password" name="password" required>
+                    <input class="input-field" type="password" name="password" v-model="formData.password" @input="validatePassword" required>
                     <div class="placeholder">Пароль</div>
                 </div>
-                <div class="description">Минимум 5 символов <div class="errors">{{errors.passwordError}}</div></div>
+                <div class="description">От 8 символов, разный регистр, одна цифра и спецсимвол <div class="errors">{{errors.passwordError}}</div></div>
             </div>
             <div class="container">
                 <div class="input">
                     <i class="fas fa-lock icon"></i>
-                    <input class="input-field" type="password" name="password" required>
+                    <input class="input-field" type="password" name="password" v-model="formData.passwordRepeat" required>
                     <div class="placeholder">Повторите пароль</div>
                     
                 </div>
-                 <div class="description">Пароли должны совпадать <div class="errors">{{errors.matchError}}</div></div>
+                 <div class="description">Пароли должны совпадать <div class="errors">{{errors.matchError = (this.formData.password === this.formData.passwordRepeat)? '':'Пароли не совпадают'}}</div></div>
             </div>
 
             
 
             <div class="buttons">
-                <button class="button-simple">Зарегистрироваться</button>
+                <button class="button-simple"
+                :class="{ 'button-simple-disabled': hasErrors()}"
+                :disabled="hasErrors()"
+                 @click="send">Зарегистрироваться</button>
                 
             </div>
         </div>
-    </form>
+    </div>
 </template>
 
 <script>
+
+    import { mapActions, mapGetters} from 'vuex'
+
     export default {
         data() {
             return {
                 errors: {
-                    loginError: 'Для указания ошибок в логине',
-                    passwordError: 'Ошибки пароля',
+                    loginError: 'Не заполнено',
+                    passwordError: 'Не заполнено',
                     matchError: 'Пароли не совпадают',
-                    emailError: 'Ошибки электронной почты'
+                    emailError: 'Не заполнено'
+                },
+                formData: {
+                    login: '',
+                    email: '',
+                    password: '',
+                    passwordRepeat: ''
                 },
             }
+        },
+        computed: mapGetters(['allUsers']),
+        methods: {
+            ...mapActions(['fetchUsersNoPagination', 'register']),
+            isUserAlreadyExist() {
+                let isExist = false
+                this.allUsers.forEach(user => {
+                    
+                    if (user.login === this.formData.login) {
+                        isExist = true
+                    }
+                })
+
+                return isExist
+            },
+            isEmailAlreadyExist() {
+                let isExist = false
+                this.allUsers.forEach(user => {
+                    
+                    if (user.email === this.formData.email) {
+                        isExist = true
+                    }
+                })
+
+                return isExist
+            },
+            validateLogin() {
+                const re = new RegExp( '^[a-zA-Z0-9]{3,15}$')
+                if (this.formData.login.match(re) !== null) {
+                    if (!this.isUserAlreadyExist()) {
+                        this.errors.loginError = ''
+                    } else {
+                        this.errors.loginError = 'Логин занят'
+                    }
+                    
+                    // console.log(this.allUsers)
+                }
+                else this.errors.loginError = 'Неправильный формат'
+            },
+            validateEmail() {
+                const re = new RegExp('[^@ \\t\\r\\n]+@[^@ \\t\\r\\n]+\\.[^@ \\t\\r\\n]+')
+                if (this.formData.email.match(re) !== null) {
+                    if (!this.isEmailAlreadyExist()) {
+                        this.errors.emailError = ''
+                    } else {
+                        this.errors.emailError = 'Такая почта уже есть'
+                    }
+                    
+                    // console.log(this.allUsers)
+                }
+                else this.errors.emailError = 'Неправильный формат'
+            },
+            validatePassword() {
+                const re = new RegExp('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$')
+                if (this.formData.password.match(re) !== null) {
+                        this.errors.passwordError = ''
+                }
+                else this.errors.passwordError = 'Слабый пароль'
+            },
+            checkPasswordMatch() {
+                if (this.formData.password === this.formData.passwordRepeat) {
+                    this.errors.matchError = ''
+                } else {
+                    this.errors.matchError = 'Пароли не совпадают'
+                }
+                    
+                
+            },
+            hasErrors() {
+                let errors = false
+
+                for (let key in this.errors) {
+                    if (this.errors[key].length > 0) {
+                        errors = true
+                    }
+                }
+
+                return errors
+            },
+            send() {
+                const formData = new FormData()
+
+                formData.append('login', this.formData.login)
+                formData.append('email', this.formData.email)
+                formData.append('password', this.formData.password)
+
+                this.register(formData)
+                
+            }
+        },
+        created() {
+            this.fetchUsersNoPagination()
         }
         
     }
@@ -95,7 +199,7 @@
         color: #000;
     }
 
-    form {
+    .formContainer {
         background-color: #fff;
         width: 800px;
         display: flex;
@@ -199,7 +303,7 @@
          text-align: end;
          font-family: "Inter", sans-serif;
          color: #000;
-         font-size: 16px;
+         font-size: 14px;
     }
 
 </style>

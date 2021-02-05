@@ -52,6 +52,7 @@ import { mapGetters } from 'vuex'
                 // }
 
                 this.login(formData)
+                this.$router.push('map');
             }
         }
         
