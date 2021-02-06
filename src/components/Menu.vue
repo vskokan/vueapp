@@ -10,13 +10,14 @@
                 <li class="menuitem"><router-link to="/reviews">Отзыв</router-link></li> -->
                 <!-- <li class="menuitem wayToAdmin"><router-link to="/databases">Админка</router-link></li>  отображать только для админа-->
             </ul>
-            <div v-if="isAuth">{{'Привет,'+ currentUser.login}}</div>
+            <!-- <div v-if="isAuth">{{'Привет,'+ currentUser.login}}</div> -->
+            
             <div class="nav-buttons">
-                
+                <userPanel v-if="isAuth" />
                 <router-link to="/login" v-if="!isAuth"><button class="button-simple">Вход</button></router-link>
                  <router-link to="/reg" v-if="!isAuth"><button class="button-simple">Регистрация</button></router-link>
-                 <button class="button-simple" v-if="isAuth" @click="exit">Выход</button>
-                 <router-link to="/database" v-if="isAuth && isAdmin"><button class="button-simple">Админка</button></router-link>
+                 <!-- <button class="button-simple" v-if="isAuth" @click="exit">Выход</button>
+                 <router-link to="/database" v-if="isAuth && isAdmin"><button class="button-simple"><i class="fas fa-tools"></i></button></router-link> -->
             </div>
     </div>
 </template>
@@ -25,6 +26,7 @@
 
 import { mapActions } from 'vuex'
 import { mapGetters } from 'vuex'
+import userPanel from './UserPanel'
 
 export default {
     // data() {
@@ -38,6 +40,9 @@ export default {
         exit() {
             this.logout()
         }
+    },
+    components: {
+        userPanel
     }
     // methods: {
     //     // ...mapActions('signIn')
@@ -62,6 +67,7 @@ export default {
         padding-left: 20px;
         align-items: center;
         justify-content: space-between;
+        z-index: 2;
     }
 
     .nav {

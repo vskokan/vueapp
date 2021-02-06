@@ -20,6 +20,7 @@ export default {
 
                     console.log(response.data)
                     commit('updateCurrentUser', currentUser)
+                    router.push('map')
                     
                 }
             })
@@ -56,12 +57,14 @@ export default {
                 }
             })
         },
-        register({commit, }, user) {
+        register({commit, dispatch}, user) {
             AuthData.register(user)
             .then((response) => {
                 if (response.status === 200) {
+                    user.append('userAgent', window.navigator.userAgent)
+                    dispatch('login', user)
                     commit('updateServerResponse', 'Регистрация прошла успешно, вы будете перенаправлены на страницу входа')
-                    setTimeout(() => {router.push('login')}, 2000)
+                    // setTimeout(() => {router.push('login')}, 2000)
                     // this.$router.push('login')
                 } else {
                     commit('updateServerResponse', 'Что-то пошло не так...')
