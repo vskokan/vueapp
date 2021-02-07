@@ -1,7 +1,7 @@
 <template>
     <div class="menu">
             <ul class="nav">
-                <li class="menuitem"><router-link to="/map"><i class="fas fa-map-marked-alt"></i>Карта</router-link></li>
+                <li class="menuitem"><router-link to="/map"><i class="fas fa-map-marker-alt"></i>Карта</router-link></li>
                 <li class="menuitem"><router-link to="/fish"><i class="fas fa-fish"></i>Рыба</router-link></li>
                 <li class="menuitem"><router-link to="/test"><i class="fas fa-handshake"></i>Партнеры</router-link></li>
                 <li class="menuitem"><router-link to="/test"><i class="fas fa-info-circle"></i>О нас</router-link></li>
@@ -65,6 +65,7 @@ export default {
         display: flex;
         flex-direction: row;
         padding-left: 20px;
+        
         align-items: center;
         justify-content: space-between;
         z-index: 2;
@@ -79,6 +80,9 @@ export default {
         margin: 0; 
         padding-left: 0; 
         height: 100%;
+        font-family: 'IBM Plex Sans', sans-serif;
+        font-weight: 500;
+        margin-top: 15px;
         /* margin-top: 20px; */
         background-color:  #fff;
     }
@@ -131,7 +135,7 @@ export default {
             text-decoration: none;
             text-transform: uppercase;
             color: #747474;
-            font-weight: bold;
+            /* font-weight: bold; */
             height: 100%;
         }
 

@@ -5,7 +5,7 @@
             <div class="username">{{currentUser.login}}</div>
             <div class="userPanelArrow"><i class="fas fa-chevron-down" :class="{'opened': isMenuOpened}" @click="toggleUserMenu"></i></div>
         </div>
-        <ul class="dropdown" v-if="isMenuOpened">
+        <ul class="dropdown"  v-if="isMenuOpened">
             <li @click="isMenuOpened = false"><router-link to="/404"><i class="fas fa-id-badge"></i>Мой профиль</router-link></li>
             <li><router-link to="/404"><i class="fas fa-users-cog"></i>Настройки</router-link></li>
             <li v-if="currentUser.admin == true"><router-link to="/database"><i class="fas fa-tools"></i>Админка</router-link></li>
@@ -81,7 +81,7 @@ export default {
         position: absolute;
         z-index: 2;
         list-style: none;
-        top: 90px;
+        top: 100px;
         right: 10px;
         display: flex;
         flex-direction: column;
@@ -89,33 +89,35 @@ export default {
         align-items: center;
         margin: 0px;
         padding: 5px 10px;
-        font-family: 'Rubik', sans-serif;
-        border-radius: 5px;
+        font-family: 'IBM Plex Sans', sans-serif;
+        border-radius: 15px;
         box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px, rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
     }
 
     li {
         margin: 5px 10px;
-        font-size: 18px;
-        border: 3px solid var(--color-violet);
+        font-size: 22px;
+        /* border: 3px solid var(--color-violet); */
         width: 100%;
         padding: 5px 0px;
         text-decoration: none;
-            text-transform: uppercase;
+        font-family: 'IBM Plex Sans', sans-serif;
+            /* text-transform: uppercase; */
             color: #000;
-            font-weight: bold;
+            font-weight: 500;
     }
 
     li:hover {
-        color: rgb(101, 15, 172);
+        color: var(--color-violet);
         cursor: pointer;
     }
 
             a {
             text-decoration: none;
-            text-transform: uppercase;
+            /* text-transform: uppercase; */
             color: #000;
-            font-weight: bold;
+            font-family: 'IBM Plex Sans', sans-serif;
+            /* font-weight: bold; */
             height: 100%;
         }
 
@@ -129,7 +131,7 @@ export default {
 
         a:hover {
             text-decoration: none;
-            color: rgb(101, 15, 172);
+            color: var(--color-violet);
         }
 
         .dropdown .fas {

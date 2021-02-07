@@ -52,7 +52,9 @@ export default {
         align-items: center;
         background-color: #fff;
         padding-bottom: 20px;
-        box-shadow: 0 0 60px rgba(14,42,71,.25);
+        border-radius: 15px;
+        box-shadow: rgba(0, 0, 0, 0.11) 0px 10px 50px;
+        /* box-shadow: 0 0 60px rgba(14,42,71,.25); */
     }
 
     .name {

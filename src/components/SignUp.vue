@@ -174,7 +174,7 @@
         border-top-left-radius: 5px;
         border-top-right-radius: 5px;
         /* background: linear-gradient(to right, var(--color-yellow),var(--color-violet)); */
-        background-color: var(--color-violet);
+        /* background-color: var(--color-violet); */
         margin-bottom: 30px;
         display: flex;
         justify-content: center;
@@ -183,7 +183,7 @@
 
     h2 {
         font-size: 34px;
-        color: rgb(255, 255, 255);
+        color: rgb(0, 0, 0);
     }
 
     .icon {
@@ -207,9 +207,9 @@
         align-items: center;
         justify-items: center;
         padding: 0px 20px 20px 20px;
-        box-shadow: 0 0 60px rgba(14, 42, 71, 0.25);
+        /* box-shadow: 0 0 60px rgba(14, 42, 71, 0.25); */
         /* box-shadow: 0 0 60px rgba(14,42,71,.25); */
-        border-radius: 5px;
+        border-radius: 15px;
         z-index: 0;
     }
 
@@ -223,6 +223,7 @@
         display: flex;
         flex-direction: row;
         justify-content: space-between;
+        font-family: 'Inter', sans-serif;
     }
 
     .input {
@@ -244,7 +245,7 @@
 
     .input-field {
         border: none;
-        border-bottom: 1px solid lightgray;
+        border-bottom: 1px solid var(--color-violet);
         background: transparent;
         z-index: 1;
         width: 300px;
@@ -275,7 +276,7 @@
     .input-field:focus + .placeholder, .input-field:valid + .placeholder {
         color: var(--color-violet);
         font-size: 18px;
-        font-family: 'Roboto', sans-serif;
+        font-family: 'Inter', sans-serif;
         animation: movePlaceholder 0.2s ease-in forwards;
         border: transparent;
         outline: none;

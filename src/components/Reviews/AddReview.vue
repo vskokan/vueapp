@@ -472,16 +472,18 @@ export default {
   flex-direction: column;
   justify-content: space-between;
   background-color: #fff;
-  border-radius: 5px;
+  border-radius: 15px;
+        box-shadow: rgba(0, 0, 0, 0.11) 0px 10px 50px;
+  /* border-radius: 5px; */
   padding: 10px;
-  box-shadow: 0 0 60px rgba(14, 42, 71, 0.25);
+  /* box-shadow: 0 0 60px rgba(14, 42, 71, 0.25); */
   /* box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px; */
   /* border-radius: 3px;  */
-  --color-violet: rgb(91, 21, 148);
-  --color-yellow: rgb(255, 230, 0);
+  /* --color-violet: rgb(91, 21, 148);
+  --color-yellow: rgb(255, 230, 0); */
   /* --color-darkgray: rgb(56, 56, 56); */
-  --color-darkgray: rgb(0, 0, 0);
-  --color-lightgray: rgb(194, 194, 194);
+  /* --color-darkgray: rgb(0, 0, 0);
+  --color-lightgray: rgb(194, 194, 194); */
 }
 
 .stepPart {

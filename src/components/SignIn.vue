@@ -65,10 +65,10 @@ import { mapGetters } from 'vuex'
         width: 450px;
         padding-top: 20px;
         padding-bottom: 20px;
-        border-top-left-radius: 5px;
-        border-top-right-radius: 5px;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
         /* background: linear-gradient(to right, var(--color-yellow),var(--color-violet)); */
-        background-color: var(--color-violet);
+        /* background-color: var(--color-violet); */
         margin-bottom: 30px;
         display: flex;
         justify-content: center;
@@ -77,7 +77,7 @@ import { mapGetters } from 'vuex'
 
     h2 {
         font-size: 34px;
-        color: rgb(255, 255, 255);
+        color: rgb(41, 41, 41);
     }
 
     .icon {
@@ -101,9 +101,9 @@ import { mapGetters } from 'vuex'
         align-items: center;
         justify-items: center;
         padding: 0px 0px 20px 0px;
-        box-shadow: 0 0 60px rgba(14, 42, 71, 0.25);
+        /* box-shadow: 0 0 60px rgba(14, 42, 71, 0.25); */
         /* box-shadow: 0 0 60px rgba(14,42,71,.25); */
-        border-radius: 5px;
+        border-radius: 15px;
         z-index: 0;
     }
 
