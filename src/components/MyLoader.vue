@@ -16,7 +16,7 @@
 }
 
 img {
-    animation: swimmimg 1.2s linear infinite;
+    animation: swimmimg 1s linear infinite;
 }
 
 @keyframes swimmimg {
