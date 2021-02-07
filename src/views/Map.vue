@@ -52,6 +52,8 @@ export default {
 
 <style scoped>
 
+
+
   /* div {
       min-height: calc(100vh - 180px)
   } */
