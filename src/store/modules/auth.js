@@ -55,6 +55,11 @@ export default {
                     //localStorage.setItem('refreshToken', response.data.refreshToken)
                     commit('updateCurrentUser', response.data.user)
                 }
+
+                commit('stopAuthLoader')
+            })
+            .catch(() => {
+                commit('stopAuthLoader')
             })
         },
         register({commit, dispatch}, user) {
@@ -93,10 +98,17 @@ export default {
             state.user.admin = false
 
             //localStorage.setItem('refreshToken', null)
+        },
+        stopAuthLoader(state) {
+            setTimeout(() => {
+                state.authLoader = false
+            }, 1300)
+            
         }
     },
     state: {
         auth: false,
+        authLoader: true,
         user: {
             login: '',
             email: '',
@@ -121,6 +133,9 @@ export default {
         },
         serverResponse(state) {
             return state.serverResponse
+        },
+        isAuthLoading(state) {
+            return state.authLoader
         }
     }
 }
