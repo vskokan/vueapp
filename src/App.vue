@@ -1,8 +1,9 @@
 <template>
   <div id="app">
-    <Header></Header>
+    <MyLoader class="loader" v-if="isAuthLoading" />
+    <Header v-if="!isAuthLoading"></Header>
     <transition name="slide-fade" mode="out-in">
-      <router-view>
+      <router-view v-if="!isAuthLoading">
       </router-view>
     </transition>
   </div>
@@ -11,16 +12,20 @@
 <script>
 
 import Header from '@/components/Header'
+import MyLoader from '@/components/MyLoader'
 import { mapActions } from "vuex";
+import { mapGetters} from "vuex";
 
 export default {
   name: 'App',
   components: {
     Header, 
+    MyLoader
   },
   methods: {
     ...mapActions(['checkSession'])
   },
+  computed:mapGetters(['isAuthLoading']),
   created() {
     this.checkSession()
   }
@@ -33,8 +38,14 @@ export default {
   @import url('https://fonts.googleapis.com/css2?family=Ubuntu+Condensed&display=swap');
   @import url('https://fonts.googleapis.com/css2?family=Marmelad&display=swap');
   @import url('https://fonts.googleapis.com/css2?family=Inter:wght@700&display=swap');
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@700&display=swap');
+
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;700&display=swap');
   
+
+  @font-face {
+    font-family: Arkhip; /* Имя шрифта */
+    src: url(./assets/fonts/Arkhip_font.ttf); /* Путь к файлу со шрифтом */
+   }
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -43,11 +54,11 @@ export default {
   color: #2c3e50;
       /* padding-top: 20px; */
   /* background: radial-gradient(circle farthest-corner at 100px 50px, #f9faf9, #e0e0e0); */
-  background-image:  url('./assets/background2.svg');
-  background-image: url('./assets/background2.svg'), radial-gradient(circle farthest-corner at 100px 50px, #f9faf9, #e0e0e0);
+  background-image:  url('./assets/background3.svg');
+  background-image: url('./assets/background3.svg'), radial-gradient(circle farthest-corner at 100px 50px, #f9faf9, #e0e0e0);
   min-height: calc(100vh);
   height: auto;
-    --color-violet: rgb(91, 21, 148);
+    --color-violet: #7D24D6;
   --color-yellow: rgb(255, 230, 0);
   /* --color-darkgray: rgb(56, 56, 56); */
   --color-darkgray: rgb(0, 0, 0);
@@ -61,6 +72,12 @@ export default {
 * {
     margin: 0px;
     margin-bottom: 0px;
+}
+
+.loader {
+  position: absolute;
+  top: 50%;
+  left: 47%;
 }
 
 /* button {
@@ -83,10 +100,12 @@ button:hover {
     height: 40px;
     font-size: 24px;
     border: none;
-    background-color: transparent;
-    color: rgb(0, 0, 0);
-    border: 3px solid rgb(101, 15, 172);
-    /* border-radius: 5px; */
+    padding: 0px 20px;
+    /* background-color: transparent; */
+    background-color: var(--color-violet);
+    color: rgb(255, 255, 255);
+    /* border: 3px solid rgb(101, 15, 172); */
+    border-radius: 10px;
     /* margin: 10px 0px 0px 10px; */
     margin-left: 5px;
     margin-right: 5px;
@@ -97,23 +116,27 @@ button:hover {
 }
 
 .button-simple:hover {
-    border-color:transparent;
-    background-color:   rgb(101, 15, 172);
+    /* border-color:transparent; */
+    background-color:   rgb(87, 31, 133);
     color: #fff;
     cursor: pointer;
 }
 
 .button-simple-disabled {
   cursor: auto;
-  border: 3px solid var(--color-lightgray);
-  color: var(--color-lightgray);
+  
+  background-color: var(--color-lightgray);
+  /* border: 3px solid var(--color-lightgray); */
+  color: #fff;
 }
 
 .button-simple-disabled:hover {
   cursor: auto;
-  border: 3px solid var(--color-lightgray);
-  color: var(--color-lightgray);
-  background-color: transparent;
+  background-color: var(--color-lightgray);
+  color: #fff;
+  /* border: 3px solid var(--color-lightgray); */
+  /* color: var(--color-lightgray); */
+  /* background-color: transparent; */
 }
 
 .slide-fade-enter-active {

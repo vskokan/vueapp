@@ -1,6 +1,11 @@
 <template>
     <div class="header">
-        <div class="logo">LOGO</div>
+        <div class="logo">
+            <!-- <i class="fas fa-map-marker-alt"></i> -->
+            <i class="fas fa-map"></i>
+            <!-- <i class="fas fa-fish"></i> -->
+            
+            Рыбокарта</div>
         <Menu></Menu>
     </div>
 </template>
@@ -45,12 +50,39 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        border:  5px solid;
-        padding-top: 20px;
-        padding-left: 20px;
-        padding-right: 20px;
-        padding-bottom: 20px;
-        font-size: 24px;
+        /* border:  5px solid var(--color-violet); */
+        /* padding-top: 10px;
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-bottom: 10px; */
+        font-size: 50px;
+        color: #000;
+        font-family: 'Arkhip';
+    }
+
+    .icons {
+        height: 40px;
+    }
+
+    /* .fa-map-marker-alt {
+        font-size: 35px;
+        margin-right: 5px;
+        margin-bottom: 10px;
+        color: var(--color-violet);
+        position: relative;
+        bottom: 45px;
+        z-index: 2;
+    }
+
+    .fa-fish {
+        position: relative;
+        bottom: 70px;
+        z-index: 1;
+        font-size: 40px;
+    } */
+
+    .fa-map{
+        margin-right: 10px;
     }
 
 </style>
