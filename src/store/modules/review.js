@@ -50,29 +50,46 @@ export default {
                 })
             })
         },
-        updateReviewPassword_AdminPanel({commit, dispatch}, reviewToUpdate, reviews) {
-            //alert(ReviewToUpdate.formData)
-            ReviewData.updatePassword(reviewToUpdate.login, reviewToUpdate.formData)
-                .then(() => {
-                    dispatch('fetchReviews')
-                    .then(() => {
-                        commit('updateReviews', reviews)
-                    })
-                })
+        getReviewPhotos({commit}, review) {
+            ReviewData.getPhotos(review)
+            .then((json) => {
+                if (json.status === 200) {
+                    const photos = json.data
+                    console.log(photos)
+                    commit('updatePhotos', photos)
+                }
+            })
         }
+        // updateReviewPassword_AdminPanel({commit, dispatch}, reviewToUpdate, reviews) {
+        //     //alert(ReviewToUpdate.formData)
+        //     ReviewData.updatePassword(reviewToUpdate.login, reviewToUpdate.formData)
+        //         .then(() => {
+        //             dispatch('fetchReviews')
+        //             .then(() => {
+        //                 commit('updateReviews', reviews)
+        //             })
+        //         })
+        // }
     },
     mutations: {
         updateReviews(state, reviews) {
             state.reviews = reviews
         },
+        updatePhotos(state, photos) {
+            state.reviewPhotos = photos
+        }
     },
     state: {
         reviews: [],
+        reviewPhotos: []
     },
     getters: {
         allReviews(state) {
             //alert(state.reviews)
             return state.reviews
         },
+        allPhotos(state) {
+            return state.reviewPhotos
+        }
     },
 }

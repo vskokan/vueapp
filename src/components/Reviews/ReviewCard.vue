@@ -29,6 +29,7 @@
         <p class="description">{{review.longitude}}</p> -->
         <!-- <p v-for="fact in allFacts" :key="fact.id">{{fact.fish + ' ' + fact.bait + ' ' + fact.method}}</p> -->
         <Facts v-bind:review="review.id" />
+        <ReviewPhotos v-bind:review="review.id" />
         <div class="formButtons">
             <button class="button-simple close" v-on:click="closeForm">Закрыть</button>
         </div>
@@ -42,11 +43,13 @@ import { mapActions} from 'vuex'
 import { mapMutations } from "vuex";
 
 import Facts from '@/components/Reviews/Facts.vue'
+import ReviewPhotos from '@/components/Reviews/ReviewPhotos.vue'
 
 export default {
     props: ['review'],
     components: {
-        Facts
+        Facts,
+        ReviewPhotos
     },
     // computed: mapGetters(['allFacts']),
     methods: {

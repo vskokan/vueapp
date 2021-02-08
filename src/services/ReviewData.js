@@ -38,6 +38,9 @@ class ReviewData {
     return http.get(`/reviews?p=amount`)
   }
 
+  getPhotos(id) {
+    return http.get(`/reviews/${id}/photos`)
+  }
 //   findByTitle(title) {
 //     return http.get(`/fish?title=${title}`);
 //   }
