@@ -33,7 +33,7 @@
 <script>
 
 import { mapGetters, mapActions, mapMutations } from "vuex";
-import ReviewCard from '@/components/Reviews/AdminPanel/ReviewCard'
+import ReviewCard from '@/components/Reviews/ReviewCard'
 import AddReview from '@/components/Reviews/AddReview'
 // import ReviewCard from '@/components/ReviewCard'
 // import ClickOutside from 'vue-click-outside'
