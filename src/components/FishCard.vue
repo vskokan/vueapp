@@ -38,7 +38,7 @@
         align-items: center;
         justify-items: center;
         padding: 20px;  
-        box-shadow: 0 0 25px rgba(14,42,71,.25);   
+        /* box-shadow: 0 0 25px rgba(14,42,71,.25);    */
         border-radius: 5px;
         position: absolute;
         top: 220px;
@@ -74,7 +74,7 @@
     .description {
         margin-top: 10px;
         width: 300px;
-        box-shadow: inset 0 0 2px rgba(14,42,71,.15);
+        /* box-shadow: inset 0 0 2px rgba(14,42,71,.15); */
         background-color: #fafafa8a;
         text-align: left;
         padding: 10px;

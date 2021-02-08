@@ -1,6 +1,5 @@
 <template>
     <div class="mainpage">
-      <h1>Рыба из БД</h1>
        <MyLoader class="loader" v-if="loading"></MyLoader>
        <FishCardList v-bind:fishes="fishes"></FishCardList>
     </div>

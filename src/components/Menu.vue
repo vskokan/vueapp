@@ -102,13 +102,16 @@ export default {
 
     .menuitem {
         position: relative;
-        margin: 0 8px 0px 8px;
+        margin: 0 12px 0px 12px;
         font-size: 28px;
     }
 
     i {
-        font-size: 24px;
+        font-size: 20px;
         margin-right: 5px;
+        position: relative;
+        bottom: 2px;
+        
     }
 
     .menuitem:after {

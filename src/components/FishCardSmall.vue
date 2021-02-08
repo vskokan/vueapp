@@ -61,13 +61,15 @@
         flex-direction: column;
         align-items: center;
         justify-items: center;
-        padding: 0px 0px 20px 0px;  
-        box-shadow: 0 0 10px rgba(14,42,71,.25);   
-        border-radius: 5px;
+        padding: 0px 0px 20px 0px;
+        color: #000;  
+        font-family: 'Inter', sans-serif;
+        /* box-shadow: 0 0 10px rgba(14,42,71,.25);    */
+        border-radius: 15px;
     }
 
     .card:hover {
-        box-shadow: 0 0 10px rgba(14,42,71,.85);
+        /* box-shadow: 0 0 10px rgba(14,42,71,.85); */
         cursor: pointer;  
     }
 

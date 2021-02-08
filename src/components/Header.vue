@@ -55,7 +55,7 @@
         padding-left: 10px;
         padding-right: 10px;
         padding-bottom: 10px; */
-        font-size: 50px;
+        font-size: 45px;
         color: #000;
         font-family: 'Arkhip';
     }
