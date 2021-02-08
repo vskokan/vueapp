@@ -2,14 +2,14 @@ import FullReviewData from '../../services/FullReviewData';
 
 export default {
     actions: {
-        fetchReviews({ commit, }) {
-            FullReviewData.getAll()
-            .then(json => {
-                const reviews = json.data
+        // fetchShortReviews({ commit, }) {
+        //     FullReviewData.getAll()
+        //     .then(json => {
+        //         const reviews = json.data
                 
-                commit('updateReviews', reviews)
-            })
-        },
+        //         commit('updateReviews', reviews)
+        //     })
+        // },
         createFullReview({ commit, dispatch }, newReview, reviews, ) {
             FullReviewData.create(newReview)
             .then(() => {
@@ -18,6 +18,9 @@ export default {
                 
             })
         },
+        getFullReviewById() {
+
+        }
         // deleteReview({commit, dispatch}, reviewToDelete, reviews) {
         //     ReviewData.delete(reviewToDelete)
         //     .then(() => {
@@ -52,10 +55,11 @@ export default {
     },
     state: {
         reviews: [],
+        review: []
     },
-    getters: {
-        allReviews(state) {
-            return state.reviews
-        },
-    },
+    // getters: {
+    //     allReviews(state) {
+    //         return state.reviews
+    //     },
+    // },
 }

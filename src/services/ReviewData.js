@@ -3,7 +3,7 @@ import http from "../http-common";
 class ReviewData {
     
   getAll() {
-    return http.get("/reviews");
+    return http.get("/test/reviews");
   }
 
   getPage(page) {

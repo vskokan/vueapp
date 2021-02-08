@@ -14,8 +14,8 @@ export default {
         fetchReviewsNoPagination({ commit, }) {
             ReviewData.getAll()
             .then(json => {
-                const reviews = json.data
-                
+                const reviews = json.data.rows
+                console.log(json)
                 commit('updateReviews', reviews)
             })
         },
