@@ -24,12 +24,13 @@
             <div class="baiting"><i :class="{ 'fas fa-thumbs-up': review.isbaiting, 'fas fa-thumbs-down': !review.isbaiting}" ></i>{{review.isbaiting ? 'Клюёт' : 'Не клюёт'}}</div>
             <div class="time"><i class="fas fa-clock"></i>{{review.fishingtime}}</div>
         </div>
-       
+   
         <!-- <p class="description">{{review.latitude}}</p>
         <p class="description">{{review.longitude}}</p> -->
         <!-- <p v-for="fact in allFacts" :key="fact.id">{{fact.fish + ' ' + fact.bait + ' ' + fact.method}}</p> -->
         <Facts v-bind:review="review.id" />
         <ReviewPhotos v-bind:review="review.id" />
+       
         <div class="formButtons">
             <button class="button-simple close" v-on:click="closeForm">Закрыть</button>
         </div>
@@ -45,12 +46,14 @@ import { mapMutations } from "vuex";
 import Facts from '@/components/Reviews/Facts.vue'
 import ReviewPhotos from '@/components/Reviews/ReviewPhotos.vue'
 
+
 export default {
     props: ['review'],
     components: {
         Facts,
-        ReviewPhotos
+        ReviewPhotos,
     },
+
     // computed: mapGetters(['allFacts']),
     methods: {
         ...mapMutations(['changeCardView']),
@@ -158,4 +161,6 @@ export default {
         font-size: 18px;
         margin-top: 5px;
     }
+
+
 </style>

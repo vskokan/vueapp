@@ -22,6 +22,9 @@ export default {
         },
         decrementCurrentPage(state) {
             if (state.currentPage > 1) state.currentPage--
+        },
+        changeSliderView(state) {
+            state.slider = !state.slider
         }
     },
     state: {
@@ -30,7 +33,8 @@ export default {
         editForm: false,
         changePasswordForm: false,
         currentPage: 1,
-        maxPage: 1
+        maxPage: 1,
+        slider: false
     },
     getters: {
         showForm(state) {
@@ -52,5 +56,8 @@ export default {
             
             return state.currentPage
         },
+        showSlider(state) {
+            return state.slider
+        }
     },
 }
