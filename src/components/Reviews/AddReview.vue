@@ -273,7 +273,7 @@ export default {
       //preview: "",
       //showPreview: false,
       review: {
-        login: 'vikking',
+        login: '',
         isBaiting: null,
         description: "",
         files: [],
@@ -313,6 +313,7 @@ export default {
       "fetchFishesNoPagination",
       "fetchBaitsNoPagination",
       "fetchMethodsNoPagination",
+      "fetchReviewsNoPagination",
       "createFullReview"
     ]),
     ...mapMutations(["changeFormView", ]),
@@ -408,15 +409,15 @@ export default {
             this.changeFormView()
     },
     send() {
-        const review = {
-            login: this.currentUser.login,
-            isBaiting: this.review.isBaiting,
-            facts:this.facts,
-            description: this.review.description,
-            roadquality: this.review.roadquality,
-            fishingtime: this.review.fishingtime,
-            files: this.review.files
-        }
+        // const review = {
+        //     login: this.currentUser.login,
+        //     isBaiting: this.review.isBaiting,
+        //     facts:this.facts,
+        //     description: this.review.description,
+        //     roadquality: this.review.roadquality,
+        //     fishingtime: this.review.fishingtime,
+        //     files: this.review.files
+        // }
         let formData = new FormData()
 
         formData.append('login', this.currentUser.login)
@@ -436,8 +437,8 @@ export default {
         }
 
         this.createFullReview(formData)
-
-        console.log(review)
+        .then(this.fetchReviewsNoPagination())
+        this.closeForm()
     }
   },
   directives: {

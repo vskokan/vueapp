@@ -1,5 +1,6 @@
 <template>
     <div class="container">
+        {{review}}
         <div class="row" v-for="fact in allFacts" :key="fact.index">
             <div class="fishes">
                 <div class="fish" v-for="fish in fact.fishes" :key="fish.id">{{fish.name}}</div>
@@ -29,14 +30,23 @@ import { mapGetters, mapActions } from 'vuex'
 
 export default {
     props: ['review'],
+    watch: {
+        review: function (newVal) {
+            this.findFactsByReview(newVal)
+        }
+    },
     computed: mapGetters(['allFacts']),
     methods: {
         ...mapActions(['findFactsByReview']),
+        // updateFacts() {
+        //     this.findFactsByReview(newVal)
+        // }
         
     },
     created() {
         this.findFactsByReview(this.review)
-    }
+    },
+    
 }
 </script>
 
