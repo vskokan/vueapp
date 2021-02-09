@@ -81,8 +81,8 @@ export default {
         position: absolute;
         z-index: 2;
         list-style: none;
-        top: 100px;
-        right: 10px;
+        top: 75px;
+        right: 30px;
         display: flex;
         flex-direction: column;
         justify-content: center;

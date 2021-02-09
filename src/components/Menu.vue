@@ -68,7 +68,7 @@ export default {
         
         align-items: center;
         justify-content: space-between;
-        z-index: 2;
+        /* z-index: 1; */
     }
 
     .nav {
